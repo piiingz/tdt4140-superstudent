@@ -8,7 +8,7 @@ import org.junit.Assert;
 
 public class AreaTest {
 
-	//This represents Gløshaugen
+	//This represents Gloshaugen
 	private Location northWest = new Location(63.4305149,10.3950528);
 	private Location northEast = new Location(63.4305149,10.408700);
 	private Location southWest = new Location(63.415836,10.3950528);
