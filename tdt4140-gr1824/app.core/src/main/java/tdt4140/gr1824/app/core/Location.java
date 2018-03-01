@@ -1,6 +1,7 @@
 package tdt4140.gr1824.app.core;
 
 public class Location {
+	// Latitude = y-koordinater, longitude = x-koordinater
 	private double latitude, longitude;
 	
 	public Location(double latitude, double longitude) {
