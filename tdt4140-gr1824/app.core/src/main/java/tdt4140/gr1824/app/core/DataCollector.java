@@ -13,6 +13,7 @@ public class DataCollector {
 	}
 	
 	private String parseNMEA(String[] data) {
+		//Method extracts relevant information from the NMEA input-string, return null if data-quality is not acceptable
 		if (threshold.contains(data[7])) {
 			return null;
 		}
