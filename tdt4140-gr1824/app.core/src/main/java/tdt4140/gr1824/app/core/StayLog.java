@@ -21,6 +21,10 @@ public class StayLog {
 		this.inTime = System.nanoTime();		
 	}
 	
+	public Area getArea() {
+		return this.area;
+	}
+	
 	// Sets stayTime in minutes.
 	private void setStayTime() {
 		long stayTimeNS = System.nanoTime() - this.inTime;

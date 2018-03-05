@@ -1,9 +1,7 @@
 package tdt4140.gr1824.app.core;
 
 import org.junit.Test;
-
-
-import org.junit.Assert;
+import org.junit.Assert;;
 
 public class DefinedAreasTest {
 	
@@ -11,7 +9,14 @@ public class DefinedAreasTest {
 	
 	@Test
 	public void testArea() {
-		Assert.assertTrue(DefinedAreas.glos.inArea(insideGlos));
+		for (Area area : DefinedAreas.areas) {
+			if (area == DefinedAreas.glos) {
+				Assert.assertTrue(area.inArea(insideGlos));
+			}
+			else {
+				Assert.assertFalse(area.inArea(insideGlos));
+			}
+		}
 	}
 
 }
