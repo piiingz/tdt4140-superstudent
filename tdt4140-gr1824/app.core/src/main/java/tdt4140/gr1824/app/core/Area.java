@@ -8,12 +8,14 @@ public class Area {
 	private final Location northEast;
 	private final Location southWest;
 	private final Location southEast;
+	private String name;
 	
-	public Area(Location nw, Location ne, Location sw, Location se ) {
+	public Area(Location nw, Location ne, Location sw, Location se, String name) {
 		this.northWest = nw;
 		this.northEast = ne;
 		this.southWest = sw;
 		this.southEast = se;
+		this.name = name;
 	}
 	
 	public boolean inArea(Location location) {
@@ -41,6 +43,15 @@ public class Area {
 	public Location getSouthEast() {
 		return southEast;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
 }
 
 

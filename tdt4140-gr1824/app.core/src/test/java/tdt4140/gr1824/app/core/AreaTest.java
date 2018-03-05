@@ -13,8 +13,9 @@ public class AreaTest {
 	private Location northEast = new Location(63.4305149,10.408700);
 	private Location southWest = new Location(63.415836,10.3950528);
 	private Location southEast = new Location(63.415836,10.408700);
+	private String name = "Gløshaugen";
 	
-	private Area area = new Area(this.northWest, this.northEast, this.southWest, this.southEast);
+	private Area area = new Area(this.northWest, this.northEast, this.southWest, this.southEast, this.name);
 	
 	private Location outsideArea = new Location(65.4305149,12.3950528);
 	private Location insideArea = new Location(63.418177,10.403385);
