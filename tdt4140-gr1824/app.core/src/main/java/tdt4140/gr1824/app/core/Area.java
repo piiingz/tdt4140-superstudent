@@ -4,26 +4,33 @@ import java.awt.Polygon;
 
 
 public class Area {
-	// x-points = longitude, y-points = latitude, npoints = number of points
+	// x-points = longitude, y-points = latitude
 	private int[] ypoints;
 	private int[] xpoints;
-	private int npoints;
 	private Polygon areaPolygon;
 	
 	// Locations needs to be in a clockwise order
 	public Area(Location...locations) {
-		this.npoints = locations.length;
+		/* 
+		 *Adds all coordinates from the inputs "locations" (Locations... = Variable number of arguments)
+		 *extracts lat-coordinates to ypoints, long-coordinates to xpoints. Creates polygon-object to
+		 *define area.
+		 */
+		int npoints = locations.length;
 		this.ypoints = new int[locations.length];
 		this.xpoints = new int[locations.length];
 		for (int i = 0; i < npoints; i++) {
 			ypoints[i] = (intConverter(locations[i].getLat()));
 			xpoints[i] = (intConverter(locations[i].getLong()));
 		}
-		this.areaPolygon = new Polygon (this.xpoints, this.ypoints, this.npoints);
+		this.areaPolygon = new Polygon (this.xpoints, this.ypoints, npoints);
 	}
 	
-	// Maps a double to int with 6 digits
 	private static Integer intConverter (double number) {
+		/*
+		 *Takes a double number (coordinate) and maps it to a integer because the polygon object demands int coordinates.
+		 *Scales the numbers up by 100 000 to keep accuracy, and returns scaled int
+		 */
 		Double doubleCoord = Double.valueOf(number*1000000);
 		double tempDouble = doubleCoord.doubleValue();
 		int tempCoord = (int) tempDouble;
@@ -31,22 +38,10 @@ public class Area {
 		return intCoord;
 	}
 	
-	public String getYpoints(){
-		String result = "";
-		for (int ypoint: this.ypoints) {
-			result += Integer.toString(ypoint) + ", ";
-		}
-		return result;
-	}
-	public String getXpoints(){
-		String result = "";
-		for (int xpoint: this.xpoints) {
-			result += Integer.toString(xpoint) + ", ";
-		}
-		return result;
-	}
-	
 	public boolean inArea(Location location) {
+		/* Uses polygon built in method to check if a location is inside the area
+		 * return false if not in area, true if in area. 
+		 */
 		return areaPolygon.contains(intConverter(location.getLong()), intConverter(location.getLat()));
 	}
 }

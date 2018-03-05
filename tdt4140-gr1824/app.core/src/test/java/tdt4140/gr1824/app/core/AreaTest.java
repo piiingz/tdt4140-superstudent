@@ -1,10 +1,8 @@
 package tdt4140.gr1824.app.core;
 
 import org.junit.Test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-//import org.junit.Assert;
 
 public class AreaTest {
 
@@ -17,7 +15,7 @@ public class AreaTest {
 	private Location outsideArea = new Location(65.4305149,12.3950528);
 	private Location insideArea = new Location(63.418177,10.403385);
 	
-	//Testing pentagonal shaped area, coordinates around Samfundet clockwise order
+	//Testing pentagonal shaped area, coordinates around Samfundet, clockwise order
 	private Location pentPoint1 = new Location(63.422547, 10.394912);
 	private Location pentPoint2 = new Location(63.422636, 10.395427);
 	private Location pentPoint3 = new Location(63.422569, 10.396070);
@@ -38,7 +36,7 @@ public class AreaTest {
 	private Location outsideHexArea = new Location (63.421262, 10.404921);
 	private Location insideHexArea = new Location (63.421079, 10.405396);
 	
-	
+	// Tests that the Area class returns correct restults for locations that are outside or inside the area.
 	@Test
 	public void testInSquareAreaTrue() {
 		assertTrue(this.area.inArea(this.insideArea));
@@ -66,13 +64,13 @@ public class AreaTest {
 	
 	@Test
 	public void testInHexAreaFalse() {
-
 		assertFalse(this.hexArea.inArea(this.outsideHexArea));
 	}
 
 	@Test
 	public void testNonArea() {
-		//Test area that consists of only 2 points (not an area)
+		// Test area that consists of only 2 points (not an area) 
+		// inArea should always return false if the area consists of 2 or less locations
 		Location NonAreaPoint1 = new Location(63.420813, 10.404738);
 		Location NonAreaPoint2 = new Location(63.421076, 10.405420);
 		Area NonArea = new Area (NonAreaPoint1, NonAreaPoint2);
