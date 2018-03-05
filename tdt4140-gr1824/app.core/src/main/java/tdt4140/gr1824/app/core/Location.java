@@ -4,16 +4,16 @@ public class Location {
 	// Latitude = y-koordinater, longitude = x-koordinater
 	private double latitude, longitude;
 	
-	public Location(double latitude, double longitude) {
+	public Location(Double latitude, Double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 	
-	public double getLong() {
+	public Double getLong() {
 		return this.longitude;
 	}
 	
-	public double getLat() {
+	public Double getLat() {
 		return this.latitude;
 	}
 }
