@@ -1,4 +1,3 @@
-//TODO check NMEA format against lat long format
 //TODO Write tests once Interpreter class is finished
 package tdt4140.gr1824.app.core;
 

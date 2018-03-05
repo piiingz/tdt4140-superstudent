@@ -17,7 +17,8 @@ public class DefinedAreas implements Iterable<Area> {
 	public static final Area samfundet = new Area(new Location(63.422726, 10.394794), new Location(63.422726, 10.396044), 
 			new Location(63.422191, 10.394794), new Location(63.422191, 10.396044), "samfundet");
 	
-	public static final Area nowhere = new Area(new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(0.0, 0.0), new Location(0.0, 0.0), "nowhere");
+	public static final Area nowhere = new Area(new Location(0.0, 0.0), new Location(0.0, 0.0),
+			new Location(0.0, 0.0), new Location(0.0, 0.0), "nowhere");
 	
 	
 	public static Collection<Area> areas = new ArrayList<Area>(Arrays.asList(glos, sitTrening, samfundet));
