@@ -1,6 +1,0 @@
-2, Sit trening, 0
-1, Gløshaugen, 0
-2, Sit trening, 0
-1, glos, 0
-1, glos, 0
-1, glos, 0
