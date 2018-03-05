@@ -52,5 +52,9 @@ public class StayLog {
 		return stayTime;
 	}	
 
+	public long getStartTime() {
+		return inTime;
+	}
+
 	
 }
