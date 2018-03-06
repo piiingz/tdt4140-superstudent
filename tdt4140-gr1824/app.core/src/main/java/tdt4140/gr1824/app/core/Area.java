@@ -8,14 +8,16 @@ public class Area {
 	private int[] ypoints;
 	private int[] xpoints;
 	private Polygon areaPolygon;
+	private String name;
 	
 	// Locations needs to be in a clockwise order
-	public Area(Location...locations) {
+	public Area(String name, Location...locations) {
 		/* 
 		 *Adds all coordinates from the inputs "locations" (Locations... = Variable number of arguments)
 		 *extracts lat-coordinates to ypoints, long-coordinates to xpoints. Creates polygon-object to
 		 *define area.
 		 */
+		this.name = name;
 		int npoints = locations.length;
 		this.ypoints = new int[locations.length];
 		this.xpoints = new int[locations.length];
@@ -43,5 +45,9 @@ public class Area {
 		 * return false if not in area, true if in area. 
 		 */
 		return areaPolygon.contains(intConverter(location.getLong()), intConverter(location.getLat()));
+	}
+	
+	public String getName() {
+		return name;
 	}
 }
