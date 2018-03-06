@@ -54,4 +54,7 @@ public class Interpreter {
 		return users.get(ID);
 	}
 
+	public String getParsedResult() {
+		return this.parsedResult;
+	}
 }
