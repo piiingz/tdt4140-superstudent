@@ -9,7 +9,7 @@ public class UserTest {
 	public void basicTest() {
 		User user = new User(23);
 		Assert.assertEquals(23, user.getId());
-		user.setArea(DefinedAreas.samfundet);
+		user.setStayLog(DefinedAreas.samfundet);
 		Assert.assertEquals(DefinedAreas.samfundet, user.getArea());
 		
 	}

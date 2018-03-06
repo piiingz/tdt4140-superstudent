@@ -1,6 +1,5 @@
 package tdt4140.gr1824.app.core;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -17,13 +16,13 @@ public class DataCollectorTest {
 	@Test
 	public void testAcceptedCollect() {
 		this.collector.collect(acceptedInput);
-		assertTrue(this.dummyInterpreter.getParsedResult().equals(this.expectedResultAccept));
+		assertTrue(this.collector.getLastParsedResult().equals(this.expectedResultAccept));
 	}
 	
 	@Test
 	public void testDiscardedCollect() {
 		this.collector.collect(this.unacceptedInput);
-		assertTrue(this.dummyInterpreter.getParsedResult() == null);
+		assertTrue(this.collector.getLastParsedResult() == null);
 	}
 	
 	
