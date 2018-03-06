@@ -5,6 +5,7 @@ public class DataCollector {
 	
 	private String threshold; // String that contains unacceptable signal qualities 
 	private Interpreter interpreter;
+	private String lastParseResult;
 	
 	public DataCollector(String threshold, Interpreter interpreter) {
 		this.threshold = threshold;
@@ -26,8 +27,13 @@ public class DataCollector {
 		String[] data = NMEAdata.split(",");
 		String parsedResult = parseNMEA(data);
 		if (parsedResult != null) {
+			this.lastParseResult = parsedResult;
 			interpreter.receive(parsedResult);
 		}
+	}
+	
+	public String getLastParsedResult() {
+		return this.lastParseResult;
 	}
 
 }
