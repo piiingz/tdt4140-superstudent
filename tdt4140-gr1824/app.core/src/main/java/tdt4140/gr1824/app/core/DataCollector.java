@@ -1,4 +1,3 @@
-//TODO Write tests once Interpreter class is finished
 package tdt4140.gr1824.app.core;
 
 public class DataCollector {
