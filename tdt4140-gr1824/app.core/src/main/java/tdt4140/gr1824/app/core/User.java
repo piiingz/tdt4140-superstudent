@@ -29,5 +29,12 @@ public class User {
 		return this.staylog.getArea();
 	}
 	
+	@Override
+	public String toString() {
+		
+		return "User #" + String.valueOf(id) + " is located within " + this.getArea().getName() + ".";
+	}
+	
+	
 
 }
