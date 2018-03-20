@@ -4,26 +4,28 @@ import java.util.HashMap;
 
 public class Interpreter {
 	
-	private HashMap<Integer, User> users = new HashMap<Integer, User>();
 	private int currentUserID;
-
+	private User currentUser;
+	private DatabaseCommunicator dbcom;
+	
+	public Interpreter(DatabaseCommunicator dbcom) {
+		this.dbcom = dbcom;
+	}
+	
 	public void receive(String parsedResult) {
 		String[] data = parsedResult.split(",");
 		this.currentUserID = Integer.parseInt(data[0]);
+		this.currentUser = dbcom.getUser(currentUserID); //TRENGER METODE FRA DBCOMM SOM GIR TILBAKE USER-OBJEKT
 		Location location = buildLocation(data[1],data[2]);
-		if (!(users.containsKey(currentUserID))) {
-			createUser(location);
+		if(inDefinedArea(location) == currentUser.getArea()) {
+			return;
 		}
 		else {
-			if(inDefinedArea(location) == users.get(currentUserID).getArea()) {
-				return;
-			}
-			else {
-				users.get(currentUserID).stopStayLog();
-				users.get(currentUserID).setStayLog(inDefinedArea(location));
+			currentUser.stopStayLog();
+			currentUser.setStayLog(inDefinedArea(location));
 			}
 		}	
-	}	
+
 	
 	//Quick maths for å gjøre NMEA coordinater som er på formen minutter og grader om til desimalform. 
 	//https://stackoverflow.com/questions/36254363/how-to-convert-latitude-and-longitude-of-nmea-format-data-to-decimal
@@ -46,15 +48,4 @@ public class Interpreter {
 		}
 		return DefinedAreas.nowhere;
 	}
-	
-	public void createUser(Location location) {
-		users.put(currentUserID, new User(currentUserID));
-		users.get(currentUserID).setStayLog(inDefinedArea(location));
-	}
-	
-	public User getUser(int ID) {
-		return users.get(ID);
-	}
-	
-
 }
