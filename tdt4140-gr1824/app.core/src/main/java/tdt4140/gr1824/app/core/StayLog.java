@@ -1,5 +1,6 @@
 package tdt4140.gr1824.app.core;
 
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,15 +15,18 @@ public class StayLog {
 	private Area area;
 	private long start; // used to measure elapsed time (stayTime)
 	private long stayTime;
-	private int ID;
+	private int userID;
 	private Date startDate; // the date when the instance of stayLog is initiated
 	private Date stopDate; // the date when it is stopped
-	
+	private String dateTime;
+
 	public StayLog(Area area, int ID) {
 		this.area = area;
-		this.ID = ID;
+		this.userID = ID;
 		this.start = System.nanoTime();
 		this.startDate = new Date();
+		this.dateTime = ""+String.format("%1$tY-%1$tm-%1$td", startDate)+" "+String.format("%1$tT", startDate);
+		
 	}
 	
 	public Area getArea() {
@@ -32,17 +36,23 @@ public class StayLog {
 	// Sets stayTime in minutes.
 	private void setStayTime() {
 		long stayTimeNS = System.nanoTime() - this.start;
-		stayTime = (NANOSECONDS.toSeconds(stayTimeNS))/60;
+		stayTime = (NANOSECONDS.toSeconds(stayTimeNS));
 	}
 	
 	// Used by interpreter to stop StayLog. Writing to database, format: ID, Area.name, stayTime.
 	public void stopStayLog() {
 		setStayTime();
 		this.stopDate = new Date();
+	
+		try {
+			DatabaseCommunicator.addStay(this.dateTime, this.stayTime, this.area.getName(), this.userID);
+		} catch (Exception e) {
+			System.out.println("Trouble while trying to add stay to database.");
+		}
 		
 		try {
 			PrintWriter output = new PrintWriter(new FileWriter("database.txt", true));
-			output.println("" + this.ID + ", " + this.area.getName() + ", " + this.stayTime);
+			output.println("" + this.userID + ", " + this.area.getName() + ", " + this.stayTime);
 			output.close();
 
 		} catch (IOException e) {

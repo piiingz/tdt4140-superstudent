@@ -1,5 +1,7 @@
 package tdt4140.gr1824.app.core;
+
 import tdt4140.gr1824.app.core.Location;
+
 import java.awt.Polygon;
 
 
@@ -54,5 +56,7 @@ public class Area {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
 	
 }

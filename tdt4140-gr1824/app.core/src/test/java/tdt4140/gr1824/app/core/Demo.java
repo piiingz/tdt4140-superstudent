@@ -1,5 +1,7 @@
 package tdt4140.gr1824.app.core;
 
+
+
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -23,5 +25,4 @@ public class Demo {
 		inputFile.close();
 		console.close();
 	}
-
 }
