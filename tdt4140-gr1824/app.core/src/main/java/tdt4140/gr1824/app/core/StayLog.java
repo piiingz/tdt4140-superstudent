@@ -4,6 +4,8 @@ package tdt4140.gr1824.app.core;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -16,8 +18,6 @@ public class StayLog {
 	// Used by interpreter to stop StayLog. Writing to database, format: ID, Area.name, stayTime.
 	public void logStay(String currentStartTime, Date currentTime, String currentAreaName, int currentUserID) {
 	
-		
-		
 		try {
 			DatabaseCommunicator.addStay(this.dateTime, this.stayTime, this.area.getName(), this.userID);
 		} catch (Exception e) {
@@ -38,6 +38,8 @@ public class StayLog {
 	
 	private Date stringToDate(String timeString) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm:ss");
+		LocalDate localDateFormat = LocalDate.parse(timeString, formatter);
+		Date dateFormat = Date.from(localDateFormat.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
 	}
 }

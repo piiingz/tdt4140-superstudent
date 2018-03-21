@@ -21,7 +21,7 @@ public class Interpreter {
 		String[] data = parsedResult.split(",");
 		int currentUserID = Integer.parseInt(data[0]);
 		
-		String[] areaAndTime = dbcom.getUser(this, currentUserID); //TRENGER METODE FRA DBCOMM SOM GIR TILBAKE USER-OBJEKT
+		String[] areaAndTime = dbcom.getCurrentStay(currentUserID); //TRENGER METODE FRA DBCOMM SOM GIR TILBAKE USER-OBJEKT
 		String currentAreaName = areaAndTime[0];
 		String currentStartTime = areaAndTime[1];
 		
@@ -32,9 +32,9 @@ public class Interpreter {
 		else {
 			Date currentTime = getCurrentTime();
 			this.stayLog.logStay(currentStartTime, currentTime, currentAreaName, currentUserID);
-			dbcom.updateCurrentStay(currentUserID, inDefinedArea(location), currentTime);
+			dbcom.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), this.dateToDateTimeString(currentTime));
 			}
-		}	
+		}
 	
 	//Quick maths for � gj�re NMEA coordinater som er p� formen minutter og grader om til desimalform. 
 	//https://stackoverflow.com/questions/36254363/how-to-convert-latitude-and-longitude-of-nmea-format-data-to-decimal
@@ -56,5 +56,9 @@ public class Interpreter {
 			}
 		}
 		return DefinedAreas.nowhere;
+	}
+	
+	private String dateToDateTimeString(Date date) {
+		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
 	}
 }
