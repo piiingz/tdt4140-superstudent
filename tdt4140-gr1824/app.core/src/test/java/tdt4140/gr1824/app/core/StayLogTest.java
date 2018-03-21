@@ -1,9 +1,8 @@
 package tdt4140.gr1824.app.core;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
-import static org.junit.Assert.assertTrue;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 
@@ -11,90 +10,31 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class StayLogTest {
-		
-	@Test
-	public void testStartTime() {
-		StayLog sl = new StayLog(DefinedAreas.sitTrening, 2);
-		long testTime = System.nanoTime();
-		
-		Assert.assertEquals(testTime, sl.getStartTime(), 1);
-		
-	}	
-	
-	@Test
-	public void testStayTime() {
-		StayLog sl = new StayLog(DefinedAreas.glos, 1);
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		sl.stopStayLog();
-		Assert.assertEquals(sl.getStayTime(), (NANOSECONDS.toSeconds(System.nanoTime() - sl.getStartTime()))/60);
-	}
-	
-	@Test
-	public void testStartDateString() {
-		StayLog sl = new StayLog(DefinedAreas.glos, 1);
-		Date startTestDate = new Date();
-		
-		Assert.assertEquals(String.format("%1$td-%1$tm-%1$tY", startTestDate), sl.getStartDateString());
-		
-	}
-	
-	@Test
-	public void testStopDateString() {
-		StayLog sl = new StayLog(DefinedAreas.glos, 1);		
-		sl.stopStayLog();
-		Date stopTestDate = new Date();
-		
-		Assert.assertEquals(String.format("%1$td-%1$tm-%1$tY", stopTestDate), sl.getStopDateString());
-	}
-	
-	@Test
-	public void testStartTimeString() {
-		StayLog sl = new StayLog(DefinedAreas.glos, 1);		
-		Date startTestDate = new Date();
-		
-		Assert.assertEquals(String.format("%1$tT", startTestDate), sl.getStartTimeString());
-	}
-	
-	@Test
-	public void testStopTimeString() {
-		StayLog sl = new StayLog(DefinedAreas.glos, 1);		
-		sl.stopStayLog();
-		Date stopTestDate = new Date();
-		
-		Assert.assertEquals(String.format("%1$tT", stopTestDate), sl.getStopTimeString());
-	}
-	
-	
-	@Test
-	public void testFileWriting() {
-		StayLog sl = new StayLog(DefinedAreas.glos, 1);
-		sl.stopStayLog();
-		
-		String lastLine = null;
-		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("database.txt"));
-			
-			while (br.ready()) {
-				lastLine = br.readLine();
-			}
-			
-			br.close();
-			
-		} catch (IOException e) {
-			System.err.println("Could not open file.");
-		}
-		
-		assertTrue(lastLine.equals("1, glos, 0"));
-		
-	}
-	
-	
 
+	public StayLog stayLog = new StayLog(); 
+	
+	@Test
+	public void testStringToDate() {
+		String stringDate = "2018-03-21 15:37:45";
+		Date date = this.stayLog.stringToDate(stringDate);
+		assertTrue(date.toString().equals("Wed Mar 21 15:37:45 CET 2018"));
+	}
+	
+	@Test
+	public void testCalculateDuration() {
+		String startTime = "2018-03-21 15:37:45";
+		String stopTime = "2018-03-21 17:37:45";
+		Date startTimeDate = this.stayLog.stringToDate(startTime); 
+		Date stopTimeDate = this.stayLog.stringToDate(stopTime);
+		assertTrue(this.stayLog.calculateDuration(startTimeDate, stopTimeDate) == 120);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testStartTimeAfterStopTime() {
+		String startTime = "2018-03-21 18:37:45";
+		String stopTime = "2018-03-21 17:37:45";
+		Date startTimeDate = this.stayLog.stringToDate(startTime); 
+		Date stopTimeDate = this.stayLog.stringToDate(stopTime);
+		this.stayLog.calculateDuration(startTimeDate, stopTimeDate);
+	}
 }

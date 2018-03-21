@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -26,14 +27,17 @@ public class StayLog {
 		}
 	}
 	
-	private Date stringToDate(String timeString) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm:ss");
-		LocalDate localDateFormat = LocalDate.parse(timeString, formatter);
-		Date dateFormat = Date.from(localDateFormat.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public Date stringToDate(String timeString) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime localDateFormat = LocalDateTime.parse(timeString, formatter);
+		Date dateFormat = Date.from(localDateFormat.atZone(ZoneId.systemDefault()).toInstant());
 		return dateFormat;
 	}
 	
-	private Long calculateDuration(Date startTime, Date stopTime) {
+	public Long calculateDuration(Date startTime, Date stopTime) {
+		if (!startTime.before(stopTime)) {
+			throw new IllegalArgumentException("StartTime must be before stopTime");
+		}
 		Long duration = stopTime.getTime() - startTime.getTime();
 		return duration / 1000 / 60;
 	}
