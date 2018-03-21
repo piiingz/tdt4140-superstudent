@@ -2,9 +2,7 @@ package tdt4140.gr1824.app.core;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 
-import org.hamcrest.core.SubstringMatcher;
 
 public class Interpreter {
 	
@@ -21,13 +19,14 @@ public class Interpreter {
 		
 		String[] areaAndTime = DatabaseCommunicator.getCurrentStay(currentUserID); 
 		String currentAreaName = areaAndTime[0];
-		String currentStartTime = areaAndTime[1].substring(0,(areaAndTime[1].length()-2));
+		String currentStartTime = areaAndTime[1];
 		
 		Location location = buildLocation(data[1],data[2]);
 		if(inDefinedArea(location).getName().equals(currentAreaName)) {
 			return;
 		}
 		else {
+			System.out.println(inDefinedArea(location).getName());
 			Date currentTime = getCurrentTime();
 			this.stayLog.logStay(currentStartTime, currentTime, currentAreaName, currentUserID);
 			DatabaseCommunicator.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), this.dateToDatetimeString(currentTime));
@@ -60,3 +59,4 @@ public class Interpreter {
 		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
 	}
 }
+
