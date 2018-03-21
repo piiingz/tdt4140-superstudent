@@ -1,9 +1,7 @@
 package tdt4140.gr1824.app.core;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.Statement;
-import javax.print.attribute.standard.PrinterLocation;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,131 +9,98 @@ import java.util.Scanner;
 
 public class DatabaseCommunicator {
 	
-	public static void main(String[] args) throws SQLException {
-		DatabaseCommunicator databaseCommunicator = new DatabaseCommunicator();
-		//databaseCommunicator.createUser();
-		//databaseCommunicator.deleteUser(1);
-		//databaseCommunicator.addArea("Hjemme hos Espen");
-		//databaseCommunicator.deleteArea("glos");
-		//databaseCommunicator.printTables();
-		//databaseCommunicator.addStay();
-		//databaseCommunicator.getNextID();
-		databaseCommunicator.getAreaID("glos");
-		databaseCommunicator.getAreaName(1);
-		databaseCommunicator.getCurrentStay(1);
-		//databaseCommunicator.updateCurrentStay(1,"glos","2018-03-21 12:14:55");
+	private static Connection connection = null;
+	private static DataSource dataSource = DatabaseConnection.getMySQLDataSource();
+	private static ResultSet rs = null;
+	
+	public static Connection getConnection() {
+		try {
+			if (connection == null || connection.isClosed()) {
+				try {
+					System.out.println("Connecting database...");
+					connection = dataSource.getConnection();
+					System.out.println("Successfully connected to the database");
+				} catch (SQLException e) {
+					System.out.println("Could not connect to database");
+					throw e;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return connection;
 	}
 	
-	public static ResultSet getResultSet(String query) {
-		Connection connection = null;
+	public static void closeConnection() {
+		if (connection != null) {
+			try {
+				connection.close();
+				System.out.println("Connection closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+			
+	public static ResultSet getResultSet(String query) throws SQLException{
 		Statement stmt = null;
-		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
 		ResultSet rs = null;
 		
 		try {
-			connection = dataSource.getConnection();
+			connection = getConnection();
 			stmt = connection.createStatement();
 			String sql = query;
-			
 			rs = stmt.executeQuery(sql);
 			return rs;
+		} 
+		catch (SQLException e) {
+			throw e;
 		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try { rs.close();  
-            }
-            catch (Exception e) {
-            	e.printStackTrace();
-            }
-            
-        	try
-            {
-            	if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}
-		return null;
-	}
+	};
 	
 	public static void updateTable(String query) {
 		Connection connection = null;
 		Statement stmt = null;
 		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
 		try {
-			connection = dataSource.getConnection();
+			connection = getConnection();
 			stmt = connection.createStatement();
 			stmt.executeUpdate(query);
 			System.out.println("Query successfully executed");
 			
 		}
-		
 		catch( SQLException se )
         {
-            /*
-             * Handle errors for JDBC
-             */
             se.printStackTrace();
         }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
+	}
+		
+	public static String[] getCurrentStay(int personID) throws SQLException {
+		ResultSet rs1 = null;
+		ResultSet rs2 = null;
+		
+		String areaName = "";
+		String starttime = "";
+		int areaID = 0;
+		
+		String Query1 = "SELECT starttime as time FROM currentstay WHERE personID = "+personID+";";
+		String Query2 = "SELECT areaID as area FROM currentstay WHERE personID = "+personID+";";
+		
+		rs1 = getResultSet(Query1);
+		if (rs1.next()) {
+			starttime = rs1.getString("time");
 		}
 		
+		rs2 = getResultSet(Query2);
+		if (rs2.next()) {
+			areaID = rs2.getInt("area");
+		}
+		closeConnection();
+		
+		areaName = getAreaName(areaID);
+		String[] returnSet = {areaName,starttime};
+		System.out.println("Starttime: "+starttime+" Areaname: "+areaName);
+		return returnSet;
 	}
 	
 	public static void createUser() throws SQLException {
@@ -151,7 +116,7 @@ public class DatabaseCommunicator {
 		System.out.println("Enter your year of study: ");
 		Integer schoolYear = reader.nextInt();
 		
-		Integer nextID = getNextID();
+		Integer nextID = getNextPersonID();
 		
 		System.out.println("Here is the information you provided:\r\n"+"Fullname: "+fullname+", Gender: "+gender+", Course: "+major+", Year: "+schoolYear);
 		
@@ -160,628 +125,243 @@ public class DatabaseCommunicator {
 		
 		updateTable(sql1);
 		updateTable(sql2);
+		
+		closeConnection();
 	}
 
-	public static void updateCurrentStay(int userID, String areaName, String dateTime) {
+	public static void updateCurrentStay(int userID, String areaName, String dateTime) throws SQLException {
 		
 		int areaID = getAreaID(areaName);
-		
 		String query = "UPDATE currentstay SET starttime = '"+dateTime+"', areaID = "+areaID+" WHERE personID = "+userID+";";
-		
 		updateTable(query);
+		
+		closeConnection();
 		
 	}
 	
 	public static void deleteUser(Integer personID) {
-		Connection connection = null;
-		Statement stmt = null;
-		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			String sql = "DELETE FROM person WHERE personID = "+personID+";";
-			
-			stmt.executeUpdate(sql);
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}	
-	
+		updateTable("DELETE FROM person WHERE personID = "+personID+";");
+		closeConnection();
 	}	
 
 	public static void addArea(String areaName) {
-		Connection connection = null;
-		Statement stmt = null;
 		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			String sql = "INSERT INTO definedarea (areaname) VALUES('"+areaName+"');";
-			
-			stmt.executeUpdate(sql);
-			System.out.println("Area succesfully added!");
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}	
-	
+		updateTable("INSERT INTO definedarea (areaname) VALUES('"+areaName+"');");
+		closeConnection();
 	}	
 	
 	public static void deleteArea(Integer areaID) {
-		Connection connection = null;
-		Statement stmt = null;
 		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			String sql = "DELETE FROM definedarea WHERE areaname="+areaID+";";
-			
-			stmt.executeUpdate(sql);
-			System.out.println("Area succesfully deleted!");
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}	
-	
+		updateTable("DELETE FROM definedarea WHERE areaID="+areaID+";");
+		closeConnection();	
 	}	
 
-	public static void addStay(String starttime, Long duration, String areaName, int userID) {
-		Connection connection = null;
-		Statement stmt = null;
+	public static int getAreaID(String areaName) throws SQLException {
+		int areaID = 0;
+		rs = getResultSet("SELECT areaID as ID FROM definedarea WHERE areaname = '"+areaName+"';");
 		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			String getAreaIDsql = "SELECT * FROM definedarea WHERE areaname = '"+areaName+"'";
-			ResultSet rs = stmt.executeQuery(getAreaIDsql);
-			Integer areaID = 0;
-			
-			if (rs.next()) {
-				areaID = rs.getInt("areaID");
-			}
-			
-			String sql = "INSERT INTO stay (starttime, duration, personID, areaID) VALUES('"+starttime+"', "+duration+", "+userID+", "+areaID+");";
-			stmt.executeUpdate(sql);
-			System.out.println("Stay successfully added!");
+		if (rs.next()) {
+			areaID = rs.getInt("ID");
 		}
 		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}	
+		closeConnection();
+		return areaID;
+	}
+	
+	public static void addStay(String starttime, int duration, String areaName, int userID) throws SQLException {
+		
+		rs = getResultSet("SELECT * FROM definedarea WHERE areaname = '"+areaName+"'");
+		Integer areaID = 0;
+		
+		if (rs.next()) {
+			areaID = rs.getInt("areaID");
+		}
+		
+		updateTable("INSERT INTO stay (starttime, duration, personID, areaID) VALUES('"+starttime+"', "+duration+", "+userID+", "+areaID+");");
+		
+		closeConnection();
+		
 	
 	}
 	
 	public static void deleteStay(Integer stayID) {
-		Connection connection = null;
-		Statement stmt = null;
 		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			String sql = "DELETE FROM stay WHERE stayID='"+stayID+"';";
-			
-			stmt.executeUpdate(sql);
-			System.out.println("Area succesfully deleted!");
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}	
-	
+		updateTable("DELETE FROM stay WHERE stayID='"+stayID+"';");
+		closeConnection();
 	}	
 
-	public static void printTables() {
-
-		Connection connection = null;
-		Statement stmt = null;
-		
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			//String sql = "SELECT * FROM person;";
-			String getIDQuery = "SELECT MAX(personID) AS maximum FROM person;";
-			
-			ResultSet rs1 = stmt.executeQuery(getIDQuery);
-			//ResultSet rs = stmt.executeQuery(sql);
-			
-			while (rs1.next()) {
-				int currID = rs1.getInt("maximum");
-				int nextID = currID+1;
-				System.out.println("Next ID: "+nextID);
-			}
-			
-			/*while (rs.next()) {
-				int id = rs.getInt("personID");
-				String name = rs.getString("fullname");
-				int schoolYear = rs.getInt("schoolyear");
-				String major = rs.getString("major");
-				String gender = rs.getString("gender");
-				
-				System.out.print("ID: " + id);
-				System.out.print(", Name: " + name);
-				System.out.print(", Gender: " + gender);
-				System.out.print(", Schoolyear: " + schoolYear);
-				System.out.print(", Major: " + major + "\r\n");
-			}*/
-			//rs.close();
-			rs1.close();
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            try
-            {
-                if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}	
-	}
-	
-	public static int getNextID() throws SQLException {
-		
-		Connection connection = null;
-		Statement stmt = null;
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		ResultSet rs = null;
+	public static int getNextPersonID() throws SQLException {
 		
 		int nextID = 0;
-		String Query = "SELECT MAX(personID) AS maximum FROM person;";
+		rs = getResultSet("SELECT MAX(personID) AS maximum FROM person;");
 		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery(Query);
-			
-			if (rs.next()) {
-				int currID = rs.getInt("maximum");
-				nextID = currID+1;
-			}
+		if (rs.next()) {
+			int currID = rs.getInt("maximum");
+			nextID = currID+1;
 		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            
-        	try
-            {
-            	if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}
+		closeConnection();
 		return nextID;
 	}	
 
-	public static int getAreaID(String areaName) {
-		Connection connection = null;
-		Statement stmt = null;
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		ResultSet rs = null;
-		
-		int areaID = 0;
-		String Query = "SELECT areaID as ID FROM definedarea WHERE areaname = '"+areaName+"';";
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery(Query);
-			
-			if (rs.next()) {
-				areaID = rs.getInt("ID");
-			}
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            
-        	try
-            {
-            	if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}
-		System.out.println(areaID);
-		return areaID;
-	}
-
-	public static String getAreaName(int areaID) {
-		Connection connection = null;
-		Statement stmt = null;
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		ResultSet rs = null;
+	public static String getAreaName(int areaID) throws SQLException {
 		
 		String areaName = "";
 		
-		String Query = "SELECT areaname as name FROM definedarea WHERE areaID = '"+areaID+"';";
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery(Query);
-			
-			if (rs.next()) {
-				areaName = rs.getString("name");
-			}
+		rs = getResultSet("SELECT areaname as name FROM definedarea WHERE areaID = '"+areaID+"';");
+		if (rs.next()) {
+			areaName = rs.getString("name");
 		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            
-        	try
-            {
-            	if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}
-		System.out.println(areaName);
+		closeConnection();
 		return areaName;
 	}
+	
+	public static int[] getUserStats(int userID) throws SQLException {
+		int glosDur = 0;
+		int sitTreningDur = 0;
+		int samfundetDur = 0;
+		int otherDur = 0;
+		
+		String glosQuery = "SELECT SUM(duration) AS dur FROM stay WHERE personID = "+userID+" AND areaID = 1;";
+		String sitQuery = "SELECT SUM(duration) AS dur FROM stay WHERE personID = "+userID+" AND areaID = 2;";
+		String samfQuery = "SELECT SUM(duration) AS dur FROM stay WHERE personID = "+userID+" AND areaID = 3;";
+		String otherQuery = "SELECT SUM(duration) AS dur FROM stay WHERE personID = "+userID+" AND areaID = 4;";
+				
+		ResultSet rs1 = getResultSet(glosQuery);
+		if (rs1.next()) {
+			glosDur = rs1.getInt("dur");
+		} rs1.close();
+		
+		ResultSet rs2 = getResultSet(sitQuery);
+		if (rs2.next()) {
+			sitTreningDur = rs2.getInt("dur");
+		} rs2.close();
+		
+		ResultSet rs3 = getResultSet(samfQuery);
+		if (rs3.next()) {
+			samfundetDur = rs3.getInt("dur");
+		} rs3.close();
+		
+		ResultSet rs4 = getResultSet(otherQuery);
+		if (rs4.next()) {
+			otherDur = rs4.getInt("dur");
+		} rs4.close();
+		
+		closeConnection();
+		
+		System.out.println("glos: "+glosDur+" sit: "+sitTreningDur+" samf: "+samfundetDur+" other: "+otherDur);
+		
 
-	public static String[] getCurrentStay(int personID) {
-		Connection connection = null;
-		Statement stmt = null;
-		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
-		ResultSet rs1 = null;
-		ResultSet rs2 = null;
-		
-		String areaName = "";
-		String starttime = "";
-		int areaID = 0;
-		
-		String Query1 = "SELECT starttime as time FROM currentstay WHERE personID = "+personID+";";
-		String Query2 = "SELECT areaID as area FROM currentstay WHERE personID = "+personID+";";
-		
-		try {
-			connection = dataSource.getConnection();
-			stmt = connection.createStatement();
-			rs1 = stmt.executeQuery(Query1);
-			
-			if (rs1.next()) {
-				starttime = rs1.getString("time");
-			}
-			
-			stmt.close();
-			stmt = connection.createStatement();
-			rs2 = stmt.executeQuery(Query2);
-			
-			if (rs2.next()) {
-				areaID = rs2.getInt("area");
-			}
-			
-			stmt.close();
-			
-			
-			areaName = getAreaName(areaID);
-		}
-		
-		catch( SQLException se )
-        {
-            /*
-             * Handle errors for JDBC
-             */
-            se.printStackTrace();
-        }
-        finally
-        {
-            /*
-             * finally block used to close resources
-             */
-            
-        	try
-            {
-            	if( stmt != null )
-                {
-                    stmt.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }
-            try
-            {
-                if( connection != null )
-                {
-                    connection.close();
-                }
-            }
-            catch( SQLException sqlException )
-            {
-                sqlException.printStackTrace();
-            }			
-		}
-		String[] returnSet = {starttime,areaName};
-		System.out.println("Starttime: "+starttime+" Areaname: "+areaName);
-		return returnSet;
-	}
+		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
 
-	public static int[] getUserStats(int userID) {
-		int glos = 0;
-		int sitTrening = 0;
-		int samfundet = 0;
-		int other = 0;
-		int[] userStatset = {glos,sitTrening,samfundet,other};
 		return userStatset;
 	}
+	
+	public static int[] getAllStats() throws SQLException {
+		int glosDur = 0;
+		int sitTreningDur = 0;
+		int samfundetDur = 0;
+		int otherDur = 0;
+		
+		String glosQuery = "SELECT SUM(duration) AS dur FROM stay WHERE areaID = 1;";
+		String sitQuery = "SELECT SUM(duration) AS dur FROM stay WHERE areaID = 2;";
+		String samfQuery = "SELECT SUM(duration) AS dur FROM stay WHERE areaID = 3;";
+		String otherQuery = "SELECT SUM(duration) AS dur FROM stay WHERE areaID = 4;";
+				
+		ResultSet rs1 = getResultSet(glosQuery);
+		if (rs1.next()) {
+			glosDur = rs1.getInt("dur");
+		} rs1.close();
+		
+		ResultSet rs2 = getResultSet(sitQuery);
+		if (rs2.next()) {
+			sitTreningDur = rs2.getInt("dur");
+		} rs2.close();
+		
+		ResultSet rs3 = getResultSet(samfQuery);
+		if (rs3.next()) {
+			samfundetDur = rs3.getInt("dur");
+		} rs3.close();
+		
+		ResultSet rs4 = getResultSet(otherQuery);
+		if (rs4.next()) {
+			otherDur = rs4.getInt("dur");
+		} rs4.close();
+		
+		closeConnection();
+		
+		System.out.println("glos: "+glosDur+" sit: "+sitTreningDur+" samf: "+samfundetDur+" other: "+otherDur);
+		
+
+		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
+
+		return userStatset;
+	}
+	
+	public static int[] getGroupStats(String gender) throws SQLException {
+		int glosDur = 0;
+		int sitTreningDur = 0;
+		int samfundetDur = 0;
+		int otherDur = 0;
+		
+		if(!(gender.equals("male")||gender.equals("female")||gender.equals("other"))) {
+			System.out.println("Your input is not a qualified gender.");
+		}
+		
+		String glosQuery = "SELECT SUM(duration) AS dur FROM stay INNER JOIN person ON stay.personID = person.personID WHERE gender = '"+gender+"' AND areaID = 1;";
+		String sitQuery = "SELECT SUM(duration) AS dur FROM stay INNER JOIN person ON stay.personID = person.personID WHERE gender = '"+gender+"' AND areaID = 2;";
+		String samfQuery = "SELECT SUM(duration) AS dur FROM stay INNER JOIN person ON stay.personID = person.personID WHERE gender = '"+gender+"' AND areaID = 3;";
+		String otherQuery = "SELECT SUM(duration) AS dur FROM stay INNER JOIN person ON stay.personID = person.personID WHERE gender = '"+gender+"' AND areaID = 4;";
+		
+		ResultSet rs1 = getResultSet(glosQuery);
+		if (rs1.next()) {
+			glosDur = rs1.getInt("dur");
+		} rs1.close();
+		
+		ResultSet rs2 = getResultSet(sitQuery);
+		if (rs2.next()) {
+			sitTreningDur = rs2.getInt("dur");
+		} rs2.close();
+		
+		ResultSet rs3 = getResultSet(samfQuery);
+		if (rs3.next()) {
+			samfundetDur = rs3.getInt("dur");
+		} rs3.close();
+		
+		ResultSet rs4 = getResultSet(otherQuery);
+		if (rs4.next()) {
+			otherDur = rs4.getInt("dur");
+		} rs4.close();
+		
+		closeConnection();
+		
+		System.out.println("glos: "+glosDur+" sit: "+sitTreningDur+" samf: "+samfundetDur+" other: "+otherDur);
+		
+
+		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
+
+		return userStatset;
+	}
+	
+	
+    public static void main(String[] args) throws SQLException {
+    	//DatabaseCommunicator databaseCommunicator = new DatabaseCommunicator();
+    	//createUser();
+    	//deleteUser(1);
+    	//addArea("Hjemme hos Espen");
+    	//deleteArea(5);
+    	//databaseCommunicator.printTables();
+    //System.out.println(getNextPersonID());
+    	//System.out.println(getAreaID("glos"));
+    	//System.out.println(getAreaName(1));
+    	//printPersonTable();
+    	//updateCurrentStay(20, "glos", "2018-03-21 21:01:55");
+    	//getCurrentStay(20);
+    	//deleteUser(20);
+    	//addStay("2018-03-21 21:01:55", 30, "other", 1);
+    //	deleteStay(8);
+    //getGroupStats("other");
+    	//getAllStats();
+    	//getUserStats(30);
+    }
+
 }
