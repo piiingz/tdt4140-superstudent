@@ -1,33 +1,42 @@
 package tdt4140.gr1824.app.core;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class Interpreter {
 	
-	private int currentUserID;
-	private User currentUser;
 	private DatabaseCommunicator dbcom;
+	private StayLog stayLog;
 	
 	public Interpreter(DatabaseCommunicator dbcom) {
 		this.dbcom = dbcom;
 	}
 	
+	public Date getCurrentTime() {
+		Date currentTime = new Date();
+		return currentTime;
+	}
+	
 	public void receive(String parsedResult) {
 		String[] data = parsedResult.split(",");
-		this.currentUserID = Integer.parseInt(data[0]);
-		this.currentUser = dbcom.getUser(currentUserID); //TRENGER METODE FRA DBCOMM SOM GIR TILBAKE USER-OBJEKT
+		int currentUserID = Integer.parseInt(data[0]);
+		
+		String[] areaAndTime = dbcom.getUser(this, currentUserID); //TRENGER METODE FRA DBCOMM SOM GIR TILBAKE USER-OBJEKT
+		String currentAreaName = areaAndTime[0];
+		String currentStartTime = areaAndTime[1];
+		
 		Location location = buildLocation(data[1],data[2]);
-		if(inDefinedArea(location) == currentUser.getArea()) {
+		if(inDefinedArea(location).getName().equals(currentAreaName)) {
 			return;
 		}
 		else {
-			currentUser.stopStayLog();
-			currentUser.setStayLog(inDefinedArea(location));
+			Date currentTime = getCurrentTime();
+			this.stayLog.logStay(currentStartTime, currentTime, currentAreaName, currentUserID);
+			dbcom.updateCurrentStay(currentUserID, inDefinedArea(location), currentTime);
 			}
 		}	
-
 	
-	//Quick maths for å gjøre NMEA coordinater som er på formen minutter og grader om til desimalform. 
+	//Quick maths for ï¿½ gjï¿½re NMEA coordinater som er pï¿½ formen minutter og grader om til desimalform. 
 	//https://stackoverflow.com/questions/36254363/how-to-convert-latitude-and-longitude-of-nmea-format-data-to-decimal
 	public Location buildLocation(String latitudeNMEA, String longitudeNMEA) {
 		String latitudePart0 = latitudeNMEA.substring(0, 3);
