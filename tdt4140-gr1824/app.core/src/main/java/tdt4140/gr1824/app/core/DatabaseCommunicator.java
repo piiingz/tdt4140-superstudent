@@ -1,7 +1,5 @@
 package tdt4140.gr1824.app.core;
 
-
-
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -17,18 +15,149 @@ public class DatabaseCommunicator {
 		DatabaseCommunicator databaseCommunicator = new DatabaseCommunicator();
 		//databaseCommunicator.createUser();
 		//databaseCommunicator.deleteUser(1);
-		databaseCommunicator.addArea("Hjemme hos Espen");
+		//databaseCommunicator.addArea("Hjemme hos Espen");
 		//databaseCommunicator.deleteArea("glos");
 		//databaseCommunicator.printTables();
 		//databaseCommunicator.addStay();
+		//System.out.println(getResultSet("SELECT * FROM person;"));
+		createUser2();
 	}
-
-	public static void createUser() {
+	
+	
+	public static ResultSet getResultSet(String query) {
 		Connection connection = null;
 		Statement stmt = null;
 		
 		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
+		ResultSet rs;
+		
+		try {
+			connection = dataSource.getConnection();
+			stmt = connection.createStatement();
+			String sql = query;
+			
+			rs = stmt.executeQuery(sql);
+			rs.close();
+			return rs;
+		}
+		
+		catch( SQLException se )
+        {
+            /*
+             * Handle errors for JDBC
+             */
+            se.printStackTrace();
+        }
+        finally
+        {
+            /*
+             * finally block used to close resources
+             */
+            try
+            {
+                if( stmt != null )
+                {
+                    stmt.close();
+                }
+            }
+            catch( SQLException sqlException )
+            {
+                sqlException.printStackTrace();
+            }
+            try
+            {
+                if( connection != null )
+                {
+                    connection.close();
+                }
+            }
+            catch( SQLException sqlException )
+            {
+                sqlException.printStackTrace();
+            }			
+		}
+		return null;
+	}
+	
+	public static void updateTable(String query) {
+		Connection connection = null;
+		Statement stmt = null;
+		
+		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
+		
+		try {
+			connection = dataSource.getConnection();
+			stmt = connection.createStatement();
+			stmt.executeUpdate(query);
+			System.out.println("Query successfully executed");
+			
+		}
+		
+		catch( SQLException se )
+        {
+            /*
+             * Handle errors for JDBC
+             */
+            se.printStackTrace();
+        }
+        finally
+        {
+            /*
+             * finally block used to close resources
+             */
+            try
+            {
+                if( stmt != null )
+                {
+                    stmt.close();
+                }
+            }
+            catch( SQLException sqlException )
+            {
+                sqlException.printStackTrace();
+            }
+            try
+            {
+                if( connection != null )
+                {
+                    connection.close();
+                }
+            }
+            catch( SQLException sqlException )
+            {
+                sqlException.printStackTrace();
+            }			
+		}
+		
+	}
 
+	public static void createUser2() {
+
+		@SuppressWarnings("resource")
+		Scanner reader = new Scanner(System.in);
+		System.out.println("Enter your fullname: ");
+		String fullname = reader.nextLine();
+		System.out.println("Enter your gender: ");
+		String gender = reader.nextLine();
+		System.out.println("Enter your study major: ");
+		String major = reader.nextLine();
+		System.out.println("Enter your year of study: ");
+		Integer schoolYear = reader.nextInt();
+		
+		System.out.println("Here is the information you provided:\r\n"+"Fullname: "+fullname+", Gender: "+gender+", Course: "+major+", Year: "+schoolYear
+				);
+		
+		updateTable("INSERT INTO person VALUES(18,'"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"');");
+		
+	}
+	
+	
+	public static void createUser() {
+
+		Connection connection = null;
+		Statement stmt = null;
+		
+		DataSource dataSource = DatabaseConnection.getMySQLDataSource();
 		@SuppressWarnings("resource")
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Enter your fullname: ");
