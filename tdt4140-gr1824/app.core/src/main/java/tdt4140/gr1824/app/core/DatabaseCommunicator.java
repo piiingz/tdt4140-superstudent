@@ -128,6 +128,17 @@ public class DatabaseCommunicator {
 		
 		closeConnection();
 	}
+	
+	public static boolean userInDatabase(int userID) throws SQLException {
+		boolean userInDatabase = false;
+		
+		rs = getResultSet("select * from person where personID = "+userID);
+		if (rs.next()) {
+			userInDatabase = true;
+		}
+		closeConnection();
+		return userInDatabase;
+	}
 
 	public static void updateCurrentStay(int userID, String areaName, String dateTime) throws SQLException {
 		
@@ -361,6 +372,7 @@ public class DatabaseCommunicator {
     //getGroupStats("other");
     	//getAllStats();
     	//getUserStats(30);
+    	System.out.println(userInDatabase(30));
     }
 
 }
