@@ -96,7 +96,7 @@ public class DatabaseCommunicator {
 			areaID = rs2.getInt("area");
 		}
 		closeConnection();
-		
+		starttime = starttime.substring(0, starttime.length() - 2);
 		areaName = getAreaName(areaID);
 		String[] returnSet = {areaName,starttime};
 		System.out.println("Starttime: "+starttime+" Areaname: "+areaName);
