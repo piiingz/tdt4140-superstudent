@@ -15,31 +15,26 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 public class StayLog {
 	
-	// Used by interpreter to stop StayLog. Writing to database, format: ID, Area.name, stayTime.
-	public void logStay(String currentStartTime, Date currentTime, String currentAreaName, int currentUserID) {
-	
+	// Used by interpreter to log stays to database. Writing to database, format: ID, Area.name, stayTime.
+	public void logStay(String currentStartTime, Date stopTime, String currentAreaName, int currentUserID) {
+		Long duration = this.calculateDuration(this.stringToDate(currentStartTime), stopTime);
+		
 		try {
-			DatabaseCommunicator.addStay(this.dateTime, this.stayTime, this.area.getName(), this.userID);
+			DatabaseCommunicator.addStay(currentStartTime, duration, currentAreaName, currentUserID);
 		} catch (Exception e) {
 			System.out.println("Trouble while trying to add stay to database.");
 		}
-	}
-	
-
-		// Returns the date on the format: dd-mm-YYYY
-	public String getStartDateString() {
-		return String.format("%1$td-%1$tm-%1$tY", startDate);	
-	}
-	
-	// Returns the initial time of the stay on the format: HH:MM:SS
-	public String getStartTimeString() {
-		return String.format("%1$tT", startDate);
 	}
 	
 	private Date stringToDate(String timeString) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm:ss");
 		LocalDate localDateFormat = LocalDate.parse(timeString, formatter);
 		Date dateFormat = Date.from(localDateFormat.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		
+		return dateFormat;
+	}
+	
+	private Long calculateDuration(Date startTime, Date stopTime) {
+		Long duration = stopTime.getTime() - startTime.getTime();
+		return duration / 1000 / 60;
 	}
 }
