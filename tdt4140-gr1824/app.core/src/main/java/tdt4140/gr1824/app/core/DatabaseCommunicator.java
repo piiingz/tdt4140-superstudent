@@ -168,7 +168,7 @@ public class DatabaseCommunicator {
 		return areaID;
 	}
 	
-	public static void addStay(String starttime, int duration, String areaName, int userID) throws SQLException {
+	public static void addStay(String starttime, Long duration, String areaName, int userID) throws SQLException {
 		
 		rs = getResultSet("SELECT * FROM definedarea WHERE areaname = '"+areaName+"'");
 		Integer areaID = 0;
@@ -341,7 +341,6 @@ public class DatabaseCommunicator {
 
 		return userStatset;
 	}
-	
 	
     public static void main(String[] args) throws SQLException {
     	//DatabaseCommunicator databaseCommunicator = new DatabaseCommunicator();
