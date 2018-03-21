@@ -1,24 +1,27 @@
 package tdt4140.gr1824.app.core;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.hamcrest.core.SubstringMatcher;
+
 public class Interpreter {
 	
-	private StayLog stayLog;
+	private StayLog stayLog = new StayLog();
 	
 	public Date getCurrentTime() {
 		Date currentTime = new Date();
 		return currentTime;
 	}
 	
-	public void receive(String parsedResult) {
+	public void receive(String parsedResult) throws SQLException {
 		String[] data = parsedResult.split(",");
 		int currentUserID = Integer.parseInt(data[0]);
 		
 		String[] areaAndTime = DatabaseCommunicator.getCurrentStay(currentUserID); 
 		String currentAreaName = areaAndTime[0];
-		String currentStartTime = areaAndTime[1];
+		String currentStartTime = areaAndTime[1].substring(0,(areaAndTime[1].length()-2));
 		
 		Location location = buildLocation(data[1],data[2]);
 		if(inDefinedArea(location).getName().equals(currentAreaName)) {
@@ -50,10 +53,10 @@ public class Interpreter {
 				return area;
 			}
 		}
-		return DefinedAreas.nowhere;
+		return DefinedAreas.other;
 	}
 	
-	private String dateToDatetimeString(Date date) {
+	public String dateToDatetimeString(Date date) {
 		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
 	}
 }
