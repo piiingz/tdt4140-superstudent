@@ -49,16 +49,6 @@ public class StayLog {
 		} catch (Exception e) {
 			System.out.println("Trouble while trying to add stay to database.");
 		}
-		
-		try {
-			PrintWriter output = new PrintWriter(new FileWriter("database.txt", true));
-			output.println("" + this.userID + ", " + this.area.getName() + ", " + this.stayTime);
-			output.close();
-
-		} catch (IOException e) {
-			System.err.println("File could not be opened.");
-			System.exit(1);
-			}	
 	}
 	
 	public long getStartTime() {
