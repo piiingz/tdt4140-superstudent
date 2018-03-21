@@ -5,12 +5,7 @@ import java.util.HashMap;
 
 public class Interpreter {
 	
-	private DatabaseCommunicator dbcom;
 	private StayLog stayLog;
-	
-	public Interpreter(DatabaseCommunicator dbcom) {
-		this.dbcom = dbcom;
-	}
 	
 	public Date getCurrentTime() {
 		Date currentTime = new Date();
@@ -21,7 +16,7 @@ public class Interpreter {
 		String[] data = parsedResult.split(",");
 		int currentUserID = Integer.parseInt(data[0]);
 		
-		String[] areaAndTime = dbcom.getCurrentStay(currentUserID); 
+		String[] areaAndTime = DatabaseCommunicator.getCurrentStay(currentUserID); 
 		String currentAreaName = areaAndTime[0];
 		String currentStartTime = areaAndTime[1];
 		
@@ -32,7 +27,7 @@ public class Interpreter {
 		else {
 			Date currentTime = getCurrentTime();
 			this.stayLog.logStay(currentStartTime, currentTime, currentAreaName, currentUserID);
-			dbcom.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), this.dateToDatetimeString(currentTime));
+			DatabaseCommunicator.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), this.dateToDatetimeString(currentTime));
 			}
 		}
 	
