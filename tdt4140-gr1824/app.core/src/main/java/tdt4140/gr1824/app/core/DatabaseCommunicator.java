@@ -103,18 +103,7 @@ public class DatabaseCommunicator {
 		return returnSet;
 	}
 	
-	public static void createUser() throws SQLException {
-
-		@SuppressWarnings("resource")
-		Scanner reader = new Scanner(System.in);
-		System.out.println("Enter your fullname: ");
-		String fullname = reader.nextLine();
-		System.out.println("Enter your gender: ");
-		String gender = reader.nextLine();
-		System.out.println("Enter your study major: ");
-		String major = reader.nextLine();
-		System.out.println("Enter your year of study: ");
-		Integer schoolYear = reader.nextInt();
+	public static void createUser(String fullname, String gender, int schoolYear, String major) throws SQLException {
 		
 		Integer nextID = getNextPersonID();
 		
@@ -128,7 +117,7 @@ public class DatabaseCommunicator {
 		
 		closeConnection();
 	}
-	
+  
 	public static boolean userInDatabase(int userID) throws SQLException {
 		boolean userInDatabase = false;
 		
