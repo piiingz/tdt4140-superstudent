@@ -5,7 +5,6 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.util.Scanner;
 
 public class DatabaseCommunicator {
 	
