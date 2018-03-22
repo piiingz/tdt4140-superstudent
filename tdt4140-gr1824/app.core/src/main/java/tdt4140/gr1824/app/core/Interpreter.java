@@ -1,32 +1,43 @@
 package tdt4140.gr1824.app.core;
 
-import java.util.HashMap;
+import java.sql.SQLException;
+import java.util.Date;
+
 
 public class Interpreter {
 	
-	private HashMap<Integer, User> users = new HashMap<Integer, User>();
-	private int currentUserID;
-
-	public void receive(String parsedResult) {
+	private StayLog stayLog = new StayLog();
+	
+	// Gives current time as a Date object.
+	public Date getCurrentTime() {
+		Date currentTime = new Date();
+		return currentTime;
+	}
+	
+	//receives data on the format ("userID, latitude, longitude"). 
+	//receives current area and time for current user from database.
+	//if user changes location it calls stayLog to log last stay. It then calls DatabaseCommunicator to update new current area and starttime.
+	public void receive(String parsedResult) throws SQLException {
 		String[] data = parsedResult.split(",");
-		this.currentUserID = Integer.parseInt(data[0]);
+		int currentUserID = Integer.parseInt(data[0]);
+		
+		String[] areaAndTime = DatabaseCommunicator.getCurrentStay(currentUserID); 
+		String currentAreaName = areaAndTime[0];
+		String currentStartTime = areaAndTime[1];
+		
 		Location location = buildLocation(data[1],data[2]);
-		if (!(users.containsKey(currentUserID))) {
-			createUser(location);
+		if(inDefinedArea(location).getName().equals(currentAreaName)) {
+			return;
 		}
 		else {
-			if(inDefinedArea(location) == users.get(currentUserID).getArea()) {
-				return;
+			System.out.println(inDefinedArea(location).getName());
+			Date currentTime = getCurrentTime();
+			this.stayLog.logStay(currentStartTime, currentTime, currentAreaName, currentUserID);
+			DatabaseCommunicator.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), this.dateToDatetimeString(currentTime));
 			}
-			else {
-				users.get(currentUserID).stopStayLog();
-				users.get(currentUserID).setStayLog(inDefinedArea(location));
-			}
-		}	
-	}	
+		}
 	
-	//Quick maths for å gjøre NMEA coordinater som er på formen minutter og grader om til desimalform. 
-	//https://stackoverflow.com/questions/36254363/how-to-convert-latitude-and-longitude-of-nmea-format-data-to-decimal
+	//Takes a location as an argument and returns which of the defined areas it is located inside.
 	public Location buildLocation(String latitudeNMEA, String longitudeNMEA) {
 		String latitudePart0 = latitudeNMEA.substring(0, 3);
 		String latitudePart1 = latitudeNMEA.substring(3);
@@ -38,23 +49,19 @@ public class Interpreter {
 		return location;
 	}
 	
+	//Formats a Date to a string for the database.	
 	public Area inDefinedArea(Location location) {
 		for (Area area: DefinedAreas.areas) {
 			if(area.inArea(location)) {
 				return area;
 			}
 		}
-		return DefinedAreas.nowhere;
+		return DefinedAreas.other;
 	}
 	
-	public void createUser(Location location) {
-		users.put(currentUserID, new User(currentUserID));
-		users.get(currentUserID).setStayLog(inDefinedArea(location));
+	//Formats a date to a string for the database.
+	public String dateToDatetimeString(Date date) {
+		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
 	}
-	
-	public User getUser(int ID) {
-		return users.get(ID);
-	}
-	
-
 }
+

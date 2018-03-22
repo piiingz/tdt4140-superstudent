@@ -1,8 +1,13 @@
 package tdt4140.gr1824.app.core;
 
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
@@ -10,82 +15,30 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS;
 // StayLog registers the time this person stays in this area. 
 
 public class StayLog {
-
-	private Area area;
-	private long start; // used to measure elapsed time (stayTime)
-	private long stayTime;
-	private int ID;
-	private Date startDate; // the date when the instance of stayLog is initiated
-	private Date stopDate; // the date when it is stopped
 	
-	public StayLog(Area area, int ID) {
-		this.area = area;
-		this.ID = ID;
-		this.start = System.nanoTime();
-		this.startDate = new Date();
-	}
-	
-	public Area getArea() {
-		return this.area;
-	}
-	
-	// Sets stayTime in minutes.
-	private void setStayTime() {
-		long stayTimeNS = System.nanoTime() - this.start;
-		stayTime = (NANOSECONDS.toSeconds(stayTimeNS))/60;
-	}
-	
-	// Used by interpreter to stop StayLog. Writing to database, format: ID, Area.name, stayTime.
-	public void stopStayLog() {
-		setStayTime();
-		this.stopDate = new Date();
+	// Used by interpreter to log stays to database. Writing to database, format: ID, Area.name, stayTime.
+	public void logStay(String currentStartTime, Date stopTime, String currentAreaName, int currentUserID) {
+		Long duration = this.calculateDuration(this.stringToDate(currentStartTime), stopTime);
 		
 		try {
-			PrintWriter output = new PrintWriter(new FileWriter("database.txt", true));
-			output.println("" + this.ID + ", " + this.area.getName() + ", " + this.stayTime);
-			output.close();
-
-		} catch (IOException e) {
-			System.err.println("File could not be opened.");
-			System.exit(1);
-			}	
+			DatabaseCommunicator.addStay(currentStartTime, duration, currentAreaName, currentUserID);
+		} catch (Exception e) {
+			System.out.println("Trouble while trying to add stay to database.");
+		}
 	}
 	
-	public long getStartTime() {
-		return this.start;
+	public Date stringToDate(String timeString) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime localDateFormat = LocalDateTime.parse(timeString, formatter);
+		Date dateFormat = Date.from(localDateFormat.atZone(ZoneId.systemDefault()).toInstant());
+		return dateFormat;
 	}
 	
-	public long getStayTime() {
-		return stayTime;
+	public Long calculateDuration(Date startTime, Date stopTime) {
+		if (!startTime.before(stopTime)) {
+			throw new IllegalArgumentException("StartTime must be before stopTime");
+		}
+		Long duration = stopTime.getTime() - startTime.getTime();
+		return duration / 1000 / 60;
 	}
-
-	/* Don't know if it is necessary to be able to return the Date objects?
-	 * 
-	public Date getStartDateObj() {
-		return this.startDate;
-	}
-	
-	public Date getStopDateObj() {
-		return this.stopDate;
-	}
-	*/
-	
-	// Returns the date on the format: dd-mm-YYYY
-	public String getStartDateString() {
-		return String.format("%1$td-%1$tm-%1$tY", startDate);	
-	}
-	
-	public String getStopDateString() {
-		return String.format("%1$td-%1$tm-%1$tY", stopDate);	
-	}
-	
-	// Returns the initial time of the stay on the format: HH:MM:SS
-	public String getStartTimeString() {
-		return String.format("%1$tT", startDate);
-	}
-	
-	public String getStopTimeString() {
-		return String.format("%1$tT", stopDate);
-	}
-	
 }

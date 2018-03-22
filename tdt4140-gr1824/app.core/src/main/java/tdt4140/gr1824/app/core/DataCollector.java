@@ -1,5 +1,7 @@
 package tdt4140.gr1824.app.core;
 
+import java.sql.SQLException;
+
 public class DataCollector {
 	
 	private String threshold; // String that contains unacceptable signal qualities 
@@ -21,7 +23,7 @@ public class DataCollector {
 		
 	}
 	
-	public void collect(String NMEAdata) {
+	public void collect(String NMEAdata) throws SQLException {
 		// Split due to NMEA format: http://gpsworld.com/what-exactly-is-gps-nmea-data/
 		String[] data = NMEAdata.split(",");
 		String parsedResult = parseNMEA(data);

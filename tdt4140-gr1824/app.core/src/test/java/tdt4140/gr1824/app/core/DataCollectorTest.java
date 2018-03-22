@@ -1,6 +1,9 @@
 package tdt4140.gr1824.app.core;
 
 import static org.junit.Assert.assertTrue;
+
+import java.sql.SQLException;
+
 import org.junit.Test;
 
 public class DataCollectorTest {
@@ -14,13 +17,13 @@ public class DataCollectorTest {
 	
 	
 	@Test
-	public void testAcceptedCollect() {
+	public void testAcceptedCollect() throws SQLException {
 		this.collector.collect(acceptedInput);
 		assertTrue(this.collector.getLastParsedResult().equals(this.expectedResultAccept));
 	}
 	
 	@Test
-	public void testDiscardedCollect() {
+	public void testDiscardedCollect() throws SQLException {
 		this.collector.collect(this.unacceptedInput);
 		assertTrue(this.collector.getLastParsedResult() == null);
 	}
