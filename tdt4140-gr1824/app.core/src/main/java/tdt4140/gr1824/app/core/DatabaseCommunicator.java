@@ -5,7 +5,7 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 public class DatabaseCommunicator {
 	
@@ -17,9 +17,9 @@ public class DatabaseCommunicator {
 		try {
 			if (connection == null || connection.isClosed()) {
 				try {
-					System.out.println("Connecting database...");
+					//System.out.println("Connecting database...");
 					connection = dataSource.getConnection();
-					System.out.println("Successfully connected to the database");
+					//System.out.println("Successfully connected to the database");
 				} catch (SQLException e) {
 					System.out.println("Could not connect to database");
 					throw e;
@@ -35,8 +35,9 @@ public class DatabaseCommunicator {
 		if (connection != null) {
 			try {
 				connection.close();
-				System.out.println("Connection closed");
+				//System.out.println("Connection closed");
 			} catch (SQLException e) {
+				System.out.println("Couldn't close connection");
 				e.printStackTrace();
 			}
 		}
@@ -66,11 +67,12 @@ public class DatabaseCommunicator {
 			connection = getConnection();
 			stmt = connection.createStatement();
 			stmt.executeUpdate(query);
-			System.out.println("Query successfully executed");
+			//System.out.println("Query successfully executed");
 			
 		}
 		catch( SQLException se )
         {
+			System.out.println("Couldn't ecexute query");
             se.printStackTrace();
         }
 	}
@@ -144,9 +146,22 @@ public class DatabaseCommunicator {
 		closeConnection();
 	}	
 
-	public static void addArea(String areaName) {
+	public static int getNextAreaID() throws SQLException {
 		
-		updateTable("INSERT INTO definedarea (areaname) VALUES('"+areaName+"');");
+		int nextID = 0;
+		rs = getResultSet("SELECT MAX(areaID) AS maximum FROM definedarea;");
+		
+		if (rs.next()) {
+			int currID = rs.getInt("maximum");
+			nextID = currID+1;
+		}
+		closeConnection();
+		return nextID;
+	}		
+	
+	public static void addArea(String areaName) throws SQLException {
+		int areaID = getNextAreaID();
+		updateTable("INSERT INTO definedarea VALUES("+areaID+", '"+areaName+"');");
 		closeConnection();
 	}	
 	
@@ -361,7 +376,9 @@ public class DatabaseCommunicator {
     //getGroupStats("other");
     	//getAllStats();
     	//getUserStats(30);
-    	System.out.println(userInDatabase(30));
+    	//System.out.println(userInDatabase(30));
+    //System.out.println(getAreaName(5));
+    	deleteUser(16);
     }
 
 }
