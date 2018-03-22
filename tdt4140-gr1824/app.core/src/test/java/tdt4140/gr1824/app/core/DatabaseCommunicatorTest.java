@@ -6,7 +6,16 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import java.sql.Connection;
+
 public class DatabaseCommunicatorTest {
+
+	
+	@Test
+	public void testGetConnection(){
+	  Connection connection  = DatabaseCommunicator.getConnection();
+	  assertTrue(connection != null);
+	}
 
 	@Test
 	public void testCreateUser() {
@@ -31,7 +40,6 @@ public class DatabaseCommunicatorTest {
 			se.printStackTrace();
 		}
 	}
-	
 	
 	@Test
 	public void testAddArea(){
@@ -78,8 +86,26 @@ public class DatabaseCommunicatorTest {
 	}
 	
 	@Test
-	public void testGetUserStats() {
-		//TODO Write a method that asserts true if getUserStats returns an int[](int array)
+	public void testGetUserStats() throws SQLException {
+		assertTrue(DatabaseCommunicator.getUserStats(1).getClass().getComponentType() == int.class);
+	}
+	
+	@Test
+	public void testGetAllStats() throws SQLException {
+		assertTrue(DatabaseCommunicator.getAllStats().getClass().getComponentType() == int.class);
+	}
+	
+	@Test 
+	public void testGroupStats() throws SQLException {
+		assertTrue(DatabaseCommunicator.getGroupStats("male").getClass().getComponentType() == int.class);
+		assertTrue(DatabaseCommunicator.getGroupStats("female").getClass().getComponentType() == int.class);
+		assertTrue(DatabaseCommunicator.getGroupStats("other").getClass().getComponentType() == int.class);
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFalseInputGroupStats() throws SQLException {
+		DatabaseCommunicator.getGroupStats("None");
 	}
 	
 }

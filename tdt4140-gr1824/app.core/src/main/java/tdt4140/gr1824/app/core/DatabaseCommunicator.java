@@ -319,7 +319,7 @@ public class DatabaseCommunicator {
 		int otherDur = 0;
 		
 		if(!(gender.equals("male")||gender.equals("female")||gender.equals("other"))) {
-			System.out.println("Your input is not a qualified gender.");
+			throw new IllegalArgumentException("Not a valid gender");
 		}
 		
 		String glosQuery = "SELECT SUM(duration) AS dur FROM stay INNER JOIN person ON stay.personID = person.personID WHERE gender = '"+gender+"' AND areaID = 1;";
@@ -378,7 +378,6 @@ public class DatabaseCommunicator {
     	//getUserStats(30);
     	//System.out.println(userInDatabase(30));
     //System.out.println(getAreaName(5));
-    	deleteUser(16);
     }
 
 }
