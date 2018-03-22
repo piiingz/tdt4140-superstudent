@@ -22,8 +22,6 @@ public class InterpreterTest {
 		
 		//interpreter.receive("1,06325.347,01023.712");
 		//Assert.assertFalse(DatabaseCommunicator.getCurrentStay(1)[0].equals(DefinedAreas.glos.getName()));
-		//Assert.assertTrue(DatabaseCommunicator.getCurrentStay(1)[1].equals(interpreter.dateToDatetimeString(interpreter.getCurrentTime())));
-		System.out.println(DatabaseCommunicator.getCurrentStay(1)[1].equals(interpreter.dateToDatetimeString(interpreter.getCurrentTime())));
 	}
 	
 	
