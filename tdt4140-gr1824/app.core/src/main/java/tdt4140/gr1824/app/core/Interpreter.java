@@ -33,8 +33,6 @@ public class Interpreter {
 			}
 		}
 	
-	//Quick maths for � gj�re NMEA coordinater som er p� formen minutter og grader om til desimalform. 
-	//https://stackoverflow.com/questions/36254363/how-to-convert-latitude-and-longitude-of-nmea-format-data-to-decimal
 	public Location buildLocation(String latitudeNMEA, String longitudeNMEA) {
 		String latitudePart0 = latitudeNMEA.substring(0, 3);
 		String latitudePart1 = latitudeNMEA.substring(3);
