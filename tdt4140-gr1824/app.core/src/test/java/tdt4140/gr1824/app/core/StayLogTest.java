@@ -12,13 +12,13 @@ import org.junit.Test;
 public class StayLogTest {
 
 	public StayLog stayLog = new StayLog(); 
-	/*
+	
 	@Test
 	public void testStringToDate() {
 		String stringDate = "2018-03-21 15:37:45";
 		Date date = this.stayLog.stringToDate(stringDate);
 		assertTrue(date.toString().equals("Wed Mar 21 15:37:45 CET 2018"));
-	}*/
+	}
 	
 	@Test
 	public void testCalculateDuration() {
