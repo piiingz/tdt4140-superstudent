@@ -24,13 +24,4 @@ public class StayLogTest {
 		Date stopTimeDate = this.stayLog.stringToDate(stopTime);
 		assertTrue(this.stayLog.calculateDuration(startTimeDate, stopTimeDate) == 120);
 	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testStartTimeAfterStopTime() {
-		String startTime = "2018-03-21 18:37:45";
-		String stopTime = "2018-03-21 17:37:45";
-		Date startTimeDate = this.stayLog.stringToDate(startTime); 
-		Date stopTimeDate = this.stayLog.stringToDate(stopTime);
-		this.stayLog.calculateDuration(startTimeDate, stopTimeDate);
-	}
 }

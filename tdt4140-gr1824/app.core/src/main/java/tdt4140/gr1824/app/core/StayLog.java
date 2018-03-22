@@ -32,9 +32,6 @@ public class StayLog {
 	}
 	
 	public Long calculateDuration(Date startTime, Date stopTime) {
-		if (!startTime.before(stopTime)) {
-			throw new IllegalArgumentException("StartTime must be before stopTime");
-		}
 		Long duration = stopTime.getTime() - startTime.getTime();
 		return duration / 1000 / 60;
 	}
