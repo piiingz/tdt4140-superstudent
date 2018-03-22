@@ -8,11 +8,15 @@ public class Interpreter {
 	
 	private StayLog stayLog = new StayLog();
 	
+	// Gives current time as a Date object.
 	public Date getCurrentTime() {
 		Date currentTime = new Date();
 		return currentTime;
 	}
 	
+	//receives data on the format ("userID, latitude, longitude"). 
+	//receives current area and time for current user from database.
+	//if user changes location it calls stayLog to log last stay. It then calls DatabaseCommunicator to update new current area and starttime.
 	public void receive(String parsedResult) throws SQLException {
 		String[] data = parsedResult.split(",");
 		int currentUserID = Integer.parseInt(data[0]);
@@ -33,6 +37,7 @@ public class Interpreter {
 			}
 		}
 	
+	//Takes a location as an argument and returns which of the defined areas it is located inside.
 	public Location buildLocation(String latitudeNMEA, String longitudeNMEA) {
 		String latitudePart0 = latitudeNMEA.substring(0, 3);
 		String latitudePart1 = latitudeNMEA.substring(3);
@@ -44,6 +49,7 @@ public class Interpreter {
 		return location;
 	}
 	
+	//Formats a Date to a string for the database.	
 	public Area inDefinedArea(Location location) {
 		for (Area area: DefinedAreas.areas) {
 			if(area.inArea(location)) {
@@ -53,6 +59,7 @@ public class Interpreter {
 		return DefinedAreas.other;
 	}
 	
+	//Formats a date to a string for the database.
 	public String dateToDatetimeString(Date date) {
 		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
 	}
