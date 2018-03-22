@@ -1,13 +1,7 @@
-package tdt4140.gr1824.app.core;
-
-
-
+package tdt4140.gr1824.app.db;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import java.sql.Connection;
-import java.sql.Statement;
 import javax.sql.DataSource;
-import java.sql.ResultSet;
 
 public class DatabaseConnection {
 	

@@ -1,8 +1,9 @@
-package tdt4140.gr1824.app.core;
+package tdt4140.gr1824.app.db;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import javax.sql.DataSource;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -36,7 +37,7 @@ public class DatabaseCommunicator {
 				connection.close();
 				//System.out.println("Connection closed");
 			} catch (SQLException e) {
-				System.out.println("Couldn't close connection");
+				System.out.println("Could not close connection");
 				e.printStackTrace();
 			}
 		}
@@ -355,28 +356,4 @@ public class DatabaseCommunicator {
 
 		return userStatset;
 	}
-	
-    public static void main(String[] args) throws SQLException {
-    	//DatabaseCommunicator databaseCommunicator = new DatabaseCommunicator();
-    	//createUser();
-    	//deleteUser(1);
-    	//addArea("Hjemme hos Espen");
-    	//deleteArea(5);
-    	//databaseCommunicator.printTables();
-    //System.out.println(getNextPersonID());
-    	//System.out.println(getAreaID("glos"));
-    	//System.out.println(getAreaName(1));
-    	//printPersonTable();
-    	//updateCurrentStay(20, "glos", "2018-03-21 21:01:55");
-    	//getCurrentStay(20);
-    	//deleteUser(20);
-    	//addStay("2018-03-21 21:01:55", 30, "other", 1);
-    //	deleteStay(8);
-    //getGroupStats("other");
-    	//getAllStats();
-    	//getUserStats(30);
-    	//System.out.println(userInDatabase(30));
-    //System.out.println(getAreaName(5));
-    }
-
 }

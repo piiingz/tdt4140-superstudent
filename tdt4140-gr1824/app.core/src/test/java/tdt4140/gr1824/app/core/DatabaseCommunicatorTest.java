@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import tdt4140.gr1824.app.db.DatabaseCommunicator;
+
 import java.sql.Connection;
 
 public class DatabaseCommunicatorTest {

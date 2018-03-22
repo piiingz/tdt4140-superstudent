@@ -1,12 +1,8 @@
 package tdt4140.gr1824.app.core;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Date;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public class StayLogTest {

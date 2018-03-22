@@ -3,6 +3,8 @@ package tdt4140.gr1824.app.core;
 import java.sql.SQLException;
 import java.util.Date;
 
+import tdt4140.gr1824.app.db.DatabaseCommunicator;
+
 
 public class Interpreter {
 	
@@ -62,6 +64,10 @@ public class Interpreter {
 	//Formats a date to a string for the database.
 	public String dateToDatetimeString(Date date) {
 		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
+	}
+	public static void main(String[] args) throws SQLException {
+		Interpreter interpreter = new Interpreter();
+		interpreter.receive("5,06325.0761,01024.2219");
 	}
 }
 

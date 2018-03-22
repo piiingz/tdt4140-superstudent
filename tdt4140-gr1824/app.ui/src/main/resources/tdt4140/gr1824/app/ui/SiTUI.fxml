@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.SitUIController">
+   <children>
+      <JFXButton buttonType="RAISED" layoutX="714.0" layoutY="479.0" onAction="#handleGetStatsButton" prefHeight="33.0" prefWidth="76.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Get Stats" textFill="WHITE" />
+      <JFXTextField fx:id="groupID" disable="true" layoutX="239.0" layoutY="38.0" promptText="Group ID" unFocusColor="#0f9d58" />
+      <JFXToggleButton layoutX="32.0" layoutY="21.0" onAction="#handleToggleButton" text="Show Group stats" />
+      <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="479.0" onAction="#handleReturnButton" prefHeight="33.0" prefWidth="76.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Return" textFill="WHITE" />
+      <PieChart fx:id="averageChart" layoutX="8.0" layoutY="79.0" prefHeight="390.0" prefWidth="380.0" />
+      <PieChart fx:id="groupChart" layoutX="418.0" layoutY="79.0" prefHeight="390.0" prefWidth="380.0" />
+   </children>
+</AnchorPane>

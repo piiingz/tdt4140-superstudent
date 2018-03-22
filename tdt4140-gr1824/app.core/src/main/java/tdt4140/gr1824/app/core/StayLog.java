@@ -1,15 +1,12 @@
 package tdt4140.gr1824.app.core;
 
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
+import tdt4140.gr1824.app.db.DatabaseCommunicator;
+
 
 // Purpose: To log a stay. Interpreter calls StayLog when the person passes over to a new area. 
 // StayLog registers the time this person stays in this area. 
