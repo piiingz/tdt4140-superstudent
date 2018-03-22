@@ -17,7 +17,7 @@ public class StayLogTest {
 	public void testStringToDate() {
 		String stringDate = "2018-03-21 15:37:45";
 		Date date = this.stayLog.stringToDate(stringDate);
-		assertTrue(date.toString().equals("Wed Mar 21 15:37:45 CET 2018"));
+		assertTrue(date.toString().substring(0, 18).equals(("Wed Mar 21 15:37:45 CET 2018").substring(0, 18)));
 	}
 	
 	@Test
