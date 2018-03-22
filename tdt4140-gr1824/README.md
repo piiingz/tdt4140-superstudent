@@ -18,7 +18,7 @@ Running Superstudent
 --------------------
 
 1) We use Maven for CI in order to test the project we suggest installing it. Find instructions here:
-	https://maven.apache.org/download.html#Installation
+	https://maven.apache.org/download.html#Installation, you also need to install jfoenix to build the UI. 
 	
 2) Clone the repo to the desired directory.
 
