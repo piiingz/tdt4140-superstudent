@@ -9,8 +9,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="906.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.UserUIController">
    <children>
       <JFXButton buttonType="RAISED" layoutX="791.0" layoutY="555.0" onAction="#handleGetStatsButton" prefHeight="37.0" prefWidth="101.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Get Stats" textFill="WHITE" />
-      <JFXTextField fx:id="userID" layoutX="198.0" layoutY="31.0" promptText="User ID" unFocusColor="#0f9d58" />
-      <JFXTextField fx:id="groupID" disable="true" layoutX="398.0" layoutY="31.0" promptText="Group ID" unFocusColor="#0f9d58" />
+      <JFXTextField fx:id="groupID" disable="true" layoutX="171.0" layoutY="32.0" promptText="Group ID" unFocusColor="#0f9d58" />
       <PieChart fx:id="userChart" layoutX="5.0" layoutY="82.0" prefHeight="470.0" prefWidth="294.0" />
       <PieChart fx:id="averageChart" layoutX="306.0" layoutY="82.0" prefHeight="470.0" prefWidth="294.0" />
       <PieChart fx:id="groupChart" layoutX="608.0" layoutY="82.0" prefHeight="470.0" prefWidth="294.0" />

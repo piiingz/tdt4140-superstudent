@@ -19,9 +19,6 @@ import tdt4140.gr1824.app.db.DatabaseCommunicator;
 public class UserUIController{
 
 	@FXML
-	public TextField userID; //Reads text input from User-field
-	
-	@FXML
 	public TextField groupID; //Reads text input from User-field
 	
 	@FXML
@@ -68,9 +65,7 @@ public class UserUIController{
 			}
 			this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
 		} 
-		if (!this.userID.getText().isEmpty()) {
-			this.setPieChart(this.statistics.getUserStats(Integer.valueOf(this.userID.getText())), this.userChart, this.userID.getText());
-		}
+			this.setPieChart(this.statistics.getUserStats(currentUserID), this.userChart, "User ID: " + currentUserID);
 		
 	}
 	
