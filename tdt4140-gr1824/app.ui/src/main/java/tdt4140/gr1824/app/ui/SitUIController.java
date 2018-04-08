@@ -34,8 +34,8 @@ public class SitUIController{
 	@FXML
 	public void handleReturnButton(ActionEvent event) throws IOException {
 		/*Sets interface described in MainMenuUI.fxml as the scene in the primary Stage*/
-		Parent userViewParent = FXMLLoader.load(getClass().getResource("MainMenuUI.fxml"));
-		Scene userViewScene = new Scene(userViewParent);
+		Parent sitViewParent = FXMLLoader.load(getClass().getResource("MainMenuUI.fxml"));
+		Scene userViewScene = new Scene(sitViewParent);
 		Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow()); //Get stage from the action event
 		window.setScene(userViewScene);
 		window.show();

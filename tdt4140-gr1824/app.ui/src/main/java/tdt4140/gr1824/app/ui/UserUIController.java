@@ -33,13 +33,15 @@ public class UserUIController{
 	@FXML
 	public PieChart averageChart; //PieChart used to display average stats for all users
 	
+	private static int currentUserID;
+	
 	private Statistics statistics = new Statistics(new DatabaseCommunicator());
 	private boolean toggle = false; //State of the toggle button
 	
 	@FXML
 	public void handleReturnButton(ActionEvent event) throws IOException {
 		/*Sets interface described in MainMenuUI.fxml as the scene in the primary Stage*/
-		Parent userViewParent = FXMLLoader.load(getClass().getResource("MainMenuUI.fxml"));
+		Parent userViewParent = FXMLLoader.load(getClass().getResource("UserLoginUI.fxml"));
 		Scene userViewScene = new Scene(userViewParent);
 		Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow()); //Get stage from the action event
 		window.setScene(userViewScene);
@@ -81,6 +83,10 @@ public class UserUIController{
                 new PieChart.Data("Andre steder", stats[3]));
 		chart.setData(pieChartData);
 		chart.setTitle(groupName);
+	}
+	
+	public static void setCurrentUserID(int userID) {
+		currentUserID = userID;
 	}
 }
 
