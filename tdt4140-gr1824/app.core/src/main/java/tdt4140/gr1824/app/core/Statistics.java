@@ -1,6 +1,7 @@
 package tdt4140.gr1824.app.core;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 import tdt4140.gr1824.app.mock.DummyClassDatabaseCommunicatorForStatisticsTest;
@@ -36,7 +37,7 @@ public class Statistics {
 	/**
 	 * The methods: getUserStats, getGroupStats and getAllUserStats
 	 * uses the corresponding DatabaseCommunicator-methods to provide
-	 * 4-element int[]-arrays on the form: [Gløshaugen, SitTrening, Samfundet, Other] 
+	 * 4-element int[]-arrays on the form: [Gloshaugen, SitTrening, Samfundet, Other] 
 	 */
 	public int[] getUserStats(int userID) {
 		try {
@@ -109,5 +110,20 @@ public class Statistics {
 	public int[] getAllStatsTest() {
 		return this.dummydbCom.getAllStats();
 		
+	}
+
+	public int[] getLinePointsGroup(String text, LocalDate value, LocalDate value2, String string) {
+		int[] retVal = {2,5,10,30,7,6,9};
+		return retVal;
+	}
+
+	public int[] getLinePointsAll(LocalDate value, LocalDate value2, String string) {
+		int[] retVal = {7,8,13,17,2,20,50};
+		return retVal;
+	}
+
+	public int[] getLinePointsUser(int currentUserID, LocalDate value, LocalDate value2, String string) {
+		int[] retVal = {20,10,14,15,30,24,19};
+		return retVal;
 	}
 }

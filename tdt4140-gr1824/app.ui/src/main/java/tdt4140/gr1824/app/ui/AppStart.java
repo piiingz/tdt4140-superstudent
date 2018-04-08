@@ -15,6 +15,7 @@ public class AppStart extends Application {
 		 */
 		Parent root = FXMLLoader.load(getClass().getResource("MainMenuUI.fxml"));
 		Scene scene = new Scene(root);
+		primaryStage.setTitle("Superstudenten");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
