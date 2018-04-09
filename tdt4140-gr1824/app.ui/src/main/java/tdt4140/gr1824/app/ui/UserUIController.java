@@ -2,6 +2,8 @@ package tdt4140.gr1824.app.ui;
 
 import java.io.IOException;
 
+import com.mysql.jdbc.StringUtils;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,12 +19,20 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.core.Statistics;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
+
 public class UserUIController{
 
+	@FXML
+	public Text currentGoal;
+	
+	@FXML
+	public TextField newGoalField;
+	
 	@FXML
 	public ComboBox<String> comboBox;
 	
@@ -55,6 +65,15 @@ public class UserUIController{
 	
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	
+	@FXML
+	public void handleUpdateButton() {
+		if (!this.newGoalField.getText().isEmpty()) {
+			if (this.isNumber(this.newGoalField.getText())) {
+				this.currentGoal.setText(this.newGoalField.getText());
+				this.statistics.setNewGoal(Integer.valueOf(this.currentGoal.getText()));
+			}
+		}
+	}
 	
 	@FXML
 	public void handleReturnButton(ActionEvent event) throws IOException {
@@ -165,6 +184,15 @@ public class UserUIController{
                 new PieChart.Data("Andre steder", stats[3]));
 		chart.setData(pieChartData);
 		chart.setTitle(groupName);
+	}
+	
+	private boolean isNumber(String numberString) {
+		for (int i = 0; i < numberString.length(); i++) {
+			if (!Character.isDigit(numberString.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

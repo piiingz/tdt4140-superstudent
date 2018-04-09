@@ -126,4 +126,8 @@ public class Statistics {
 		int[] retVal = {20,10,14,15,30,24,19};
 		return retVal;
 	}
+
+	public void setNewGoal(Integer valueOf) {
+		System.out.println(valueOf);
+	}
 }
