@@ -19,6 +19,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.core.Statistics;
@@ -27,6 +28,9 @@ import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UserUIController{
 
+	@FXML
+	public Text gymStatus;
+	
 	@FXML
 	public Text currentGoal;
 	
@@ -62,8 +66,20 @@ public class UserUIController{
 	private Statistics statistics = new Statistics(new DatabaseCommunicator());
 	private boolean compareToggle = false; //State of the toggle button
 	private boolean progressionToggle = false;
+	private int gymThreshold = 5;
 	
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
+	
+	@FXML
+	public void handleRefreshButton() {
+		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
+			this.gymStatus.setText("Good to go");
+			this.gymStatus.setFill(Color.GREEN);
+		} else {
+			this.gymStatus.setText("Too crowded");
+			this.gymStatus.setFill(Color.RED);
+		}
+	}
 	
 	@FXML
 	public void handleUpdateButton() {

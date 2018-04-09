@@ -130,4 +130,9 @@ public class Statistics {
 	public void setNewGoal(Integer valueOf) {
 		System.out.println(valueOf);
 	}
+
+	public int getNumberAtGym() {
+		// TODO Auto-generated method stub
+		return 6;
+	}
 }
