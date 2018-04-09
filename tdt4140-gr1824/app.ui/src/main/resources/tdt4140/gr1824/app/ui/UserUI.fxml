@@ -34,21 +34,17 @@
          </yAxis>
       </LineChart>
       <JFXComboBox fx:id="comboBox" disable="true" layoutX="489.0" layoutY="10.0" prefHeight="25.0" prefWidth="119.0" unFocusColor="#0f9d58" />
-      <JFXButton buttonType="RAISED" layoutX="163.0" layoutY="51.0" onAction="#handleUpdateButton" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Update" textFill="WHITE" />
-      <JFXTextField fx:id="newGoalField" layoutX="17.0" layoutY="51.0" promptText="New Goal" unFocusColor="#0f9d58" />
-      <Text layoutX="250.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current goal: " />
-      <Text fx:id="currentGoal" layoutX="334.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" />
-      <Text layoutX="364.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hours at Gloshaugen in a week" />
-      <Text layoutX="159.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Gym-status: ">
+      <JFXButton buttonType="RAISED" layoutX="88.0" layoutY="51.0" onAction="#handleUpdateButton" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Update" textFill="WHITE" />
+      <JFXTextField fx:id="newGoalField" layoutX="17.0" layoutY="51.0" prefHeight="25.0" prefWidth="61.0" promptText="New Goal" unFocusColor="#0f9d58" />
+      <Text layoutX="170.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current goal: " />
+      <Text fx:id="currentGoal" layoutX="250.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" />
+      <Text layoutX="280.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hours at Gloshaugen in a week" />
+      <Text layoutX="594.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Gym-status: " />
+      <Text fx:id="gymStatus" layoutX="728.0" layoutY="69.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" text="No data">
          <font>
-            <Font size="20.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text fx:id="gymStatus" layoutX="418.0" layoutY="581.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" text="No data">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <JFXButton buttonType="RAISED" layoutX="635.0" layoutY="558.0" onAction="#handleRefreshButton" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Refresh status" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="836.0" layoutY="50.0" onAction="#handleRefreshButton" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Refresh" textFill="WHITE" />
    </children>
 </AnchorPane>
