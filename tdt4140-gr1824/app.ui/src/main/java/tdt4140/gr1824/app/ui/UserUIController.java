@@ -86,7 +86,7 @@ public class UserUIController{
 		if (!this.newGoalField.getText().isEmpty()) {
 			if (this.isNumber(this.newGoalField.getText())) {
 				this.currentGoal.setText(this.newGoalField.getText());
-				this.statistics.setNewGoal(Integer.valueOf(this.currentGoal.getText()));
+				this.statistics.setNewGoal(Integer.valueOf(this.currentGoal.getText()), currentUserID);
 			}
 		}
 	}

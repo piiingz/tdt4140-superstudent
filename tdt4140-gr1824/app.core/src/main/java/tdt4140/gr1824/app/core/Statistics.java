@@ -112,8 +112,9 @@ public class Statistics {
 		
 	}
 
-	public int[] getLinePointsGroup(String text, LocalDate value, LocalDate value2, String string) {
+	public int[] getLinePointsGroup(String text, LocalDate startDate, LocalDate endDate, String areaName) {
 		int[] retVal = {2,5,10,30,7,6,9};
+		System.out.println(startDate);
 		return retVal;
 	}
 
@@ -127,12 +128,12 @@ public class Statistics {
 		return retVal;
 	}
 
-	public void setNewGoal(Integer valueOf) {
+	public void setNewGoal(Integer valueOf, int userID) {
 		System.out.println(valueOf);
 	}
 
 	public int getNumberAtGym() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 4;
 	}
 }

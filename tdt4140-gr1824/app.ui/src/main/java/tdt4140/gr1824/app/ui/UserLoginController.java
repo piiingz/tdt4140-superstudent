@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UserLoginController {
 
@@ -49,11 +50,21 @@ public class UserLoginController {
 		if (this.userID.getText().isEmpty() || this.passwordField.getText().isEmpty()) {
 			return false;
 		}
-		if (this.passwordField.getText().equals("password")){
-			return true;
+		if (this.passwordField.getText().equals("password") && this.isNumber(this.userID.getText())){
+			if (DatabaseCommunicator.userExists(Integer.valueOf(this.userID.getText()))){
+				return true;
+			}			
 		}
-		
 		return false;
+	}
+	
+	private boolean isNumber(String numberString) {
+		for (int i = 0; i < numberString.length(); i++) {
+			if (!Character.isDigit(numberString.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }

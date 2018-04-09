@@ -356,4 +356,9 @@ public class DatabaseCommunicator {
 
 		return userStatset;
 	}
+
+	public static boolean userExists(Integer valueOf) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }
