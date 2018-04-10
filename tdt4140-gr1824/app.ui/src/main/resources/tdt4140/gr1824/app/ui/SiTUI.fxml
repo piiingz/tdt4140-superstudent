@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.SitUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="906.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.SitUIController">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="714.0" layoutY="479.0" onAction="#handleGetStatsButton" prefHeight="33.0" prefWidth="76.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Get Stats" textFill="WHITE" />
-      <JFXTextField fx:id="groupID" disable="true" layoutX="239.0" layoutY="38.0" promptText="Group ID" unFocusColor="#0f9d58" />
-      <JFXToggleButton layoutX="32.0" layoutY="21.0" onAction="#handleToggleButton" text="Show Group stats" />
-      <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="479.0" onAction="#handleReturnButton" prefHeight="33.0" prefWidth="76.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Return" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="791.0" layoutY="555.0" onAction="#handleGetStatsButton" prefHeight="37.0" prefWidth="101.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Get Stats" textFill="WHITE" />
+      <JFXTextField fx:id="groupID" disable="true" layoutX="138.0" layoutY="10.0" promptText="Group ID" unFocusColor="#0f9d58" />
+      <JFXToggleButton layoutX="5.0" layoutY="-7.0" onAction="#handleToggleButton" text="Group stats" />
+      <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="555.0" onAction="#handleReturnButton" prefHeight="37.0" prefWidth="101.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Return" textFill="WHITE" />
       <PieChart fx:id="averageChart" layoutX="8.0" layoutY="79.0" prefHeight="390.0" prefWidth="380.0" />
       <PieChart fx:id="groupChart" layoutX="418.0" layoutY="79.0" prefHeight="390.0" prefWidth="380.0" />
+      <JFXToggleButton layoutX="287.0" layoutY="-6.0" onAction="#handleProgressionToggle" text="Progression over time" />
+      <JFXComboBox fx:id="comboBox" disable="true" layoutX="489.0" layoutY="10.0" prefHeight="25.0" prefWidth="119.0" unFocusColor="#0f9d58" />
+      <JFXDatePicker fx:id="startDate" defaultColor="#0f9d58" disable="true" layoutX="690.0" layoutY="11.0" prefHeight="25.0" prefWidth="101.0" promptText="Start Date" />
+      <JFXDatePicker fx:id="endDate" defaultColor="#0f9d58" disable="true" layoutX="796.0" layoutY="11.0" prefHeight="25.0" prefWidth="101.0" promptText="End Date" />
+      <LineChart fx:id="lineChart" layoutX="5.0" layoutY="80.0" prefHeight="470.0" prefWidth="897.0" visible="false">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <JFXButton buttonType="RAISED" layoutX="427.0" layoutY="561.0" onAction="#handleCompetitionsButton" style="-fx-background-color: #001aff;" text="Competitions" textFill="WHITE" />
+      <Text fx:id="gymStatus" layoutX="185.0" layoutY="72.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" text="No data">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Gym-status:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <JFXButton buttonType="RAISED" layoutX="298.0" layoutY="54.0" onAction="#handleRefreshButton" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Refresh" textFill="WHITE" />
    </children>
 </AnchorPane>

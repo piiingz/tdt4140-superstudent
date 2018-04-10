@@ -3,7 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.UserRewardsController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.CompetitionUIController">
    <children>
       <JFXButton buttonType="RAISED" layoutX="534.0" layoutY="361.0" ripplerFill="WHITE" style="-fx-background-color: #001aff;" text="Refresh" textFill="WHITE" />
    </children>

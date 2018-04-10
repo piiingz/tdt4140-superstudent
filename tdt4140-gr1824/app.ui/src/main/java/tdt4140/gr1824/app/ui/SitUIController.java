@@ -11,13 +11,34 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 import tdt4140.gr1824.app.core.Statistics;
 
 public class SitUIController{ 
+	
+	@FXML
+	public LineChart<Number,Number> lineChart;
+	
+	@FXML
+	public Text gymStatus;
+	
+	@FXML
+	public DatePicker endDate;
+	
+	@FXML
+	public DatePicker startDate;
+	
+	@FXML
+	public ComboBox<String> comboBox;
 	
 	@FXML
 	public TextField groupID; //Reads text from the group-field
@@ -28,8 +49,12 @@ public class SitUIController{
 	@FXML
 	public PieChart averageChart; //PieChart used to display average stats for all users
 	
-	private boolean toggle = false; //State of the toggle button
 	private Statistics statistics = new Statistics(new DatabaseCommunicator());
+	private boolean groupStatsToggle = false; //State of the toggle button
+	private boolean progressionToggle = false;
+	private int gymThreshold = 5;
+	
+	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	
 	@FXML
 	public void handleReturnButton(ActionEvent event) throws IOException {
@@ -40,11 +65,41 @@ public class SitUIController{
 		window.setScene(userViewScene);
 		window.show();
 	}
+	
+	@FXML
+	public void handleCompetitionsButton(ActionEvent event) throws IOException {
+		final Stage competitionStage = new Stage();
+		competitionStage.initModality(Modality.APPLICATION_MODAL);
+		competitionStage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
+		
+		Parent root = FXMLLoader.load(getClass().getResource("SiTCompetitionUI.fxml"));
+		
+		Scene competitionScene = new Scene(root);
+		competitionStage.setTitle("SiT Competition Menu");
+		competitionStage.setScene(competitionScene);
+		competitionStage.show();
+	}
 
+	@FXML
+	public void handleProgressionToggle() {
+		
+	}
+	
+	@FXML
+	public void handleRefreshButton() {
+		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
+			this.gymStatus.setText("Good to go");
+			this.gymStatus.setFill(Color.GREEN);
+		} else {
+			this.gymStatus.setText("Too crowded");
+			this.gymStatus.setFill(Color.RED);
+		}
+	}
+	
 	@FXML
 	public void handleGetStatsButton() {
 		/*Retrieves and displays stats based on state of toggle button text-field*/
-		if (this.toggle && !this.groupID.getText().isEmpty()) { 
+		if (this.groupStatsToggle && !this.groupID.getText().isEmpty()) { 
 			this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, groupID.getText());							
 		}
 		this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
@@ -53,8 +108,8 @@ public class SitUIController{
 	@FXML
 	public void handleToggleButton() {
 		/*Toggles the toggle variable. Enables/Disables text field based on toggle-state*/
-		this.toggle = !this.toggle;
-		if (this.toggle == false) {
+		this.groupStatsToggle = !this.groupStatsToggle;
+		if (this.groupStatsToggle == false) {
 			this.groupID.setDisable(true);
 		} else {
 			this.groupID.setDisable(false);

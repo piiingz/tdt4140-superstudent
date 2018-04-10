@@ -109,29 +109,16 @@ public class UserUIController{
 	
 	@FXML
 	public void handleRewardsButton(ActionEvent event) throws IOException {
-//		 public void handle(ActionEvent event) {
-//             final Stage dialog = new Stage();
-//             dialog.initModality(Modality.APPLICATION_MODAL);
-//             dialog.initOwner(primaryStage);
-//             VBox dialogVbox = new VBox(20);
-//             dialogVbox.getChildren().add(new Text("This is a Dialog"));
-//             Scene dialogScene = new Scene(dialogVbox, 300, 200);
-//             dialog.setScene(dialogScene);
-//             dialog.show();
-//		
-//         }
-		
 		final Stage rewardsStage = new Stage();
 		rewardsStage.initModality(Modality.APPLICATION_MODAL);
 		rewardsStage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
-		//Testcode: TODO Legg inn et eget view med konkurransestuff her
+		
 		Parent root = FXMLLoader.load(getClass().getResource("UserRewardsUI.fxml"));
 		
 		Scene rewardScene = new Scene(root);
 		rewardsStage.setTitle("Rewards for user: " + currentUserID);
 		rewardsStage.setScene(rewardScene);
 		rewardsStage.show();
-		
 	}
 	
 	@FXML
