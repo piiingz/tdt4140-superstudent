@@ -125,10 +125,11 @@ public class UserUIController{
 		rewardsStage.initModality(Modality.APPLICATION_MODAL);
 		rewardsStage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
 		//Testcode: TODO Legg inn et eget view med konkurransestuff her
-		VBox dialogVbox = new VBox(20);
-		dialogVbox.getChildren().add(new Text("Her kommer en oversikt over rewards"));
-		Scene dialogScene = new Scene(dialogVbox, 300, 200);
-		rewardsStage.setScene(dialogScene);
+		Parent root = FXMLLoader.load(getClass().getResource("UserRewardsUI.fxml"));
+		
+		Scene rewardScene = new Scene(root);
+		rewardsStage.setTitle("Rewards for user: " + currentUserID);
+		rewardsStage.setScene(rewardScene);
 		rewardsStage.show();
 		
 	}
@@ -182,13 +183,14 @@ public class UserUIController{
 	}
 	
 	@FXML
-	public void handleGetStatsButton() {
+	public void handleGetStatsButton(ActionEvent event) {
 		/*Retrieves and displays stats based on state of toggle buttons and text-fields*/
 		if (this.progressionToggle) {
 			//Linechart-mode
 			this.lineChart.getData().clear();
 			if (this.comboBox.getValue() != null && this.startDate.getValue() != null && this.endDate.getValue() != null) {
-				if (!this.startDate.getValue().isBefore(this.endDate.getValue())) {
+				if (!this.startDate.getValue().isBefore(this.endDate.getValue())) { 
+					this.popupDateError(event);
 					return;
 				}
 				if (this.compareToggle) {
@@ -228,6 +230,8 @@ public class UserUIController{
         	weekNr += 1;
         }
         this.lineChart.getData().add(series);
+        this.lineChart.getYAxis().setLabel("Timer");
+        this.lineChart.getXAxis().setLabel("Uke nr:");
 	}
 	
 	private void setPieChart(int[] stats, PieChart chart, String groupName) {
@@ -249,6 +253,18 @@ public class UserUIController{
 		}
 		return true;
 	}
+	
+	private void popupDateError(ActionEvent event) {
+		final Stage dialog = new Stage();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
+		VBox dialogVbox = new VBox(20);
+		dialogVbox.getChildren().add(new Text("Start date must be before end date!"));
+		Scene dialogScene = new Scene(dialogVbox, 300, 100);
+		dialog.setScene(dialogScene);
+		dialog.show();
+	}
+	
 	//TODO Legg inn dette om tiden strekker til
 //	private void addGoalToLineChart() {
 //		
