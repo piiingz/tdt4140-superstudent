@@ -1,6 +1,7 @@
 package tdt4140.gr1824.app.ui;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +24,7 @@ public class UserLoginController {
 	
 	
 	@FXML
-	public void handleLoginButton(ActionEvent event) throws IOException{
+	public void handleLoginButton(ActionEvent event) throws IOException, NumberFormatException, SQLException{
 		if (this.loginChecker()) {
 			UserUIController.setCurrentUserID(Integer.valueOf(this.userID.getText()));
 			
@@ -45,13 +46,13 @@ public class UserLoginController {
 		window.show();
 	}
 	
-	private boolean loginChecker() {
+	private boolean loginChecker() throws NumberFormatException, SQLException {
 		//Passwords are "password"
 		if (this.userID.getText().isEmpty() || this.passwordField.getText().isEmpty()) {
 			return false;
 		}
 		if (this.passwordField.getText().equals("password") && this.isNumber(this.userID.getText())){
-			if (DatabaseCommunicator.userExists(Integer.valueOf(this.userID.getText()))){
+			if (DatabaseCommunicator.userInDatabase(Integer.valueOf(this.userID.getText()))){
 				return true;
 			}			
 		}
