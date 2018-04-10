@@ -9,9 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -19,8 +21,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.core.Statistics;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
@@ -102,6 +108,32 @@ public class UserUIController{
 	}
 	
 	@FXML
+	public void handleRewardsButton(ActionEvent event) throws IOException {
+//		 public void handle(ActionEvent event) {
+//             final Stage dialog = new Stage();
+//             dialog.initModality(Modality.APPLICATION_MODAL);
+//             dialog.initOwner(primaryStage);
+//             VBox dialogVbox = new VBox(20);
+//             dialogVbox.getChildren().add(new Text("This is a Dialog"));
+//             Scene dialogScene = new Scene(dialogVbox, 300, 200);
+//             dialog.setScene(dialogScene);
+//             dialog.show();
+//		
+//         }
+		
+		final Stage rewardsStage = new Stage();
+		rewardsStage.initModality(Modality.APPLICATION_MODAL);
+		rewardsStage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
+		//Testcode: TODO Legg inn et eget view med konkurransestuff her
+		VBox dialogVbox = new VBox(20);
+		dialogVbox.getChildren().add(new Text("Her kommer en oversikt over rewards"));
+		Scene dialogScene = new Scene(dialogVbox, 300, 200);
+		rewardsStage.setScene(dialogScene);
+		rewardsStage.show();
+		
+	}
+	
+	@FXML
 	public void handleToggleButton() {
 		/*Toggles the toggle variable. Enables/Disables group text field based on toggle-state*/
 		this.compareToggle = !this.compareToggle;
@@ -142,6 +174,10 @@ public class UserUIController{
 			this.groupChart.setVisible(false);
 			this.averageChart.setVisible(false);
 			this.comboBox.setItems(this.comboBoxElements);
+			
+			//Disable all days except monday
+			
+			
 		}
 	}
 	
@@ -152,13 +188,16 @@ public class UserUIController{
 			//Linechart-mode
 			this.lineChart.getData().clear();
 			if (this.comboBox.getValue() != null && this.startDate.getValue() != null && this.endDate.getValue() != null) {
+				if (!this.startDate.getValue().isBefore(this.endDate.getValue())) {
+					return;
+				}
 				if (this.compareToggle) {
 					if (!this.groupID.getText().isEmpty()) {
 						this.setLineChart("Group: " + this.groupID.getText(), this.statistics.getLinePointsGroup(this.groupID.getText(), this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the group
 					}
 					this.setLineChart("Average all users", this.statistics.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the average of all users
 				}
-				this.setLineChart("User ID: " + currentUserID, this.statistics.getLinePointsUser(currentUserID, this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the user.	
+				this.setLineChart("User ID: " + currentUserID, this.statistics.getLinePointsUser(currentUserID, this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the user.
 			}
 			
 		} else {
@@ -210,5 +249,19 @@ public class UserUIController{
 		}
 		return true;
 	}
+	//TODO Legg inn dette om tiden strekker til
+//	private void addGoalToLineChart() {
+//		
+//		Line valueMarker = this.goalLine;
+//		NumberAxis yAxis = (NumberAxis) this.lineChart.getYAxis();
+//		Node chartArea = this.lineChart.lookup(".chart-plot-background");
+//		Bounds chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal());
+//		double yShift = chartAreaBounds.getMinY(); 
+//		double displayPosition = yAxis.getDisplayPosition(Integer.valueOf(this.currentGoal.getText()));
+//		System.out.println(Integer.valueOf(this.currentGoal.getText()));
+//		
+//		valueMarker.setStartY(yShift + displayPosition);
+//        valueMarker.setEndY(yShift + displayPosition);
+//	}
 }
 
