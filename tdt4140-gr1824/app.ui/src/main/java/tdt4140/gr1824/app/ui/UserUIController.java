@@ -239,29 +239,14 @@ public class UserUIController{
 	}
 	
 	private void popupDateError(ActionEvent event) {
-		final Stage dialog = new Stage();
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
-		VBox dialogVbox = new VBox(20);
-		dialogVbox.getChildren().add(new Text("Start date must be before end date!"));
-		Scene dialogScene = new Scene(dialogVbox, 300, 100);
-		dialog.setScene(dialogScene);
-		dialog.show();
+		final Stage errMessage = new Stage();
+		errMessage.initModality(Modality.APPLICATION_MODAL);
+		errMessage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
+		VBox errMessageVbox = new VBox(20);
+		errMessageVbox.getChildren().add(new Text("Start date must be before end date."));
+		Scene errMessageScene = new Scene(errMessageVbox, 300, 100);
+		errMessage.setScene(errMessageScene);
+		errMessage.show();
 	}
-	
-	//TODO Legg inn dette om tiden strekker til
-//	private void addGoalToLineChart() {
-//		
-//		Line valueMarker = this.goalLine;
-//		NumberAxis yAxis = (NumberAxis) this.lineChart.getYAxis();
-//		Node chartArea = this.lineChart.lookup(".chart-plot-background");
-//		Bounds chartAreaBounds = chartArea.localToScene(chartArea.getBoundsInLocal());
-//		double yShift = chartAreaBounds.getMinY(); 
-//		double displayPosition = yAxis.getDisplayPosition(Integer.valueOf(this.currentGoal.getText()));
-//		System.out.println(Integer.valueOf(this.currentGoal.getText()));
-//		
-//		valueMarker.setStartY(yShift + displayPosition);
-//        valueMarker.setEndY(yShift + displayPosition);
-//	}
 }
 
