@@ -77,27 +77,6 @@ public class UserUIController{
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	
 	@FXML
-	public void handleRefreshButton() {
-		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
-			this.gymStatus.setText("Good to go");
-			this.gymStatus.setFill(Color.GREEN);
-		} else {
-			this.gymStatus.setText("Too crowded");
-			this.gymStatus.setFill(Color.RED);
-		}
-	}
-	
-	@FXML
-	public void handleUpdateButton() {
-		if (!this.newGoalField.getText().isEmpty()) {
-			if (this.isNumber(this.newGoalField.getText())) {
-				this.currentGoal.setText(this.newGoalField.getText());
-				this.statistics.setNewGoal(Integer.valueOf(this.currentGoal.getText()), currentUserID);
-			}
-		}
-	}
-	
-	@FXML
 	public void handleReturnButton(ActionEvent event) throws IOException {
 		/*Sets interface described in MainMenuUI.fxml as the scene in the primary Stage*/
 		Parent userViewParent = FXMLLoader.load(getClass().getResource("UserLoginUI.fxml"));
@@ -122,6 +101,29 @@ public class UserUIController{
 	}
 	
 	@FXML
+	public void handleRefreshButton() {
+		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
+			this.gymStatus.setText("Good to go");
+			this.gymStatus.setFill(Color.GREEN);
+		} else {
+			this.gymStatus.setText("Too crowded");
+			this.gymStatus.setFill(Color.RED);
+		}
+	}
+	
+	@FXML
+	public void handleUpdateButton() {
+		if (!this.newGoalField.getText().isEmpty()) {
+			if (this.isNumber(this.newGoalField.getText())) {
+				this.currentGoal.setText(this.newGoalField.getText());
+				this.statistics.setNewGoal(Integer.valueOf(this.currentGoal.getText()), currentUserID);
+			}
+		}
+	}
+	
+	
+	
+	@FXML
 	public void handleToggleButton() {
 		/*Toggles the toggle variable. Enables/Disables group text field based on toggle-state*/
 		this.compareToggle = !this.compareToggle;
@@ -143,7 +145,6 @@ public class UserUIController{
 			this.comboBox.setDisable(true);
 			this.startDate.setDisable(true);
 			this.endDate.setDisable(true);
-			this.lineChart.getData().clear();
 			
 			//Enable piechart-related elements
 			this.userChart.setVisible(true);
@@ -162,10 +163,6 @@ public class UserUIController{
 			this.groupChart.setVisible(false);
 			this.averageChart.setVisible(false);
 			this.comboBox.setItems(this.comboBoxElements);
-			
-			//Disable all days except monday
-			
-			
 		}
 	}
 	

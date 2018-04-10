@@ -13,9 +13,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -79,11 +81,6 @@ public class SitUIController{
 		competitionStage.setScene(competitionScene);
 		competitionStage.show();
 	}
-
-	@FXML
-	public void handleProgressionToggle() {
-		
-	}
 	
 	@FXML
 	public void handleRefreshButton() {
@@ -95,15 +92,7 @@ public class SitUIController{
 			this.gymStatus.setFill(Color.RED);
 		}
 	}
-	
-	@FXML
-	public void handleGetStatsButton() {
-		/*Retrieves and displays stats based on state of toggle button text-field*/
-		if (this.groupStatsToggle && !this.groupID.getText().isEmpty()) { 
-			this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, groupID.getText());							
-		}
-		this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
-	}
+
 	
 	@FXML
 	public void handleToggleButton() {
@@ -116,6 +105,79 @@ public class SitUIController{
 		}
 	}
 	
+	@FXML
+	public void handleProgressionToggle() {
+		/*Toggles the progressionToggle variable. Enables/Disables linechart/piechart elements based on progressionToggle-state*/
+		this.progressionToggle = !this.progressionToggle;
+		if (this.progressionToggle == false) {
+			
+			//Disable all progression-related elements and remove all data-points from linechart
+			this.lineChart.setVisible(false);
+			this.comboBox.setDisable(true);
+			this.startDate.setDisable(true);
+			this.endDate.setDisable(true);
+			
+			//Enable piechart-related elements
+			this.groupChart.setVisible(true);
+			this.averageChart.setVisible(true);
+			
+		} else {
+			
+			//Enable all progression-related elements
+			this.lineChart.setVisible(true);
+			this.comboBox.setDisable(false);
+			this.startDate.setDisable(false);
+			this.endDate.setDisable(false);
+			
+			//Disable all piechart-related elements
+			this.groupChart.setVisible(false);
+			this.averageChart.setVisible(false);
+			this.comboBox.setItems(this.comboBoxElements);
+		}
+	}
+	
+	@FXML
+	public void handleGetStatsButton(ActionEvent event) {
+		/*Retrieves and displays stats based on state of toggle button text-field*/
+		if (this.progressionToggle) {
+			//Linechart-mode
+			this.lineChart.getData().clear();
+			if (this.comboBox.getValue() != null && this.startDate.getValue() != null && this.endDate.getValue() != null) {
+				if (!this.startDate.getValue().isBefore(this.endDate.getValue())) {
+					this.popupDateError(event);
+					return;
+				}
+				if (this.groupStatsToggle) {
+					if (!this.groupID.getText().isEmpty()) {
+						this.setLineChart("Group: " + this.groupID.getText(), this.statistics.getLinePointsGroup(this.groupID.getText(), this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the group
+					}
+				}
+				this.setLineChart("Average all users", this.statistics.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the average of all users
+			}
+		} else {
+			//Piechart-mode 
+			if (this.groupStatsToggle && !this.groupID.getText().isEmpty()) { 
+				this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, groupID.getText());							
+			}
+			this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");			
+		}
+	}
+	
+	private void setLineChart(String lineName, int[] dataPoints) {
+		XYChart.Series series = new XYChart.Series();
+        series.setName(lineName);
+        int weekNr = 1;
+        
+        //populating the series with data
+        for (int dataPoint : dataPoints) {
+        	series.getData().add(new XYChart.Data(Integer.toString(weekNr), dataPoint));
+        	weekNr += 1;
+        }
+        this.lineChart.getData().add(series);
+        this.lineChart.getYAxis().setLabel("Timer");
+        this.lineChart.getXAxis().setLabel("Uke nr:");
+	}
+	
 	private void setPieChart(int[] stats, PieChart chart, String groupName) {
 		ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
@@ -125,5 +187,16 @@ public class SitUIController{
                 new PieChart.Data("Andre steder", stats[3]));
 		chart.setData(pieChartData);
 		chart.setTitle(groupName);
+	}
+	
+	private void popupDateError(ActionEvent event) {
+		final Stage dialog = new Stage();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
+		VBox dialogVbox = new VBox(20);
+		dialogVbox.getChildren().add(new Text("Start date must be before end date!"));
+		Scene dialogScene = new Scene(dialogVbox, 300, 100);
+		dialog.setScene(dialogScene);
+		dialog.show();
 	}
 }
