@@ -84,10 +84,10 @@
                   <Font name="Ebrima" size="30.0" />
                </font>
             </Text>
-            <JFXComboBox fx:id="comboBoxCreateComp" layoutX="81.0" layoutY="119.0" promptText="Choose an area" unFocusColor="#00a2d3" visible="false" />
-            <JFXTextField fx:id="requiredHours" layoutX="81.0" layoutY="202.0" promptText="Enter required hours" unFocusColor="#00a2d3" visible="false" />
-            <JFXDatePicker fx:id="startDateCreateComp" defaultColor="#00a2d3" layoutX="401.0" layoutY="119.0" prefHeight="25.0" prefWidth="98.0" promptText="Start Date" visible="false" />
-            <JFXDatePicker fx:id="endDateCreateComp" defaultColor="#00a2d3" layoutX="401.0" layoutY="202.0" prefHeight="25.0" prefWidth="98.0" promptText="End Date" visible="false" />
+            <JFXComboBox fx:id="comboBoxCreateComp" layoutX="81.0" layoutY="150.0" promptText="Choose an area" unFocusColor="#00a2d3" visible="false" />
+            <JFXTextField fx:id="requiredHours" layoutX="81.0" layoutY="229.0" promptText="Enter required hours" unFocusColor="#00a2d3" visible="false" />
+            <JFXDatePicker fx:id="startDateCreateComp" defaultColor="#00a2d3" layoutX="401.0" layoutY="150.0" prefHeight="25.0" prefWidth="98.0" promptText="Start Date" visible="false" />
+            <JFXDatePicker fx:id="endDateCreateComp" defaultColor="#00a2d3" layoutX="401.0" layoutY="229.0" prefHeight="25.0" prefWidth="98.0" promptText="End Date" visible="false" />
             <JFXTextField fx:id="prizeDescription" layoutX="81.0" layoutY="329.0" prefHeight="25.0" prefWidth="426.0" promptText="What is the prize?" unFocusColor="#00a2d3" visible="false" />
             <JFXTextField fx:id="competitionDescription" layoutX="81.0" layoutY="408.0" prefHeight="25.0" prefWidth="426.0" promptText="Competition description" unFocusColor="#00a2d3" visible="false" />
             <Text fx:id="welcomeMessage" layoutX="165.0" layoutY="63.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Superstudenten Admin page">

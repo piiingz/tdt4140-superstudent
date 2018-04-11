@@ -138,6 +138,11 @@ public class Statistics {
 	}
 	
 	public void createCompetition(String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) {
-		
+		System.out.println("Areaname: " + areaName);
+		System.out.println("Required hours: " + requiredHours);
+		System.out.println("Start date: " + startDate);
+		System.out.println("End date: " + endDate);
+		System.out.println("Competition description: " + competitionDescription);
+		System.out.println("Prize description: " + prizeDescription);
 	}
 }

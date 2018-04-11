@@ -165,7 +165,7 @@ public class SiTUIController {
 		} else if (this.adminID == 4) {
 			this.handleViewCompButton();
 		} else if (this.adminID == 5) {
-			this.handleCreateCompButton();
+			this.handleCreateCompButton(event);
 		}
 	}
 	
@@ -349,6 +349,7 @@ public class SiTUIController {
 	//Handle create new competition events:
 	private void initializeCreateCompView() {
 		this.comboBoxCreateComp.setVisible(true);
+		this.comboBoxCreateComp.setItems(this.comboBoxElements);
 		this.requiredHours.setVisible(true);
 		this.startDateCreateComp.setVisible(true);
 		this.endDateCreateComp.setVisible(true);
@@ -361,8 +362,14 @@ public class SiTUIController {
 		this.bottomRightButton.setVisible(true);
 	}
 	
-	private void handleCreateCompButton() {
-		
+	private void handleCreateCompButton(ActionEvent event) {
+		if (this.comboBoxCreateComp.getValue() != null && this.startDateCreateComp.getValue() != null && this.endDateCreateComp.getValue() != null && !this.requiredHours.getText().isEmpty() && !this.competitionDescription.getText().isEmpty() && !this.prizeDescription.getText().isEmpty()) {
+			if (!this.startDateCreateComp.getValue().isBefore(this.endDateCreateComp.getValue())) {
+				this.popupDateError(event);
+				return;
+			}
+			this.statistics.createCompetition(this.comboBoxCreateComp.getValue(), Integer.valueOf(this.requiredHours.getText()), this.startDateCreateComp.getValue(), this.endDateCreateComp.getValue(), this.competitionDescription.getText(), this.prizeDescription.getText());			
+		}
 	}
 	
 	private void destructCreateCompView() {
