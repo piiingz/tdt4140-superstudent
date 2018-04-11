@@ -136,4 +136,8 @@ public class Statistics {
 		// TODO Auto-generated method stub
 		return 4;
 	}
+	
+	public void createCompetition(String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) {
+		
+	}
 }
