@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 import tdt4140.gr1824.app.core.Statistics;
 
-public class SitUIController{ 
+public class OldSitUIController{ 
 	
 	@FXML
 	public LineChart<Number,Number> lineChart;
@@ -74,7 +74,7 @@ public class SitUIController{
 		competitionStage.initModality(Modality.APPLICATION_MODAL);
 		competitionStage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
 		
-		Parent root = FXMLLoader.load(getClass().getResource("SiTCompetitionUI.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("SiTUI.fxml"));
 		
 		Scene competitionScene = new Scene(root);
 		competitionStage.setTitle("SiT Competition Menu");
@@ -200,3 +200,10 @@ public class SitUIController{
 		errMessage.show();
 	}
 }
+
+//@FXML
+//public void handleTestClick() {
+//	System.out.println("Success!");
+//	this.piechartStat.setStyle("-fx-background-color: #FFFFFF;");
+//	
+//}
