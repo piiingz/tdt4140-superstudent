@@ -92,6 +92,8 @@ public class SiTUIController {
 	@FXML
 	public Text gymStatText;
 	//View competitions elements:
+	@FXML
+	public Text viewCompText;
 	
 	//Create new competition elements:
 	@FXML
@@ -335,7 +337,10 @@ public class SiTUIController {
 	
 	//Handle View Competitions events:
 	private void initializeViewCompView() {
-		
+		this.competitionIcon.setVisible(true);
+		this.viewCompText.setVisible(true);
+		this.bottomRightButton.setText("Refresh");
+		this.bottomRightButton.setVisible(true);
 	}
 	
 	private void handleViewCompButton() {
@@ -343,7 +348,9 @@ public class SiTUIController {
 	}
 	
 	private void destructViewCompView() {
-		
+		this.competitionIcon.setVisible(false);
+		this.viewCompText.setVisible(false);
+		this.bottomRightButton.setVisible(false);
 	}
 	
 	//Handle create new competition events:

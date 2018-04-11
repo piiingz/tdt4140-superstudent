@@ -200,10 +200,3 @@ public class OldSitUIController{
 		errMessage.show();
 	}
 }
-
-//@FXML
-//public void handleTestClick() {
-//	System.out.println("Success!");
-//	this.piechartStat.setStyle("-fx-background-color: #FFFFFF;");
-//	
-//}

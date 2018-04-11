@@ -79,7 +79,7 @@
                   <Image url="@../icons/tick-inside-circle.png" />
                </image>
             </ImageView>
-            <Text fx:id="createNewCompetition" layoutX="100.0" layoutY="62.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new competition" visible="false">
+            <Text fx:id="createNewCompetition" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new competition" visible="false">
                <font>
                   <Font name="Ebrima" size="30.0" />
                </font>
@@ -105,6 +105,11 @@
                   <Font name="Ebrima" size="30.0" />
                </font>
             </Text>
+         <Text fx:id="viewCompText" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Competitions" visible="false">
+            <font>
+               <Font name="Ebrima" size="30.0" />
+            </font>
+         </Text>
          </children></AnchorPane>
       <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="295.0" style="-fx-background-color: #00A2D3;" text="   SiT Admin Panel" textFill="WHITE">
          <font>
