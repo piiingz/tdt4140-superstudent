@@ -28,7 +28,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tdt4140.gr1824.app.core.Statistics;
+import tdt4140.gr1824.app.core.UIBackendController;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 
@@ -69,7 +69,7 @@ public class UserUIController{
 	
 	private static int currentUserID;
 	
-	private Statistics statistics = new Statistics(new DatabaseCommunicator());
+	private UIBackendController backendController = new UIBackendController(new DatabaseCommunicator());
 	private boolean compareToggle = false; //State of the toggle button
 	private boolean progressionToggle = false;
 	private int gymThreshold = 5;
@@ -102,7 +102,7 @@ public class UserUIController{
 	
 	@FXML
 	public void handleRefreshButton() {
-		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
+		if (this.backendController.getNumberAtGym() <= this.gymThreshold) {
 			this.gymStatus.setText("Good to go");
 			this.gymStatus.setFill(Color.GREEN);
 		} else {
@@ -116,7 +116,7 @@ public class UserUIController{
 		if (!this.newGoalField.getText().isEmpty()) {
 			if (this.isNumber(this.newGoalField.getText())) {
 				this.currentGoal.setText(this.newGoalField.getText());
-				this.statistics.setNewGoal(Integer.valueOf(this.currentGoal.getText()), currentUserID);
+				this.backendController.setNewGoal(Integer.valueOf(this.currentGoal.getText()), currentUserID);
 			}
 		}
 	}
@@ -179,22 +179,22 @@ public class UserUIController{
 				}
 				if (this.compareToggle) {
 					if (!this.groupID.getText().isEmpty()) {
-						this.setLineChart("Group: " + this.groupID.getText(), this.statistics.getLinePointsGroup(this.groupID.getText(), this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the group
+						this.setLineChart("Group: " + this.groupID.getText(), this.backendController.getLinePointsGroup(this.groupID.getText(), this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the group
 					}
-					this.setLineChart("Average all users", this.statistics.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the average of all users
+					this.setLineChart("Average all users", this.backendController.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the average of all users
 				}
-				this.setLineChart("User ID: " + currentUserID, this.statistics.getLinePointsUser(currentUserID, this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the user.
+				this.setLineChart("User ID: " + currentUserID, this.backendController.getLinePointsUser(currentUserID, this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the user.
 			}
 			
 		} else {
 			//Piechart-mode
 			if (this.compareToggle) {
 				if (!this.groupID.getText().isEmpty()) { //Don't get stats if textfield is empty
-					this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, this.groupID.getText());
+					this.setPieChart(this.backendController.getGroupStats(this.groupID.getText()), this.groupChart, this.groupID.getText());
 				}
-				this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
+				this.setPieChart(this.backendController.getAllStats(), this.averageChart, "Average stats all users");
 			} 
-			this.setPieChart(this.statistics.getUserStats(currentUserID), this.userChart, "User ID: " + currentUserID);			
+			this.setPieChart(this.backendController.getUserStats(currentUserID), this.userChart, "User ID: " + currentUserID);			
 		}
 	}
 	

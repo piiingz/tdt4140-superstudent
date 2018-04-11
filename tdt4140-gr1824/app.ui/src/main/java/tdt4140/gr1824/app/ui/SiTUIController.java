@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tdt4140.gr1824.app.core.Statistics;
+import tdt4140.gr1824.app.core.UIBackendController;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class SiTUIController {
@@ -133,7 +133,7 @@ public class SiTUIController {
 	public Text instructionMessage;
 	
 	//Other/common variables
-	private Statistics statistics = new Statistics(new DatabaseCommunicator());
+	private UIBackendController backendController = new UIBackendController(new DatabaseCommunicator());
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	private boolean groupStatsToggle = false;
 	private int gymThreshold = 5;
@@ -256,9 +256,9 @@ public class SiTUIController {
 	
 	private void handlePieButton() {
 		if (this.groupStatsToggle && !this.groupID.getText().isEmpty()) {
-			this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, this.groupID.getText());
+			this.setPieChart(this.backendController.getGroupStats(this.groupID.getText()), this.groupChart, this.groupID.getText());
 		}
-		this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
+		this.setPieChart(this.backendController.getAllStats(), this.averageChart, "Average stats all users");
 	}
 	
 	private void destructPieView() {
@@ -293,10 +293,10 @@ public class SiTUIController {
 			}
 			if (this.groupStatsToggle) {
 				if (!this.groupID.getText().isEmpty()) {
-					this.setLineChart("Group: " + this.groupID.getText(), this.statistics.getLinePointsGroup(this.groupID.getText(),  this.startDate.getValue(), this.endDate.getValue(), this.comboBoxProgression.getValue()));					
+					this.setLineChart("Group: " + this.groupID.getText(), this.backendController.getLinePointsGroup(this.groupID.getText(),  this.startDate.getValue(), this.endDate.getValue(), this.comboBoxProgression.getValue()));					
 				}
 			}
-			this.setLineChart("Average all users", this.statistics.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBoxProgression.getValue()));
+			this.setLineChart("Average all users", this.backendController.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBoxProgression.getValue()));
 		}
 	}
 	
@@ -320,7 +320,7 @@ public class SiTUIController {
 	}
 	
 	private void handleGymStatButton() {
-		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
+		if (this.backendController.getNumberAtGym() <= this.gymThreshold) {
 			this.goodToGo.setVisible(true);
 		} else {
 			this.tooCrowded.setVisible(true);
@@ -375,7 +375,7 @@ public class SiTUIController {
 				this.popupDateError(event);
 				return;
 			}
-			this.statistics.createCompetition(this.comboBoxCreateComp.getValue(), Integer.valueOf(this.requiredHours.getText()), this.startDateCreateComp.getValue(), this.endDateCreateComp.getValue(), this.competitionDescription.getText(), this.prizeDescription.getText());			
+			this.backendController.createCompetition(this.comboBoxCreateComp.getValue(), Integer.valueOf(this.requiredHours.getText()), this.startDateCreateComp.getValue(), this.endDateCreateComp.getValue(), this.competitionDescription.getText(), this.prizeDescription.getText());			
 		}
 	}
 	

@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
-import tdt4140.gr1824.app.core.Statistics;
+import tdt4140.gr1824.app.core.UIBackendController;
 
 public class OldSitUIController{ 
 	
@@ -51,7 +51,7 @@ public class OldSitUIController{
 	@FXML
 	public PieChart averageChart; //PieChart used to display average stats for all users
 	
-	private Statistics statistics = new Statistics(new DatabaseCommunicator());
+	private UIBackendController backendController = new UIBackendController(new DatabaseCommunicator());
 	private boolean groupStatsToggle = false; //State of the toggle button
 	private boolean progressionToggle = false;
 	private int gymThreshold = 5;
@@ -84,7 +84,7 @@ public class OldSitUIController{
 	
 	@FXML
 	public void handleRefreshButton() {
-		if (this.statistics.getNumberAtGym() <= this.gymThreshold) {
+		if (this.backendController.getNumberAtGym() <= this.gymThreshold) {
 			this.gymStatus.setText("Good to go");
 			this.gymStatus.setFill(Color.GREEN);
 		} else {
@@ -149,17 +149,17 @@ public class OldSitUIController{
 				}
 				if (this.groupStatsToggle) {
 					if (!this.groupID.getText().isEmpty()) {
-						this.setLineChart("Group: " + this.groupID.getText(), this.statistics.getLinePointsGroup(this.groupID.getText(), this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the group
+						this.setLineChart("Group: " + this.groupID.getText(), this.backendController.getLinePointsGroup(this.groupID.getText(), this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the group
 					}
 				}
-				this.setLineChart("Average all users", this.statistics.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the average of all users
+				this.setLineChart("Average all users", this.backendController.getLinePointsAll(this.startDate.getValue(), this.endDate.getValue(), this.comboBox.getValue())); //SetLinechart for the average of all users
 			}
 		} else {
 			//Piechart-mode 
 			if (this.groupStatsToggle && !this.groupID.getText().isEmpty()) { 
-				this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, groupID.getText());							
+				this.setPieChart(this.backendController.getGroupStats(this.groupID.getText()), this.groupChart, groupID.getText());							
 			}
-			this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");			
+			this.setPieChart(this.backendController.getAllStats(), this.averageChart, "Average stats all users");			
 		}
 	}
 	

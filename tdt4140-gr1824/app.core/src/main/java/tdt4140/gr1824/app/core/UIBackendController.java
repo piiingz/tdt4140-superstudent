@@ -6,16 +6,16 @@ import java.time.LocalDate;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 import tdt4140.gr1824.app.mock.DummyClassDatabaseCommunicatorForStatisticsTest;
 
-public class Statistics {
+public class UIBackendController {
 
 	private DummyClassDatabaseCommunicatorForStatisticsTest dummydbCom;
 	private DatabaseCommunicator dbCom;
 	
-	public Statistics(DatabaseCommunicator dbcom) {
+	public UIBackendController(DatabaseCommunicator dbcom) {
 		this.dbCom = dbcom;
 	}
 	
-	public Statistics(DummyClassDatabaseCommunicatorForStatisticsTest dbcom) {
+	public UIBackendController(DummyClassDatabaseCommunicatorForStatisticsTest dbcom) {
 		this.dummydbCom = dbcom;
 	}
 	
