@@ -112,24 +112,24 @@ public class UIBackendController {
 		
 	}
 
-	public int[] getLinePointsGroup(String text, LocalDate startDate, LocalDate endDate, String areaName) {
+	public int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate endDate, String areaName) {
 		int[] retVal = {2,5,10,30,7,6,9};
 		System.out.println(startDate);
 		return retVal;
 	}
 
-	public int[] getLinePointsAll(LocalDate value, LocalDate value2, String string) {
+	public int[] getLinePointsAll(LocalDate startDate, LocalDate endDate, String areaName) {
 		int[] retVal = {7,8,13,17,2,20,50};
 		return retVal;
 	}
 
-	public int[] getLinePointsUser(int currentUserID, LocalDate value, LocalDate value2, String string) {
+	public int[] getLinePointsUser(int currentUserID, LocalDate startDate, LocalDate endDate, String areaName) {
 		int[] retVal = {20,10,14,15,30,24,19};
 		return retVal;
 	}
 
-	public void setNewGoal(Integer valueOf, int userID) {
-		System.out.println(valueOf);
+	public void setNewGoal(Integer goal, int userID) {
+		System.out.println(goal);
 	}
 
 	public int getNumberAtGym() {
