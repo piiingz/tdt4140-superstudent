@@ -1,4 +1,4 @@
-package web.server;
+package tdt4140.gr1824.web.server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,6 +20,6 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+        return "It's WORKING!!";
     }
 }

@@ -7,9 +7,7 @@
     <artifactId>tdt4140-gr1824</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>tdt4140-gr1824</groupId>
   <artifactId>tdt4140-gr1824.web.server</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>tdt4140-gr1824.web.server</name>
   <properties>
@@ -37,12 +35,26 @@
       <artifactId>jersey-hk2</artifactId>
     </dependency>
     
+    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-moxy -->
+<dependency>
+    <groupId>org.glassfish.jersey.media</groupId>
+    <artifactId>jersey-media-moxy</artifactId>
+    <version>2.27</version>
+</dependency>
+    
+    
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
     <version>5.1.38</version>
 </dependency>
+
+<dependency>
+			<groupId>tdt4140-gr1824</groupId>
+			<artifactId>tdt4140-gr1824.app.core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
     
     
   </dependencies>
@@ -54,8 +66,8 @@
         <version>2.5.1</version>
         <inherited>true</inherited>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>

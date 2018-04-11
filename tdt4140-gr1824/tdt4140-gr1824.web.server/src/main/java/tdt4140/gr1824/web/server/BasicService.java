@@ -1,4 +1,4 @@
-package web.server;
+package tdt4140.gr1824.web.server;
 
 import java.sql.*;
 
