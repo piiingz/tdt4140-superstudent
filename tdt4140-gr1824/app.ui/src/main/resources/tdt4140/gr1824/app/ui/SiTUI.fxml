@@ -22,27 +22,27 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="1202.0" style="-fx-background-color: #333645;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.SiTUIController">
       <AnchorPane layoutX="295.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="906.0" style="-fx-background-color: #ffffff;">
          <children>
-            <ImageView fx:id="pieIcon" fitHeight="61.0" fitWidth="64.0" layoutX="836.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="pieIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../icons/pie-chart.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="progressionIcon" fitHeight="61.0" fitWidth="64.0" layoutX="836.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="progressionIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../icons/linegraph.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="gymStatIcon" fitHeight="61.0" fitWidth="64.0" layoutX="836.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="gymStatIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../icons/cardiogram.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="competitionIcon" fitHeight="61.0" fitWidth="64.0" layoutX="836.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="competitionIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="@../icons/winner.png" />
+                  <Image url="@../icons/cup.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="smallPlus" fitHeight="27.0" fitWidth="27.0" layoutX="877.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="smallPlus" fitHeight="27.0" fitWidth="27.0" layoutX="878.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../icons/add.png" />
                </image>
@@ -101,7 +101,7 @@
                   <Image url="@../icons/students-cap.png" />
                </image>
             </ImageView>
-            <Text fx:id="instructionMessage" fill="#00a2d3" layoutX="194.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get started by clicking the panel to the left">
+            <Text fx:id="instructionMessage" fill="#00a2d3" layoutX="165.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get started by clicking the panel to the left">
                <font>
                   <Font name="Ebrima" size="30.0" />
                </font>
@@ -256,7 +256,7 @@
          <children>
             <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/winner.png" />
+                  <Image url="@../icons/cup.png" />
                </image>
                <HBox.margin>
                   <Insets left="15.0" top="10.0" />
@@ -279,7 +279,7 @@
          <children>
             <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/winner.png" />
+                  <Image url="@../icons/cup.png" />
                </image>
                <HBox.margin>
                   <Insets left="15.0" top="10.0" />
@@ -315,4 +315,27 @@
          <Font size="14.0" />
       </font>
    </JFXButton>
+   <HBox fx:id="welcomeScreen" layoutY="327.0" onMouseClicked="#handleWelcomeScreenClick" prefHeight="45.0" prefWidth="295.0" style="-fx-background-color: #ffffff;">
+      <children>
+         <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../icons/students-cap.png" />
+            </image>
+            <HBox.margin>
+               <Insets left="15.0" top="10.0" />
+            </HBox.margin>
+         </ImageView>
+         <Label text="Welcome screen" textFill="#7c8184">
+            <padding>
+               <Insets left="15.0" top="15.0" />
+            </padding>
+            <font>
+               <Font name="Calibri Light" size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="18.0" />
+            </HBox.margin>
+         </Label>
+      </children>
+   </HBox>
 </AnchorPane>

@@ -134,6 +134,10 @@ public class UIBackendController {
 		System.out.println(goal);
 	}
 
+	public String getGoal(int userID) {
+		return "25";
+	}
+	
 	public int getNumberAtGym() {
 		// TODO Auto-generated method stub
 		return 4;
@@ -154,6 +158,11 @@ public class UIBackendController {
 		return competitionNames;
 	}
 	
+	public ObservableList<String> getRewardNames(int userID) {
+		ObservableList<String> rewardNames = FXCollections.observableArrayList("Supernerd!","Eternal party");
+		return rewardNames;
+	}
+	
 	public String[] getCompetitionDetails(String competitionName) {
 		if (competitionName.equals("Get Fit or die trying")) { //[areaname, required hours, startdate, enddate, competition description, prize description]
 			String[] compInfo = {"SiT Trening", "879", "12.04.2018", "30.04.2018", "Bli så sykt bola slik at skjorta sprekker", "Gratis kaffe på stripa"};
@@ -171,11 +180,19 @@ public class UIBackendController {
 		return null;
 	}
 	
+	public String getStaydurationUserArea(String areaName, int userID) {
+		return 23 + " hours";
+	}
+	
 	public boolean competitionExists(String competitionName) {
 		return false;
 	}
 	
 	public static boolean userInDatabase(Integer userID) throws SQLException {
 		return DatabaseCommunicator.userInDatabase(userID);
+	}
+	
+	public void deleteUser(int userID) {
+		System.out.println("User delete works!");
 	}
 }

@@ -51,7 +51,10 @@ public class SiTUIController {
 	@FXML
 	public HBox createComp; //ID: 5
 	
-	private int adminID = 0; //Number used to identify which button was last clicked. From top to bottom: 1-5
+	@FXML
+	public HBox welcomeScreen; //ID: 6 
+	
+	private int adminID = 6; //Number used to identify which button was last clicked. From top to bottom: 1-5
 	
 	
 	//Pie chart statistics elements:
@@ -164,10 +167,11 @@ public class SiTUIController {
 	public Text createNewCompetition;
 	
 	@FXML
-	public ImageView competitionIcon;
+	public ImageView smallPlus;
 	
 	@FXML
-	public ImageView smallPlus;
+	public ImageView competitionIcon;
+	
 	//Welcome screen elements:
 	@FXML
 	public ImageView studCapLogo;
@@ -194,10 +198,10 @@ public class SiTUIController {
 	@FXML
 	public void handleEnableGroupToggleButton() {
 		this.groupStatsToggle = !this.groupStatsToggle;
-		if (this.groupStatsToggle == false) {
-			this.groupID.setDisable(true);
-		} else {
+		if (this.groupStatsToggle) {
 			this.groupID.setDisable(false);
+		} else {
+			this.groupID.setDisable(true);
 		}
 	}
 	
@@ -258,11 +262,15 @@ public class SiTUIController {
 		this.initializeCreateCompView();
 	}
 	
-	private void resetHboxColor() {
-		if (this.adminID == 0) { //First time admin-panel is used this session
-			this.destructWelcomeView();
-		}
-		
+	@FXML
+	public void handleWelcomeScreenClick() {
+		this.resetHboxColor();
+		this.adminID = 6;
+		this.welcomeScreen.setStyle("-fx-background-color: #FFFFFF;");
+		this.initializeWelcomeView();
+	}
+	
+	private void resetHboxColor() {	
 		if (this.adminID == 1) {
 			this.piechartStat.setStyle(null);
 			this.destructPieView();
@@ -278,11 +286,29 @@ public class SiTUIController {
 		} else if (this.adminID == 5) {
 			this.createComp.setStyle(null);
 			this.destructCreateCompView();
+		} else if (this.adminID == 6) {
+			this.welcomeScreen.setStyle(null);
+			this.destructWelcomeView();
 		}
-		
-		
 	}
-	//Handle welcome screen:
+	
+	@FXML
+	public void handleReturnButton(ActionEvent event) throws IOException {
+		/*Sets interface described in MainMenuUI.fxml as the scene in the primary Stage*/
+		Parent sitViewParent = FXMLLoader.load(getClass().getResource("MainMenuUI.fxml"));
+		Scene userViewScene = new Scene(sitViewParent);
+		Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow()); //Get stage from the action event
+		window.setScene(userViewScene);
+		window.show();
+	}
+	
+	//Handle welcome screen events:
+	private void initializeWelcomeView() {
+		this.welcomeMessage.setVisible(true);
+		this.studCapLogo.setVisible(true);
+		this.instructionMessage.setVisible(true);
+	}
+	
 	private void destructWelcomeView() {
 		this.studCapLogo.setVisible(false);
 		this.welcomeMessage.setVisible(false);
@@ -362,7 +388,7 @@ public class SiTUIController {
 		this.groupID.setVisible(false);
 	}
 	
-	//Handle Gym-status events:
+	//Handle Gym status events:
 	private void initializeGymStatView() {
 		this.gymStatIcon.setVisible(true);
 		this.gymStatText.setVisible(true);
@@ -429,9 +455,9 @@ public class SiTUIController {
 		this.competitionIcon.setVisible(false);
 		this.viewCompText.setVisible(false);
 		this.bottomRightButton.setVisible(false);
+		this.comboBoxViewComp.setVisible(false);
 		
 		//Center of view, all static elements:
-		this.comboBoxViewComp.setVisible(false);
 		this.compViewMedalIcon.setVisible(false);
 		this.compViewDescription.setVisible(false);
 		this.compViewPrize.setVisible(false);
@@ -497,24 +523,7 @@ public class SiTUIController {
 		this.bottomRightButton.setVisible(false);
 	}
 	
-	
-	
-	
-	
-	
-	//Return
-	@FXML
-	public void handleReturnButton(ActionEvent event) throws IOException {
-		/*Sets interface described in MainMenuUI.fxml as the scene in the primary Stage*/
-		Parent sitViewParent = FXMLLoader.load(getClass().getResource("MainMenuUI.fxml"));
-		Scene userViewScene = new Scene(sitViewParent);
-		Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow()); //Get stage from the action event
-		window.setScene(userViewScene);
-		window.show();
-	}
-	
-	
-	
+	//Helper methods:
 	private void setLineChart(String lineName, int[] dataPoints) {
 		XYChart.Series series = new XYChart.Series();
         series.setName(lineName);
