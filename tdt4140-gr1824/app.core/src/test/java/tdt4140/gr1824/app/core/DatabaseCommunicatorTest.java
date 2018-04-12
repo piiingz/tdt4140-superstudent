@@ -110,4 +110,6 @@ public class DatabaseCommunicatorTest {
 		DatabaseCommunicator.getGroupStats("None");
 	}
 	
+	
+	
 }

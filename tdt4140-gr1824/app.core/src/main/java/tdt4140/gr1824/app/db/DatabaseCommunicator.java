@@ -104,7 +104,6 @@ public class DatabaseCommunicator {
 		return returnSet;
 	}
 	
-	// Add weeklygoal
 	public static void createUser(String fullname, String gender, int schoolYear, String major, int weeklygoal) throws SQLException {
 		
 		Integer nextID = getNextPersonID();
@@ -355,5 +354,29 @@ public class DatabaseCommunicator {
 		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
 
 		return userStatset;
+	}
+
+	public static void updateGoal(int hours, int personID) {
+		
+		String query = "UPDATE person SET weeklygoal = "+hours+" WHERE personID = "+personID+";";
+		
+		updateTable(query);
+		
+		closeConnection();
+		
+	}
+	
+	public static int getNumberAtGym() throws SQLException {
+		
+		int numberAtGym = 0;
+		
+		rs = getResultSet("select COUNT(personID) as num FROM currentstay WHERE areaID = 2;");
+		
+		if (rs.next()) {
+			numberAtGym = rs.getInt("num");
+		}
+		closeConnection();
+		
+		return numberAtGym;
 	}
 }
