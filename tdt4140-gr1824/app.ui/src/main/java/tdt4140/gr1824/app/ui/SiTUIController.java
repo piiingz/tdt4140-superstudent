@@ -1,6 +1,7 @@
 package tdt4140.gr1824.app.ui;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -149,6 +150,9 @@ public class SiTUIController {
 	
 	@FXML
 	public DatePicker endDateCreateComp;
+	
+	@FXML
+	public TextField competitionNameCreate;
 	
 	@FXML
 	public TextField prizeDescription;
@@ -330,9 +334,14 @@ public class SiTUIController {
 		this.lineChart.getData().clear();
 		if (this.comboBoxProgression.getValue() != null && this.startDate.getValue() != null && this.endDate.getValue() != null) {
 			if(!this.startDate.getValue().isBefore(this.endDate.getValue())) {
-				this.popupDateError(event);
+				this.popupErrorMessage(event, "Start date must be before end date!");
+				return;
+			} 
+			if(this.startDate.getValue().getDayOfWeek() != DayOfWeek.MONDAY || this.endDate.getValue().getDayOfWeek() != DayOfWeek.SUNDAY) {
+				this.popupErrorMessage(event, "Start date must be a monday!\n End date must be a Sunday");
 				return;
 			}
+			
 			if (this.groupStatsToggle) {
 				if (!this.groupID.getText().isEmpty()) {
 					this.setLineChart("Group: " + this.groupID.getText(), this.backendController.getLinePointsGroup(this.groupID.getText(),  this.startDate.getValue(), this.endDate.getValue(), this.comboBoxProgression.getValue()));					
@@ -442,6 +451,7 @@ public class SiTUIController {
 	
 	//Handle create new competition events:
 	private void initializeCreateCompView() {
+		this.competitionNameCreate.setVisible(true);
 		this.comboBoxCreateComp.setVisible(true);
 		this.comboBoxCreateComp.setItems(this.comboBoxElements);
 		this.requiredHours.setVisible(true);
@@ -457,16 +467,24 @@ public class SiTUIController {
 	}
 	
 	private void handleCreateCompButton(ActionEvent event) {
-		if (this.comboBoxCreateComp.getValue() != null && this.startDateCreateComp.getValue() != null && this.endDateCreateComp.getValue() != null && !this.requiredHours.getText().isEmpty() && !this.competitionDescription.getText().isEmpty() && !this.prizeDescription.getText().isEmpty()) {
+		if (!this.competitionNameCreate.getText().isEmpty() && this.comboBoxCreateComp.getValue() != null && this.startDateCreateComp.getValue() != null && this.endDateCreateComp.getValue() != null && !this.requiredHours.getText().isEmpty() && !this.competitionDescription.getText().isEmpty() && !this.prizeDescription.getText().isEmpty()) {
 			if (!this.startDateCreateComp.getValue().isBefore(this.endDateCreateComp.getValue())) {
-				this.popupDateError(event);
+				this.popupErrorMessage(event, "Start date must be before end date!");
 				return;
 			}
-			this.backendController.createCompetition(this.comboBoxCreateComp.getValue(), Integer.valueOf(this.requiredHours.getText()), this.startDateCreateComp.getValue(), this.endDateCreateComp.getValue(), this.competitionDescription.getText(), this.prizeDescription.getText());			
+			if(this.startDateCreateComp.getValue().getDayOfWeek() != DayOfWeek.MONDAY || this.endDateCreateComp.getValue().getDayOfWeek() != DayOfWeek.SUNDAY) {
+				this.popupErrorMessage(event, "Start date must be a monday!\n End date must be a Sunday");
+				return;
+			}
+			if (this.backendController.competitionExists(this.competitionNameCreate.getText())) {
+				return;
+			}
+			this.backendController.createCompetition(this.competitionNameCreate.getText(), this.comboBoxCreateComp.getValue(), Integer.valueOf(this.requiredHours.getText()), this.startDateCreateComp.getValue(), this.endDateCreateComp.getValue(), this.competitionDescription.getText(), this.prizeDescription.getText());			
 		}
 	}
 	
 	private void destructCreateCompView() {
+		this.competitionNameCreate.setVisible(false);
 		this.comboBoxCreateComp.setVisible(false);
 		this.requiredHours.setVisible(false);
 		this.startDateCreateComp.setVisible(false);
@@ -523,12 +541,12 @@ public class SiTUIController {
 		chart.setTitle(groupName);
 	}
 	
-	private void popupDateError(ActionEvent event) {
+	private void popupErrorMessage(ActionEvent event, String errorMessage) {
 		final Stage errMessage = new Stage();
 		errMessage.initModality(Modality.APPLICATION_MODAL);
 		errMessage.initOwner((Stage) (((Node) event.getSource()).getScene().getWindow())); //Set primaryStage as owner
 		VBox errMessageVbox = new VBox(20);
-		errMessageVbox.getChildren().add(new Text("Start date must be before end date."));
+		errMessageVbox.getChildren().add(new Text(errorMessage));
 		Scene errMessageScene = new Scene(errMessageVbox, 300, 100);
 		errMessage.setScene(errMessageScene);
 		errMessage.show();

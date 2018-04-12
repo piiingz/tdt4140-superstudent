@@ -139,13 +139,14 @@ public class UIBackendController {
 		return 4;
 	}
 	
-	public void createCompetition(String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) {
+	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) {
 		System.out.println("Areaname: " + areaName);
 		System.out.println("Required hours: " + requiredHours);
 		System.out.println("Start date: " + startDate);
 		System.out.println("End date: " + endDate);
 		System.out.println("Competition description: " + competitionDescription);
 		System.out.println("Prize description: " + prizeDescription);
+		System.out.println("Competition name: " + competitionName);
 	}
 	
 	public ObservableList<String> getAllCompetitionNames() {
@@ -168,5 +169,9 @@ public class UIBackendController {
 			return compInfo;
 		} 
 		return null;
+	}
+	
+	public boolean competitionExists(String competitionName) {
+		return false;
 	}
 }
