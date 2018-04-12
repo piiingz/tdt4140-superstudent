@@ -95,6 +95,48 @@ public class SiTUIController {
 	@FXML
 	public Text viewCompText;
 	
+	@FXML
+	public ComboBox<String> comboBoxViewComp;
+	
+	@FXML
+	public ImageView compViewMedalIcon;
+	
+	@FXML
+	public Text compViewDescription;
+	
+	@FXML
+	public Text compViewPrize;
+	
+	@FXML
+	public Text compViewStartDate;
+	
+	@FXML
+	public Text compViewEndDate;
+	
+	@FXML
+	public Text compViewCompetitionArea;
+	
+	@FXML
+	public Text compViewRequiredHours;
+	
+	@FXML
+	public Text compViewDescriptionVal;
+	
+	@FXML
+	public Text compViewPrizeVal;
+	
+	@FXML
+	public Text compViewStartDateVal;
+	
+	@FXML
+	public Text compViewEndDateVal;
+	
+	@FXML
+	public Text compViewCompetitionAreaVal;
+	
+	@FXML
+	public Text compViewRequiredHoursVal;
+	
 	//Create new competition elements:
 	@FXML
 	public ComboBox<String> comboBoxCreateComp;
@@ -339,18 +381,63 @@ public class SiTUIController {
 	private void initializeViewCompView() {
 		this.competitionIcon.setVisible(true);
 		this.viewCompText.setVisible(true);
-		this.bottomRightButton.setText("Refresh");
+		this.bottomRightButton.setText("View");
 		this.bottomRightButton.setVisible(true);
+		this.comboBoxViewComp.setVisible(true);
+		this.comboBoxViewComp.setItems(this.backendController.getAllCompetitionNames());
+		
+		//Center of view, all static elements:
+		this.compViewMedalIcon.setVisible(true);
+		this.compViewDescription.setVisible(true);
+		this.compViewPrize.setVisible(true);
+		this.compViewStartDate.setVisible(true);
+		this.compViewEndDate.setVisible(true);
+		this.compViewCompetitionArea.setVisible(true);
+		this.compViewRequiredHours.setVisible(true);
 	}
 	
 	private void handleViewCompButton() {
-		
+		if (this.comboBoxViewComp.getValue() != null) {
+			String[] compInfo = this.backendController.getCompetitionDetails(this.comboBoxViewComp.getValue());
+			
+			this.compViewCompetitionAreaVal.setText(compInfo[0]);
+			this.compViewRequiredHoursVal.setText(compInfo[1]);
+			this.compViewStartDateVal.setText(compInfo[2]);
+			this.compViewEndDateVal.setText(compInfo[3]);
+			this.compViewDescriptionVal.setText(compInfo[4]);
+			this.compViewPrizeVal.setText(compInfo[5]);
+			
+			this.compViewCompetitionAreaVal.setVisible(true);
+			this.compViewRequiredHoursVal.setVisible(true);
+			this.compViewStartDateVal.setVisible(true);
+			this.compViewEndDateVal.setVisible(true);
+			this.compViewDescriptionVal.setVisible(true);
+			this.compViewPrizeVal.setVisible(true);
+		}
 	}
 	
 	private void destructViewCompView() {
 		this.competitionIcon.setVisible(false);
 		this.viewCompText.setVisible(false);
 		this.bottomRightButton.setVisible(false);
+		
+		//Center of view, all static elements:
+		this.comboBoxViewComp.setVisible(false);
+		this.compViewMedalIcon.setVisible(false);
+		this.compViewDescription.setVisible(false);
+		this.compViewPrize.setVisible(false);
+		this.compViewStartDate.setVisible(false);
+		this.compViewEndDate.setVisible(false);
+		this.compViewCompetitionArea.setVisible(false);
+		this.compViewRequiredHours.setVisible(false);
+		
+		//Center of view, dynamic elements:
+		this.compViewCompetitionAreaVal.setVisible(false);
+		this.compViewRequiredHoursVal.setVisible(false);
+		this.compViewStartDateVal.setVisible(false);
+		this.compViewEndDateVal.setVisible(false);
+		this.compViewDescriptionVal.setVisible(false);
+		this.compViewPrizeVal.setVisible(false);
 	}
 	
 	//Handle create new competition events:

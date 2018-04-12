@@ -3,6 +3,8 @@ package tdt4140.gr1824.app.core;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 import tdt4140.gr1824.app.mock.DummyClassDatabaseCommunicatorForStatisticsTest;
 
@@ -144,5 +146,27 @@ public class UIBackendController {
 		System.out.println("End date: " + endDate);
 		System.out.println("Competition description: " + competitionDescription);
 		System.out.println("Prize description: " + prizeDescription);
+	}
+	
+	public ObservableList<String> getAllCompetitionNames() {
+		ObservableList<String> competitionNames = FXCollections.observableArrayList("Get Fit or die trying","Supernerd!","Eternal party","Stranger in T-town");
+		return competitionNames;
+	}
+	
+	public String[] getCompetitionDetails(String competitionName) {
+		if (competitionName.equals("Get Fit or die trying")) { //[areaname, required hours, startdate, enddate, competition description, prize description]
+			String[] compInfo = {"SiT Trening", "879", "12.04.2018", "30.04.2018", "Bli så sykt bola slik at skjorta sprekker", "Gratis kaffe på stripa"};
+			return compInfo;
+		} else if (competitionName.equals("Supernerd!")) {
+			String[] compInfo = {"Gløshaugen", "563", "10.04.2018", "20.04.2018", "Bli smartere enn den smarteste", "Hele innholdet til akademika"};
+			return compInfo;
+		} else if (competitionName.equals("Eternal party")) {
+			String[] compInfo = {"Samfundet", "700", "01.04.2018", "05.05.2018", "Nyt livet! Ha det gøy!", "Lifetime supply av tequila shots for deg og 6 venner"};
+			return compInfo;
+		} else if (competitionName.equals("Stranger in T-town")) {
+			String[] compInfo = {"Other", "1250", "01.04.2018", "30.04.2018", "Du henger ikke mye på de populære stedene i Trondheim...", "Kom deg på skolen!"};
+			return compInfo;
+		} 
+		return null;
 	}
 }
