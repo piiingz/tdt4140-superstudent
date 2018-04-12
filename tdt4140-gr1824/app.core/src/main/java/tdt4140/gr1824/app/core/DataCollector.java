@@ -29,7 +29,7 @@ public class DataCollector {
 		String parsedResult = parseNMEA(data);
 		if (parsedResult != null) {
 			this.lastParseResult = parsedResult;
-			interpreter.receive(parsedResult);
+		//	interpreter.receive(parsedResult);
 		}
 	}
 	
