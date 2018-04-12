@@ -101,17 +101,17 @@ public class DatabaseCommunicator {
 		starttime = starttime.substring(0, starttime.length() - 2);
 		areaName = getAreaName(areaID);
 		String[] returnSet = {areaName,starttime};
-		System.out.println("Starttime: "+starttime+" Areaname: "+areaName);
 		return returnSet;
 	}
 	
-	public static void createUser(String fullname, String gender, int schoolYear, String major) throws SQLException {
+	// Add weeklygoal
+	public static void createUser(String fullname, String gender, int schoolYear, String major, int weeklygoal) throws SQLException {
 		
 		Integer nextID = getNextPersonID();
 		
 		System.out.println("Here is the information you provided:\r\n"+"Fullname: "+fullname+", Gender: "+gender+", Course: "+major+", Year: "+schoolYear);
 		
-		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"');";
+		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"', "+weeklygoal+");";
 		String sql2 = "INSERT INTO currentstay VALUES ("+nextID+", 4, current_timestamp);";
 		
 		updateTable(sql1);
@@ -183,7 +183,7 @@ public class DatabaseCommunicator {
 		return areaID;
 	}
 	
-	public static void addStay(String starttime, Long duration, String areaName, int userID) throws SQLException {
+	public static void addStay(String starttime, String stoptime, Long duration, String areaName, int userID) throws SQLException {
 		
 		rs = getResultSet("SELECT * FROM definedarea WHERE areaname = '"+areaName+"'");
 		Integer areaID = 0;
@@ -192,7 +192,7 @@ public class DatabaseCommunicator {
 			areaID = rs.getInt("areaID");
 		}
 		
-		updateTable("INSERT INTO stay (starttime, duration, personID, areaID) VALUES('"+starttime+"', "+duration+", "+userID+", "+areaID+");");
+		updateTable("INSERT INTO stay (starttime, stoptime, duration, personID, areaID) VALUES('"+starttime+"', '"+stoptime+"', "+duration+", "+userID+", "+areaID+");");
 		
 		closeConnection();
 		

@@ -32,10 +32,11 @@ public class Interpreter {
 			return;
 		}
 		else {
-			System.out.println(inDefinedArea(location).getName());
-			Date currentTime = getCurrentTime();
+			String currentTime = dateToDatetimeString(getCurrentTime());
+			
+			
 			this.stayLog.logStay(currentStartTime, currentTime, currentAreaName, currentUserID);
-			DatabaseCommunicator.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), this.dateToDatetimeString(currentTime));
+			DatabaseCommunicator.updateCurrentStay(currentUserID, inDefinedArea(location).getName(), currentTime);
 			}
 		}
 	
@@ -51,7 +52,6 @@ public class Interpreter {
 		return location;
 	}
 	
-	//Formats a Date to a string for the database.	
 	public Area inDefinedArea(Location location) {
 		for (Area area: DefinedAreas.areas) {
 			if(area.inArea(location)) {
@@ -64,10 +64,6 @@ public class Interpreter {
 	//Formats a date to a string for the database.
 	public String dateToDatetimeString(Date date) {
 		return ""+String.format("%1$tY-%1$tm-%1$td", date)+" "+String.format("%1$tT", date);
-	}
-	public static void main(String[] args) throws SQLException {
-		Interpreter interpreter = new Interpreter();
-		interpreter.receive("5,06325.0761,01024.2219");
 	}
 }
 

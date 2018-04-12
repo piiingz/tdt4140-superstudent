@@ -22,7 +22,7 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testCreateUser() {
 		try {
-			DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM");
+			DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM", 40);
 			int personID = DatabaseCommunicator.getNextPersonID()-1;
 			assertTrue(DatabaseCommunicator.userInDatabase(personID) == true);
 		}
