@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import tdt4140.gr1824.app.core.UIBackendController;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UserLoginController {
@@ -52,7 +53,7 @@ public class UserLoginController {
 			return false;
 		}
 		if (this.passwordField.getText().equals("password") && this.isNumber(this.userID.getText())){
-			if (DatabaseCommunicator.userInDatabase(Integer.valueOf(this.userID.getText()))){
+			if (UIBackendController.userInDatabase(Integer.valueOf(this.userID.getText()))){
 				return true;
 			}			
 		}

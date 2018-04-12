@@ -174,4 +174,8 @@ public class UIBackendController {
 	public boolean competitionExists(String competitionName) {
 		return false;
 	}
+	
+	public static boolean userInDatabase(Integer userID) throws SQLException {
+		return DatabaseCommunicator.userInDatabase(userID);
+	}
 }
