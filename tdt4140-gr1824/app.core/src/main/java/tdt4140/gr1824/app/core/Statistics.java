@@ -1,6 +1,11 @@
 package tdt4140.gr1824.app.core;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.time.LocalDate;
 
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 import tdt4140.gr1824.app.mock.DummyClassDatabaseCommunicatorForStatisticsTest;
@@ -110,4 +115,65 @@ public class Statistics {
 		return this.dummydbCom.getAllStats();
 		
 	}
+	
+	public static List<Integer> getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+		List<Integer> weeklyHoursAll = new ArrayList<Integer>();
+		
+		while (startDate.isBefore(stopDate)) {
+			String startTime = localDateToStartString(startDate);
+			String endTime = localDateToEndString(startDate.plusWeeks(1));
+			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, areaName));
+			startDate = startDate.plusWeeks(1);
+		}
+		return weeklyHoursAll;
+	}
+	
+	public static List<Integer> getLinePointsGroup(String groupID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+		List<Integer> weeklyHoursGroup = new ArrayList<Integer>();
+		
+		while (startDate.isBefore(stopDate)) {
+			String startTime = localDateToStartString(startDate);
+			String endTime = localDateToEndString(startDate.plusWeeks(1));
+			weeklyHoursGroup.add(DatabaseCommunicator.getWeeklyHoursGroup(groupID, startTime, endTime, areaName));
+			startDate = startDate.plusWeeks(1);
+		}
+		return weeklyHoursGroup;
+	}
+	
+	public static List<Integer> getLinePointsUser(int userID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+		List<Integer> weeklyHours = new ArrayList<Integer>();
+		
+		while (startDate.isBefore(stopDate)) {
+			String startTime = localDateToStartString(startDate);
+			String endTime = localDateToEndString(startDate.plusWeeks(1));
+			weeklyHours.add(DatabaseCommunicator.getWeeklyHoursUser(userID, startTime, endTime, areaName));
+			startDate = startDate.plusWeeks(1);
+		}
+		return weeklyHours;
+	}
+	
+	private static String localDateToStartString (LocalDate localdate) {
+		return ""+String.format("%1$tY-%1$tm-%1$td", localdate)+" 00:00:00";
+	}
+	
+	private static String localDateToEndString (LocalDate localdate) {
+		return ""+String.format("%1$tY-%1$tm-%1$td", localdate)+" 23:59:59";
+	}
+	
+	public static void main(String[] args) throws SQLException {
+		LocalDate startDate = LocalDate.parse("2018-04-02");
+		LocalDate stopDate = LocalDate.parse("2018-05-03");
+		System.out.println(getLinePointsUser(5,startDate, stopDate, "glos"));
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
