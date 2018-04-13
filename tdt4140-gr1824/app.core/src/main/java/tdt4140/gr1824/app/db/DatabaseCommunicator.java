@@ -2,6 +2,9 @@ package tdt4140.gr1824.app.db;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import java.sql.ResultSet;
@@ -101,17 +104,16 @@ public class DatabaseCommunicator {
 		starttime = starttime.substring(0, starttime.length() - 2);
 		areaName = getAreaName(areaID);
 		String[] returnSet = {areaName,starttime};
-		System.out.println("Starttime: "+starttime+" Areaname: "+areaName);
 		return returnSet;
 	}
 	
-	public static void createUser(String fullname, String gender, int schoolYear, String major) throws SQLException {
+	public static void createUser(String fullname, String gender, int schoolYear, String major, int weeklygoal) throws SQLException {
 		
 		Integer nextID = getNextPersonID();
 		
 		System.out.println("Here is the information you provided:\r\n"+"Fullname: "+fullname+", Gender: "+gender+", Course: "+major+", Year: "+schoolYear);
 		
-		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"');";
+		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"', "+weeklygoal+");";
 		String sql2 = "INSERT INTO currentstay VALUES ("+nextID+", 4, current_timestamp);";
 		
 		updateTable(sql1);
@@ -157,13 +159,149 @@ public class DatabaseCommunicator {
 		}
 		closeConnection();
 		return nextID;
-	}		
+	}
+	
+	public static void addCompetition(String name, int areaID, int hours, String startdate, String stopdate, String description, String prize) throws SQLException {
+		updateTable("INSERT INTO competition VALUES('"+name+"', "+areaID+", "+hours+", '"+startdate+"', '"+stopdate+"', '"+description+"', '"+prize+"');");
+		closeConnection();
+	}
+	
+	
+	// Returns the list of winners of a competition, given the competition name
+	public static List<String> getWinners(String name) throws SQLException {
+		List<String> winners = new ArrayList<String>();
+		String query = "SELECT areaID, startdate, stopdate, hours from competition where competitionName = '"+name+"';";
+		ResultSet rs = getResultSet(query);
+		
+		if (!rs.next()) {
+			return null;
+		}
+		
+		int areaID = rs.getInt("areaID");
+		int duration = rs.getInt("hours");
+		String starttime = rs.getString("startdate");
+		String stoptime = rs.getString("stopdate");
+		List<Integer> stays = getDurationOfStays(starttime, stoptime, areaID); // Returns [userID, time(minutes), userID2, time(minutes)]
+		System.out.println(duration);
+		System.out.println(stays);
+		
+		for (int i = 0; i <= stays.size()-1; i+=2) {
+			if (stays.get(i+1) >= duration*60) {
+				ResultSet rs1 = getResultSet("SELECT fullname from person where personID = "+stays.get(i)+";");
+				if (rs1.next()) {
+					winners.add(rs1.getString("fullname"));
+				}
+				closeConnection();
+			}
+		}
+
+		System.out.println(winners);
+		closeConnection();
+		return winners;
+	}
+	
+	public static List<String> getAllCompetitionNames() throws SQLException {
+		List<String> names = new ArrayList<String>();
+		String query = "SELECT competitionName from competition;";
+		ResultSet rs = getResultSet(query);
+		
+		while (rs.next()) {
+			names.add(rs.getString("competitionName"));
+		}	
+		
+		closeConnection();
+		return names;
+	}
+	
+	public static String getCompetitionDescription(String name) throws SQLException {
+		String description = "";
+		String query = "SELECT description from competition where competitionName = '"+name+"';";
+		ResultSet rs = getResultSet(query);		
+		
+		if (rs.next()) {
+			description = rs.getString("description");
+		}
+		
+		closeConnection();
+		return description;
+	}
+	
+	public static int getCompetitionAreaID(String name) throws SQLException {
+		String query = "SELECT areaID from competition where competitionName = '"+name+"';";
+		ResultSet rs = getResultSet(query);
+		int areaID = 0;
+		
+		if (rs.next()) {
+			areaID = rs.getInt("areaID");
+		}
+		
+		closeConnection();
+		return areaID;
+	}
+	
+	public static int getCompetitionDuration(String name) throws SQLException {
+		String query = "SELECT hours from competition where competitionName = '"+name+"';";
+		ResultSet rs = getResultSet(query);
+		int duration = 0;
+		
+		if (rs.next()) {
+			duration = rs.getInt("hours");
+		}
+		
+		closeConnection();
+		return duration;
+	}
+	
+	// Returns an array of size two, containing the start- and stop date: [startdate, stopdate]
+	public static String[] getCompetitionDates(String name) throws SQLException {
+		String startdate = "";
+		String stopdate = "";
+		
+		String query = "SELECT startdate, stopdate from competition where competitionName = '"+name+"';";
+		ResultSet rs = getResultSet(query);
+		
+		if (rs.next()) {
+			startdate = rs.getString("startdate");
+			stopdate = rs.getString("stopdate");
+		}
+		
+		closeConnection();
+		String[] dates = {startdate, stopdate};	
+		
+		return dates;
+	}
+	
+	public static String getCompetitionPrize(String name) throws SQLException {
+		String prize = "";
+		String query = "SELECT prize from competition where competitionName = '"+name+"';";
+		ResultSet rs = getResultSet(query);
+		
+		if (rs.next()) {
+			prize = rs.getString("prize");
+		}
+		
+		closeConnection();
+		return prize;
+	}
+	
+	public static boolean competitionInDatabase(String name) throws SQLException {
+		boolean competitionInDB = false;
+		rs = getResultSet("SELECT * from competition where competitionName = '"+name+"';");
+		
+		if (rs.next()) {
+			competitionInDB = true;
+		}
+		
+		closeConnection();
+		return competitionInDB;
+	}
+	
 	
 	public static void addArea(String areaName) throws SQLException {
 		int areaID = getNextAreaID();
 		updateTable("INSERT INTO definedarea VALUES("+areaID+", '"+areaName+"');");
 		closeConnection();
-	}	
+	}
 	
 	public static void deleteArea(Integer areaID) {
 		
@@ -183,7 +321,7 @@ public class DatabaseCommunicator {
 		return areaID;
 	}
 	
-	public static void addStay(String starttime, Long duration, String areaName, int userID) throws SQLException {
+	public static void addStay(String starttime, String stoptime, Long duration, String areaName, int userID) throws SQLException {
 		
 		rs = getResultSet("SELECT * FROM definedarea WHERE areaname = '"+areaName+"'");
 		Integer areaID = 0;
@@ -192,7 +330,7 @@ public class DatabaseCommunicator {
 			areaID = rs.getInt("areaID");
 		}
 		
-		updateTable("INSERT INTO stay (starttime, duration, personID, areaID) VALUES('"+starttime+"', "+duration+", "+userID+", "+areaID+");");
+		updateTable("INSERT INTO stay (starttime, stoptime, duration, personID, areaID) VALUES('"+starttime+"', '"+stoptime+"', "+duration+", "+userID+", "+areaID+");");
 		
 		closeConnection();
 		
@@ -355,10 +493,5 @@ public class DatabaseCommunicator {
 		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
 
 		return userStatset;
-	}
-
-	public static boolean userExists(Integer valueOf) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 }
