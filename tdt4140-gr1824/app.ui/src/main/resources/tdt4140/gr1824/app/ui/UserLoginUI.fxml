@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.UserLoginController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="849.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <JFXTextField fx:id="userID" layoutX="357.0" layoutY="184.0" prefHeight="25.0" prefWidth="135.0" promptText="User ID" unFocusColor="#00a2d3" />
+            <JFXPasswordField fx:id="passwordField" layoutX="357.0" layoutY="236.0" promptText="Password" unFocusColor="#00a2d3" />
+            <JFXButton buttonType="RAISED" layoutX="693.0" layoutY="464.0" onAction="#handleLoginButton" prefHeight="44.0" prefWidth="142.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="Login" textFill="WHITE" />
+            <Text fill="#0d0000" layoutX="254.0" layoutY="76.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Superstudenten login">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="464.0" onAction="#handleReturnButton" prefHeight="44.0" prefWidth="142.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="Return" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

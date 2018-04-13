@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="rootAnchor" fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="849.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.MainMenuController"> 
+   <children>
+      <JFXButton layoutX="64.0" layoutY="50.0" text="takefocus" textFill="WHITE" />
+      <Text fill="#0d0000" layoutX="301.0" layoutY="53.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="SuperStudenten" wrappingWidth="317.166015625">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <JFXButton id="userMenuButton" fx:id="userButton" buttonType="RAISED" layoutX="301.0" layoutY="104.0" onAction="#handleUserButton" prefHeight="87.0" prefWidth="248.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="User" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXButton>
+      <JFXButton id="sitMenuButton" fx:id="sitButton" buttonType="RAISED" layoutX="301.0" layoutY="251.0" onAction="#handleSitButton" prefHeight="87.0" prefWidth="248.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="SiT" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
+=======
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
@@ -24,3 +53,4 @@
       </Text>
    </children>
 </AnchorPane>
+>>>>>>> refs/remotes/origin/dbBranch
