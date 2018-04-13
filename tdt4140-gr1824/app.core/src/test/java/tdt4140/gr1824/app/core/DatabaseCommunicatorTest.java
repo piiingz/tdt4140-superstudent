@@ -27,7 +27,7 @@ public class DatabaseCommunicatorTest {
 	@Test
 	public void testCreateUser() {
 		try {
-			DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM");
+			DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM", 40);
 			int personID = DatabaseCommunicator.getNextPersonID()-1;
 			assertTrue(DatabaseCommunicator.userInDatabase(personID) == true);
 		}
@@ -154,7 +154,6 @@ public class DatabaseCommunicatorTest {
 			// Deleting the same competition
 			DatabaseCommunicator.updateTable("DELETE from competition where competitionName = 'Test name';");
 			DatabaseCommunicator.closeConnection();
-	
 			assertTrue(got);
 			
 			
@@ -187,9 +186,6 @@ public class DatabaseCommunicatorTest {
 		}
 		
 	}
-
-
-
 }
 		
 

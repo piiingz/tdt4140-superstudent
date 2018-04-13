@@ -104,17 +104,16 @@ public class DatabaseCommunicator {
 		starttime = starttime.substring(0, starttime.length() - 2);
 		areaName = getAreaName(areaID);
 		String[] returnSet = {areaName,starttime};
-		System.out.println("Starttime: "+starttime+" Areaname: "+areaName);
 		return returnSet;
 	}
 	
-	public static void createUser(String fullname, String gender, int schoolYear, String major) throws SQLException {
+	public static void createUser(String fullname, String gender, int schoolYear, String major, int weeklygoal) throws SQLException {
 		
 		Integer nextID = getNextPersonID();
 		
 		System.out.println("Here is the information you provided:\r\n"+"Fullname: "+fullname+", Gender: "+gender+", Course: "+major+", Year: "+schoolYear);
 		
-		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"');";
+		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"', "+weeklygoal+");";
 		String sql2 = "INSERT INTO currentstay VALUES ("+nextID+", 4, current_timestamp);";
 		
 		updateTable(sql1);
@@ -315,7 +314,7 @@ public class DatabaseCommunicator {
 		return areaID;
 	}
 	
-	public static void addStay(String starttime, Long duration, String areaName, int userID) throws SQLException {
+	public static void addStay(String starttime, String stoptime, Long duration, String areaName, int userID) throws SQLException {
 		
 		rs = getResultSet("SELECT * FROM definedarea WHERE areaname = '"+areaName+"'");
 		Integer areaID = 0;
@@ -324,7 +323,7 @@ public class DatabaseCommunicator {
 			areaID = rs.getInt("areaID");
 		}
 		
-		updateTable("INSERT INTO stay (starttime, duration, personID, areaID) VALUES('"+starttime+"', "+duration+", "+userID+", "+areaID+");");
+		updateTable("INSERT INTO stay (starttime, stoptime, duration, personID, areaID) VALUES('"+starttime+"', '"+stoptime+"', "+duration+", "+userID+", "+areaID+");");
 		
 		closeConnection();
 		
@@ -569,12 +568,114 @@ public class DatabaseCommunicator {
 		closeConnection();
 		return compInfo;
 	}
-	
-	
-	public static void main(String[] args) throws SQLException {
-		getDurationOfStays("2018-04-06 00:00:00", "2018-04-10 23:59:59", 2);
-		System.out.println(getCompetitionNamesByUser(2));
-		System.out.println(getCompInfo(2, "Skoleflink"));
+
+	public static void updateGoal(int hours, int personID) {
+		
+		String query = "UPDATE person SET weeklygoal = "+hours+" WHERE personID = "+personID+";";
+		
+		updateTable(query);
+		
+		closeConnection();
+		
 	}
 	
+	public static int getNumberAtGym() throws SQLException {
+		
+		int numberAtGym = 0;
+		
+		rs = getResultSet("select COUNT(personID) as num FROM currentstay WHERE areaID = 2;");
+		
+		if (rs.next()) {
+			numberAtGym = rs.getInt("num");
+		}
+		closeConnection();
+		
+		return numberAtGym;
+	}
+
+	public static Integer getWeeklyHoursUser(int personID, String startTime, String stopTime, String areaName) throws SQLException {
+		int areaID = getAreaID(areaName);
+		int weeklyHours = 0;
+		String query = "select timeSpent as personHours from (select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttid, stoptid) as duration, personID from"
+				+"((select starttime as starttid, stoptime as stoptid, personID From stay as stay1 where starttime >= '"+startTime+"' AND stoptime <= '"+stopTime+"' AND areaID = "+areaID+" UNION "
+				+"select '"+startTime+"' as starttid, stoptime as stoptid, personID From stay as stay2 where starttime < '"+startTime+"' AND stoptime <= '"+stopTime+"' AND stoptime >= '"+startTime+"' AND areaID = "+areaID+" UNION " 
+				+"select starttime as starttid, '"+stopTime+"' as stoptid, personID from stay as stay3 where starttime >= '"+startTime+"' AND starttime <= '"+stopTime+"' AND stoptime > '"+stopTime+"' AND areaID = "+areaID+" UNION " 
+				+"SELECT starttime as starttid,  '"+stopTime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime >= '"+startTime+"' AND starttime <= '"+stopTime+"' UNION " 
+				+"SELECT '"+startTime+"' as starttid,  '"+stopTime+"' AS stoptid, personID from stay where areaID = "+areaID+" and starttime < '"+startTime+"' and stoptime > '"+stopTime+"' UNION " 
+				+"SELECT '"+startTime+"' as starttid,  '"+stopTime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime <= '"+startTime+"' )AS table1)) as durationspp group by personID) as personStats "
+				+"where personID = "+personID+";";
+	
+		getConnection();
+		ResultSet rs = getResultSet(query);
+		if (rs.next()) {
+			weeklyHours = rs.getInt("personHours");
+		}
+		closeConnection();
+		
+		return weeklyHours;
+	}
+
+	public static Integer getWeeklyHoursGroup(String groupID, String startTime, String stopTime, String areaName) throws SQLException {
+		int areaID = getAreaID(areaName);
+		
+		int weeklyHours = 0;
+		String query = "select avg(timeSpent) as genderAverage from (select timeSpent, gender from "
+				+"(select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttid, stoptid) as duration, personID from"
+				+"((select starttime as starttid, stoptime as stoptid, personID From stay as stay1 where starttime >= '"+startTime+"' AND stoptime <= '"+stopTime+"' AND areaID = "+areaID+" UNION "
+				+"select '"+startTime+"' as starttid, stoptime as stoptid, personID From stay as stay2 where starttime < '"+startTime+"' AND stoptime <= '"+stopTime+"' AND stoptime >= '"+startTime+"' AND areaID = "+areaID+" UNION " 
+				+"select starttime as starttid, '"+stopTime+"' as stoptid, personID from stay as stay3 where starttime >= '"+startTime+"' AND starttime <= '"+stopTime+"' AND stoptime > '"+stopTime+"' AND areaID = "+areaID+" UNION " 
+				+"SELECT starttime as starttid,  '"+stopTime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime >= '"+startTime+"' AND starttime <= '"+stopTime+"' UNION " 
+				+"SELECT '"+startTime+"' as starttid,  '"+stopTime+"' AS stoptid, personID from stay where areaID = "+areaID+" and starttime < '"+startTime+"' and stoptime > '"+stopTime+"' UNION " 
+				+"SELECT '"+startTime+"' as starttid,  '"+stopTime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime <= '"+startTime+"' )AS table1)) as durationspp group by personID) as tempGender inner join person on person.personID = tempGender.personID) as GenderStats where gender = '"+groupID+"';";
+		getConnection();
+		ResultSet rs = getResultSet(query);
+		if (rs.next()) {
+			weeklyHours = rs.getInt("genderAverage");
+		}
+		closeConnection();
+		
+		return weeklyHours;
+	}
+	
+	// Get weekly AVERAGE hours for all
+	public static Integer getWeeklyHoursAll(String startTime, String stopTime, String areaName) throws SQLException {
+		int areaID = getAreaID(areaName);
+		int weeklyHours = 0;
+		String query = "select avg(timeSpent) as allAverage from (select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttid, stoptid) as duration, personID from"
+				+"((select starttime as starttid, stoptime as stoptid, personID From stay as stay1 where starttime >= '"+startTime+"' AND stoptime <= '"+stopTime+"' AND areaID = "+areaID+" UNION "
+				+"select '"+startTime+"' as starttid, stoptime as stoptid, personID From stay as stay2 where starttime < '"+startTime+"' AND stoptime <= '"+stopTime+"' AND stoptime >= '"+startTime+"' AND areaID = "+areaID+" UNION " 
+				+"select starttime as starttid, '"+stopTime+"' as stoptid, personID from stay as stay3 where starttime >= '"+startTime+"' AND starttime <= '"+stopTime+"' AND stoptime > '"+stopTime+"' AND areaID = "+areaID+" UNION " 
+				+"SELECT starttime as starttid,  '"+stopTime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime >= '"+startTime+"' AND starttime <= '"+stopTime+"' UNION " 
+				+"SELECT '"+startTime+"' as starttid,  '"+stopTime+"' AS stoptid, personID from stay where areaID = "+areaID+" and starttime < '"+startTime+"' and stoptime > '"+stopTime+"' UNION " 
+				+"SELECT '"+startTime+"' as starttid,  '"+stopTime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime <= '"+startTime+"' )AS table1)) as durationspp group by personID) as allStats;";
+		getConnection();
+		ResultSet rs = getResultSet(query);
+		if (rs.next()) {
+			weeklyHours = rs.getInt("allAverage");
+		}
+		closeConnection();
+		
+		return weeklyHours;
+		
+	}
+	
+	public static int getGoal(int personID) throws SQLException {
+		int goal = 0;
+		
+		rs = getResultSet("select weeklygoal as num FROM person WHERE personID = "+personID+";");
+		
+		if (rs.next()) {
+			goal = rs.getInt("num");
+		}
+		closeConnection();
+		
+		return goal;
+	}
+
 }
+
+
+
+
+
+
