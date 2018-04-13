@@ -1,6 +1,7 @@
 package tdt4140.gr1824.app.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
@@ -36,6 +37,35 @@ public class DatabaseCommunicatorTest {
 		}
 	}
 	
+	//Disse 4 testene er nye
+	@Test
+	public void testUpdateGoal() throws SQLException {
+		int userID = DatabaseCommunicator.getNextPersonID()-1;
+		int goal = 75;
+		DatabaseCommunicator.updateGoal(goal, userID);
+		assertEquals(DatabaseCommunicator.getGoal(userID), goal);
+	}
+	
+	@Test
+	public void testGetWeeklyHoursUser() throws SQLException {
+		int userID = DatabaseCommunicator.getNextPersonID()-1;
+		assertTrue(DatabaseCommunicator.getWeeklyHoursUser(userID, "2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
+	}
+	
+	@Test
+	public void testGetCompetitionNamesByUser() throws SQLException {
+		int userID = DatabaseCommunicator.getNextPersonID()-1;
+		assertTrue(DatabaseCommunicator.getCompetitionNamesByUser(userID) instanceof List<?>);
+	}
+	/*
+	 * 
+	 * Venter til addCompetitionTest
+	@Test
+	public void testGetCompInfo() throws SQLException {
+		int userID = DatabaseCommunicator.getNextPersonID()-1;
+		assertTrue(DatabaseCommunicator.getCompInfo(userID, ) instanceof List<?>);
+	}
+	*/
 	@Test
 	public void testDeleteUser() {
 		try {
@@ -185,6 +215,27 @@ public class DatabaseCommunicatorTest {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//Nye tester
+	@Test
+	public void testGetWeeklyHoursAll() throws SQLException {
+		assertTrue(DatabaseCommunicator.getWeeklyHoursAll("2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
+	}
+	
+	@Test
+	public void testGetWeeklyHoursGroup() throws SQLException {
+		assertTrue(DatabaseCommunicator.getWeeklyHoursGroup("male", "2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
+	}
+	
+	@Test
+	public void testGetNumberAtGym() throws SQLException {
+		assertTrue(DatabaseCommunicator.getNumberAtGym() >= 0);
+	}
+	
+	@Test
+	public void testGetDurationOfStays() throws SQLException {
+		assertTrue(DatabaseCommunicator.getDurationOfStays("2018-04-04 00:00:00","2018-04-05 00:00:00",1) instanceof List<?>);
 	}
 }
 		
