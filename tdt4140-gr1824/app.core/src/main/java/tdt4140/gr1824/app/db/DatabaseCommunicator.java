@@ -446,6 +446,19 @@ public class DatabaseCommunicator {
 		
 	}
 	
+	public static int getGoal(int personID) throws SQLException {
+		int goal = 0;
+		
+		rs = getResultSet("select weeklygoal as num FROM person WHERE personID = "+personID+";");
+		
+		if (rs.next()) {
+			goal = rs.getInt("num");
+		}
+		closeConnection();
+		
+		return goal;
+	}
+	
 	public static void main(String[] args) throws SQLException {
 		System.out.println(getWeeklyHoursGroup("male","2018-04-06 00:00:00", "2018-04-10 23:59:59", "sitTrening"));
 	}
