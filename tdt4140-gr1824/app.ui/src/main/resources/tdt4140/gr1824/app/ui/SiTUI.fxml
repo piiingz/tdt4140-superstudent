@@ -1,18 +1,348 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="804.0" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.SitUIController">
-   <children>
-      <JFXButton buttonType="RAISED" layoutX="714.0" layoutY="479.0" onAction="#handleGetStatsButton" prefHeight="33.0" prefWidth="76.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Get Stats" textFill="WHITE" />
-      <JFXTextField fx:id="groupID" disable="true" layoutX="239.0" layoutY="38.0" promptText="Group ID" unFocusColor="#0f9d58" />
-      <JFXToggleButton layoutX="32.0" layoutY="21.0" onAction="#handleToggleButton" text="Show Group stats" />
-      <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="479.0" onAction="#handleReturnButton" prefHeight="33.0" prefWidth="76.0" ripplerFill="#001aff" style="-fx-background-color: #0f9d58;" text="Return" textFill="WHITE" />
-      <PieChart fx:id="averageChart" layoutX="8.0" layoutY="79.0" prefHeight="390.0" prefWidth="380.0" />
-      <PieChart fx:id="groupChart" layoutX="418.0" layoutY="79.0" prefHeight="390.0" prefWidth="380.0" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="1202.0" style="-fx-background-color: #333645;" xmlns="http://javafx.com/javafx/8.0.101" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tdt4140.gr1824.app.ui.SiTUIController">
+      <AnchorPane layoutX="295.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="906.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ImageView fx:id="pieIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/pie-chart.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="progressionIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/linegraph.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="gymStatIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/cardiogram.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="competitionIcon" fitHeight="61.0" fitWidth="64.0" layoutX="828.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/cup.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="smallPlus" fitHeight="27.0" fitWidth="27.0" layoutX="878.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/add.png" />
+               </image>
+            </ImageView>
+            <JFXToggleButton fx:id="enableGroupStats" layoutX="14.0" layoutY="11.0" onAction="#handleEnableGroupToggleButton" text="Enable Group Stats" toggleColor="#00a2d3" visible="false" />
+            <JFXTextField fx:id="groupID" disable="true" layoutX="216.0" layoutY="28.0" promptText="Group ID" unFocusColor="#00a2d3" visible="false" />
+            <JFXButton fx:id="bottomRightButton" buttonType="RAISED" layoutX="812.0" layoutY="560.0" onAction="#handleBottomRightButton" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #00A2D3;" text="Button" textFill="WHITE" visible="false" />
+            <Line endX="780.0" layoutX="115.0" layoutY="99.0" startX="-100.0" />
+            <JFXComboBox fx:id="comboBoxProgression" layoutX="397.0" layoutY="28.0" promptText="Choose an area" unFocusColor="#00a2d3" visible="false" />
+            <JFXDatePicker fx:id="startDate" defaultColor="#00a2d3" layoutX="538.0" layoutY="28.0" prefHeight="25.0" prefWidth="98.0" promptText="Start Date" visible="false" />
+            <JFXDatePicker fx:id="endDate" defaultColor="#00a2d3" layoutX="650.0" layoutY="28.0" prefHeight="25.0" prefWidth="98.0" promptText="End Date" visible="false" />
+            <PieChart fx:id="averageChart" layoutX="16.0" layoutY="119.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="400.0" visible="false" />
+            <PieChart fx:id="groupChart" layoutX="492.0" layoutY="119.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="400.0" visible="false" />
+            <LineChart fx:id="lineChart" layoutX="11.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="885.0" visible="false">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <Text fx:id="gymStatText" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Gym Status" visible="false">
+               <font>
+                  <Font name="Ebrima" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="tooCrowded" fitHeight="420.0" fitWidth="400.0" layoutX="250.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/cancel-button.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="goodToGo" fitHeight="420.0" fitWidth="400.0" layoutX="250.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../icons/tick-inside-circle.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="createNewCompetition" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new competition" visible="false">
+               <font>
+                  <Font name="Ebrima" size="30.0" />
+               </font>
+            </Text>
+            <JFXComboBox fx:id="comboBoxCreateComp" layoutX="81.0" layoutY="150.0" prefHeight="25.0" prefWidth="136.0" promptText="Choose an area" unFocusColor="#00a2d3" visible="false" />
+            <JFXTextField fx:id="requiredHours" layoutX="81.0" layoutY="229.0" prefWidth="136.0" promptText="Enter required hours" unFocusColor="#00a2d3" visible="false" />
+            <JFXDatePicker fx:id="startDateCreateComp" defaultColor="#00a2d3" layoutX="401.0" layoutY="150.0" prefHeight="25.0" prefWidth="98.0" promptText="Start Date" visible="false" />
+            <JFXDatePicker fx:id="endDateCreateComp" defaultColor="#00a2d3" layoutX="401.0" layoutY="229.0" prefHeight="25.0" prefWidth="98.0" promptText="End Date" visible="false" />
+         <JFXTextField fx:id="competitionNameCreate" layoutX="81.0" layoutY="329.0" prefWidth="136.0" promptText="Enter competition name" unFocusColor="#00a2d3" visible="false" />
+            <JFXTextField fx:id="prizeDescription" layoutX="81.0" layoutY="408.0" prefHeight="25.0" prefWidth="426.0" promptText="What is the prize?" unFocusColor="#00a2d3" visible="false" />
+            <JFXTextField fx:id="competitionDescription" layoutX="81.0" layoutY="487.0" prefHeight="25.0" prefWidth="426.0" promptText="Competition description" unFocusColor="#00a2d3" visible="false" />
+            <Text fx:id="welcomeMessage" layoutX="165.0" layoutY="63.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Superstudenten Admin page">
+               <font>
+                  <Font name="Ebrima" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="studCapLogo" fitHeight="175.0" fitWidth="178.0" layoutX="351.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/students-cap.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="instructionMessage" fill="#00a2d3" layoutX="165.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get started by clicking the panel to the left">
+               <font>
+                  <Font name="Ebrima" size="30.0" />
+               </font>
+            </Text>
+         <Text fx:id="viewCompText" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Competitions" visible="false">
+            <font>
+               <Font name="Ebrima" size="30.0" />
+            </font>
+         </Text>
+         <JFXComboBox fx:id="comboBoxViewComp" layoutX="596.0" layoutY="51.0" prefHeight="25.0" prefWidth="152.0" promptText="Competition Name" unFocusColor="#00a2d3" visible="false" />
+         <ImageView fx:id="compViewMedalIcon" fitHeight="150.0" fitWidth="200.0" layoutX="158.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+               <Image url="@../icons/medal.png" />
+            </image>
+         </ImageView>
+         <Text fx:id="compViewDescription" layoutX="58.0" layoutY="335.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewPrize" layoutX="58.0" layoutY="381.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Prize" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewRequiredHours" layoutX="58.0" layoutY="565.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Required hours" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewCompetitionArea" layoutX="58.0" layoutY="519.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Competition area" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewStartDate" layoutX="58.0" layoutY="427.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewEndDate" layoutX="58.0" layoutY="473.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewDescriptionVal" fill="#0171c3" layoutX="318.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eksamenstid Siste innspurt" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewPrizeVal" fill="#0171c3" layoutX="318.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gratis kaffe på stripa" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewStartDateVal" fill="#0171c3" layoutX="318.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15.05.2018" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewEndDateVal" fill="#0171c3" layoutX="318.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15.06.2018" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewCompetitionAreaVal" fill="#0171c3" layoutX="318.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gloshaugen" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <Text fx:id="compViewRequiredHoursVal" fill="#0171c3" layoutX="318.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="237 Hours" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <JFXListView fx:id="winnersList" layoutX="636.0" layoutY="147.0" prefHeight="150.0" prefWidth="248.0" visible="false" />
+         <Text fx:id="winnersText" layoutX="650.0" layoutY="135.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Winners" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         </children></AnchorPane>
+      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="295.0" style="-fx-background-color: #00A2D3;" text="   SiT Admin Panel" textFill="WHITE">
+         <font>
+            <Font name="Ebrima" size="25.0" />
+         </font>
+      </Label>
+      <HBox fx:id="piechartStat" layoutY="100.0" onMouseClicked="#handlePieClick" prefHeight="45.0" prefWidth="295.0">
+         <children>
+            <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/pie-chart.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="Piechart statistics" textFill="#7c8184">
+               <padding>
+                  <Insets left="15.0" top="15.0" />
+               </padding>
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="18.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="progressionStat" layoutY="145.0" onMouseClicked="#handleProgressionClick" prefHeight="45.0" prefWidth="295.0">
+         <children>
+            <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/linegraph.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="Progression statistics" textFill="#7c8184">
+               <padding>
+                  <Insets left="15.0" top="15.0" />
+               </padding>
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="18.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="gymStat" layoutY="190.0" onMouseClicked="#handleGymstatClick" prefHeight="45.0" prefWidth="295.0">
+         <children>
+            <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/cardiogram.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="Gym-status" textFill="#7c8184">
+               <padding>
+                  <Insets left="15.0" top="15.0" />
+               </padding>
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="18.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="viewComp" layoutY="235.0" onMouseClicked="#handleViewCompClick" prefHeight="45.0" prefWidth="295.0">
+         <children>
+            <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/cup.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="View competitions" textFill="#7c8184">
+               <padding>
+                  <Insets left="15.0" top="15.0" />
+               </padding>
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="18.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="createComp" layoutY="281.0" onMouseClicked="#handleCreateCompClick" prefHeight="45.0" prefWidth="295.0">
+         <children>
+            <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/cup.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="15.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <ImageView fitHeight="17.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/add.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label text="Create new competition" textFill="#7c8184">
+               <padding>
+                  <Insets left="15.0" top="15.0" />
+               </padding>
+               <font>
+                  <Font name="Calibri Light" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="557.0" onAction="#handleReturnButton" prefHeight="42.0" prefWidth="171.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="      Return" textFill="WHITE">
+      <graphic>
+            <ImageView fitHeight="32.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/left_arrow_white.png" />
+               </image>
+            </ImageView>
+      </graphic>
+      <font>
+         <Font size="14.0" />
+      </font>
+   </JFXButton>
+   <HBox fx:id="welcomeScreen" layoutY="327.0" onMouseClicked="#handleWelcomeScreenClick" prefHeight="45.0" prefWidth="295.0" style="-fx-background-color: #ffffff;">
+      <children>
+         <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../icons/students-cap.png" />
+            </image>
+            <HBox.margin>
+               <Insets left="15.0" top="10.0" />
+            </HBox.margin>
+         </ImageView>
+         <Label text="Welcome screen" textFill="#7c8184">
+            <padding>
+               <Insets left="15.0" top="15.0" />
+            </padding>
+            <font>
+               <Font name="Calibri Light" size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="18.0" />
+            </HBox.margin>
+         </Label>
+      </children>
+   </HBox>
 </AnchorPane>

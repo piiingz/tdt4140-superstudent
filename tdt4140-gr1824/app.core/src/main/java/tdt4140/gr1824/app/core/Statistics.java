@@ -116,7 +116,7 @@ public class Statistics {
 		
 	}
 	
-	public static List<Integer> getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+	public static int[] getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursAll = new ArrayList<Integer>();
 		
 		while (startDate.isBefore(stopDate)) {
@@ -125,10 +125,16 @@ public class Statistics {
 			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, areaName));
 			startDate = startDate.plusWeeks(1);
 		}
-		return weeklyHoursAll;
+		
+		int[] retVal = new int[weeklyHoursAll.size()];
+		for (int i = 0; i < weeklyHoursAll.size(); i++) {
+			retVal[i] = weeklyHoursAll.get(i);
+		}
+		
+		return retVal;
 	}
 	
-	public static List<Integer> getLinePointsGroup(String groupID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+	public static int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursGroup = new ArrayList<Integer>();
 		
 		while (startDate.isBefore(stopDate)) {
@@ -137,10 +143,15 @@ public class Statistics {
 			weeklyHoursGroup.add(DatabaseCommunicator.getWeeklyHoursGroup(groupID, startTime, endTime, areaName));
 			startDate = startDate.plusWeeks(1);
 		}
-		return weeklyHoursGroup;
+		int[] retVal = new int[weeklyHoursGroup.size()];
+		for (int i = 0; i < weeklyHoursGroup.size(); i++) {
+			retVal[i] = weeklyHoursGroup.get(i);
+		}
+		
+		return retVal;
 	}
 	
-	public static List<Integer> getLinePointsUser(int userID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+	public static int[] getLinePointsUser(int userID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHours = new ArrayList<Integer>();
 		
 		while (startDate.isBefore(stopDate)) {
@@ -149,7 +160,12 @@ public class Statistics {
 			weeklyHours.add(DatabaseCommunicator.getWeeklyHoursUser(userID, startTime, endTime, areaName));
 			startDate = startDate.plusWeeks(1);
 		}
-		return weeklyHours;
+		int[] retVal = new int[weeklyHours.size()];
+		for (int i = 0; i < weeklyHours.size(); i++) {
+			retVal[i] = weeklyHours.get(i);
+		}
+		
+		return retVal;
 	}
 	
 	private static String localDateToStartString (LocalDate localdate) {
@@ -159,13 +175,6 @@ public class Statistics {
 	private static String localDateToEndString (LocalDate localdate) {
 		return ""+String.format("%1$tY-%1$tm-%1$td", localdate)+" 23:59:59";
 	}
-	
-	public static void main(String[] args) throws SQLException {
-		LocalDate startDate = LocalDate.parse("2018-04-02");
-		LocalDate stopDate = LocalDate.parse("2018-05-03");
-		System.out.println(getLinePointsUser(5,startDate, stopDate, "glos"));
-	}
-	
 }
 
 
