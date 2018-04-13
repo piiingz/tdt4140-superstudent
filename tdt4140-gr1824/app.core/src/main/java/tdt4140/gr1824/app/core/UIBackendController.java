@@ -1,7 +1,9 @@
 package tdt4140.gr1824.app.core;
 
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -114,78 +116,73 @@ public class UIBackendController {
 		
 	}
 
-	public int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate endDate, String areaName) {
+	public int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate endDate, String areaName) {//TODO
 		int[] retVal = {2,5,10,30,7,6,9};
 		System.out.println(startDate);
 		return retVal;
 	}
 
-	public int[] getLinePointsAll(LocalDate startDate, LocalDate endDate, String areaName) {
+	public int[] getLinePointsAll(LocalDate startDate, LocalDate endDate, String areaName) {//TODO
 		int[] retVal = {7,8,13,17,2,20,50};
 		return retVal;
 	}
 
-	public int[] getLinePointsUser(int currentUserID, LocalDate startDate, LocalDate endDate, String areaName) {
+	public int[] getLinePointsUser(int currentUserID, LocalDate startDate, LocalDate endDate, String areaName) {//TODO
 		int[] retVal = {20,10,14,15,30,24,19};
 		return retVal;
 	}
 
 	public void setNewGoal(Integer goal, int userID) {
-		System.out.println(goal);
+		DatabaseCommunicator.updateGoal(goal, userID);
 	}
 
 	public String getGoal(int userID) {
-		return "25";
+		return DatabaseCommunicator.getGoal(int userID);
 	}
 	
 	public int getNumberAtGym() {
-		// TODO Auto-generated method stub
-		return 4;
+		return DatabaseCommunicator.getNumberAtGym();
 	}
 	
 	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) {
-		System.out.println("Areaname: " + areaName);
-		System.out.println("Required hours: " + requiredHours);
-		System.out.println("Start date: " + startDate);
-		System.out.println("End date: " + endDate);
-		System.out.println("Competition description: " + competitionDescription);
-		System.out.println("Prize description: " + prizeDescription);
-		System.out.println("Competition name: " + competitionName);
+		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate), this.localDateToString(endDate), competitionDescription, prizeDescription);
 	}
 	
 	public ObservableList<String> getAllCompetitionNames() {
-		ObservableList<String> competitionNames = FXCollections.observableArrayList("Get Fit or die trying","Supernerd!","Eternal party","Stranger in T-town");
+		ObservableList<String> competitionNames = FXCollections.observableArrayList(DatabaseCommunicator.getAllCompetitionNames());
 		return competitionNames;
 	}
 	
-	public ObservableList<String> getRewardNames(int userID) {
-		ObservableList<String> rewardNames = FXCollections.observableArrayList("Supernerd!","Eternal party");
+	public ObservableList<String> getRewardNames(int userID) { 
+		ObservableList<String> rewardNames = FXCollections.observableArrayList(DatabaseCommunicator.getCompetitionNamesByUser(userID));
 		return rewardNames;
 	}
 	
 	public String[] getCompetitionDetails(String competitionName) {
-		if (competitionName.equals("Get Fit or die trying")) { //[areaname, required hours, startdate, enddate, competition description, prize description]
-			String[] compInfo = {"SiT Trening", "879", "12.04.2018", "30.04.2018", "Bli så sykt bola slik at skjorta sprekker", "Gratis kaffe på stripa"};
-			return compInfo;
-		} else if (competitionName.equals("Supernerd!")) {
-			String[] compInfo = {"Gløshaugen", "563", "10.04.2018", "20.04.2018", "Bli smartere enn den smarteste", "Hele innholdet til akademika"};
-			return compInfo;
-		} else if (competitionName.equals("Eternal party")) {
-			String[] compInfo = {"Samfundet", "700", "01.04.2018", "05.05.2018", "Nyt livet! Ha det gøy!", "Lifetime supply av tequila shots for deg og 6 venner"};
-			return compInfo;
-		} else if (competitionName.equals("Stranger in T-town")) {
-			String[] compInfo = {"Other", "1250", "01.04.2018", "30.04.2018", "Du henger ikke mye på de populære stedene i Trondheim...", "Kom deg på skolen!"};
-			return compInfo;
-		} 
-		return null;
+		String[] compInfo = new String[6];
+		compInfo[0] = this.idToPrettyName(DatabaseCommunicator.getCompetitionAreaID(competitionName));
+		compInfo[1] = DatabaseCommunicator.getCompetitionDuration(competitionName) + " hours";
+		
+		String[] startEndDate = DatabaseCommunicator.getCompetitionDates(competitionName);
+		
+		compInfo[2] = startEndDate[0];
+		compInfo[3] = startEndDate[1];
+		compInfo[4] = DatabaseCommunicator.getCompetitionDescription(competitionName);
+		compInfo[5] = DatabaseCommunicator.getCompetitionPrize(competitionName);
+		return compInfo;
 	}
 	
-	public String getStaydurationUserArea(String areaName, int userID) {
-		return 23 + " hours";
+	public String getStaydurationUserArea(String competitionName, int userID) { 
+		return DatabaseCommunicator.getCompInfo(userID, competitionName).get(6);
 	}
 	
 	public boolean competitionExists(String competitionName) {
-		return false;
+		return DatabaseCommunicator.competitionInDatabase(competitionName);
+	}
+	
+	public ObservableList<String> getWinners(String competitionName) { 
+		ObservableList<String> winners = FXCollections.observableArrayList(DatabaseCommunicator.getWinners(competitionName)); //Denne returnerer personID-er
+		return winners;
 	}
 	
 	public static boolean userInDatabase(Integer userID) throws SQLException {
@@ -193,6 +190,45 @@ public class UIBackendController {
 	}
 	
 	public void deleteUser(int userID) {
-		System.out.println("User delete works!");
+		DatabaseCommunicator.deleteUser(userID);
 	}
+	
+	private int prettyNameToId(String prettyName) {
+		if (prettyName.equals("Gloshaugen")) {
+			return 1;
+		} else if (prettyName.equals("SiT Trening")) {
+			return 2;
+		} else if (prettyName.equals("Samfundet")) {
+			return 3;
+		} else if (prettyName.equals("Other")) {
+			return 4;
+		}
+		
+		return 0;
+	}
+	
+	private String idToPrettyName(int areaID) {
+		if (areaID == 1) {
+			return "Gloshaugen";
+		} else if (areaID == 2) {
+			return "SiT Trening";
+		} else if (areaID == 3) {
+			return "Samfundet"; 
+		} else if (areaID == 4) {
+			return "Other";
+		}
+		
+		return null;
+	}
+	
+	private String localDateToString(LocalDate date) {
+		if (date.getDayOfWeek() == DayOfWeek.MONDAY) {
+			return date.toString() + " 00:00:00";
+		} else if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return date.toString() + " 23:59:59";
+		}
+		return date.toString() + " 00:00:00";
+	}
+	
+	
 }

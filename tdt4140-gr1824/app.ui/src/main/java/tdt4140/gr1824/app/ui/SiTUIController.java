@@ -17,6 +17,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
@@ -96,6 +97,12 @@ public class SiTUIController {
 	@FXML
 	public Text gymStatText;
 	//View competitions elements:
+	@FXML
+	public Text winnersText;
+	
+	@FXML
+	public ListView<String> winnersList; 
+	
 	@FXML
 	public Text viewCompText;
 	
@@ -429,6 +436,11 @@ public class SiTUIController {
 		this.compViewEndDate.setVisible(true);
 		this.compViewCompetitionArea.setVisible(true);
 		this.compViewRequiredHours.setVisible(true);
+		
+		//Listview:
+		this.winnersText.setVisible(true);
+		this.winnersList.setVisible(true);
+		
 	}
 	
 	private void handleViewCompButton() {
@@ -448,6 +460,9 @@ public class SiTUIController {
 			this.compViewEndDateVal.setVisible(true);
 			this.compViewDescriptionVal.setVisible(true);
 			this.compViewPrizeVal.setVisible(true);
+			
+			//Listview:
+			this.winnersList.setItems(this.backendController.getWinners(this.comboBoxViewComp.getValue()));
 		}
 	}
 	
@@ -473,6 +488,10 @@ public class SiTUIController {
 		this.compViewEndDateVal.setVisible(false);
 		this.compViewDescriptionVal.setVisible(false);
 		this.compViewPrizeVal.setVisible(false);
+		
+		//Listview:
+		this.winnersText.setVisible(false);
+		this.winnersList.setVisible(false);
 	}
 	
 	//Handle create new competition events:

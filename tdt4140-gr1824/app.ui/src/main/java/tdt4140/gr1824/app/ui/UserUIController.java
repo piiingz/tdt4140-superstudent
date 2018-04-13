@@ -496,7 +496,7 @@ public class UserUIController {
 	private void handleRewardsViewButton() {
 		if (this.comboBoxCompetitions.getValue() != null) {
 			String[] compInfo = this.backendController.getCompetitionDetails(this.comboBoxCompetitions.getValue());
-			String stayDetails = this.backendController.getStaydurationUserArea(compInfo[0], currentUserID);
+			String stayDetails = this.backendController.getStaydurationUserArea(this.comboBoxCompetitions.getValue(), currentUserID);
 			//Set values:
 			this.compViewCompetitionAreaVal.setText(compInfo[0]);
 			this.compViewRequiredHoursVal.setText(compInfo[1]);

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
@@ -112,67 +113,73 @@
             </font>
          </Text>
          <JFXComboBox fx:id="comboBoxViewComp" layoutX="596.0" layoutY="51.0" prefHeight="25.0" prefWidth="152.0" promptText="Competition Name" unFocusColor="#00a2d3" visible="false" />
-         <ImageView fx:id="compViewMedalIcon" fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <ImageView fx:id="compViewMedalIcon" fitHeight="150.0" fitWidth="200.0" layoutX="158.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
                <Image url="@../icons/medal.png" />
             </image>
          </ImageView>
-         <Text fx:id="compViewDescription" layoutX="150.0" layoutY="335.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" visible="false">
+         <Text fx:id="compViewDescription" layoutX="58.0" layoutY="335.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewPrize" layoutX="150.0" layoutY="381.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Prize" visible="false">
+         <Text fx:id="compViewPrize" layoutX="58.0" layoutY="381.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Prize" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewRequiredHours" layoutX="150.0" layoutY="565.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Required hours" visible="false">
+         <Text fx:id="compViewRequiredHours" layoutX="58.0" layoutY="565.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Required hours" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewCompetitionArea" layoutX="150.0" layoutY="519.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Competition area" visible="false">
+         <Text fx:id="compViewCompetitionArea" layoutX="58.0" layoutY="519.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Competition area" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewStartDate" layoutX="150.0" layoutY="427.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" visible="false">
+         <Text fx:id="compViewStartDate" layoutX="58.0" layoutY="427.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewEndDate" layoutX="150.0" layoutY="473.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date" visible="false">
+         <Text fx:id="compViewEndDate" layoutX="58.0" layoutY="473.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="End Date" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewDescriptionVal" fill="#0171c3" layoutX="410.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eksamenstid Siste innspurt" visible="false">
+         <Text fx:id="compViewDescriptionVal" fill="#0171c3" layoutX="318.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eksamenstid Siste innspurt" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewPrizeVal" fill="#0171c3" layoutX="410.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gratis kaffe på stripa" visible="false">
+         <Text fx:id="compViewPrizeVal" fill="#0171c3" layoutX="318.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gratis kaffe på stripa" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewStartDateVal" fill="#0171c3" layoutX="410.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15.05.2018" visible="false">
+         <Text fx:id="compViewStartDateVal" fill="#0171c3" layoutX="318.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15.05.2018" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewEndDateVal" fill="#0171c3" layoutX="410.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15.06.2018" visible="false">
+         <Text fx:id="compViewEndDateVal" fill="#0171c3" layoutX="318.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15.06.2018" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewCompetitionAreaVal" fill="#0171c3" layoutX="410.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gloshaugen" visible="false">
+         <Text fx:id="compViewCompetitionAreaVal" fill="#0171c3" layoutX="318.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gloshaugen" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
-         <Text fx:id="compViewRequiredHoursVal" fill="#0171c3" layoutX="410.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="237 Hours" visible="false">
+         <Text fx:id="compViewRequiredHoursVal" fill="#0171c3" layoutX="318.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="237 Hours" visible="false">
+            <font>
+               <Font name="Ebrima" size="15.0" />
+            </font>
+         </Text>
+         <JFXListView fx:id="winnersList" layoutX="636.0" layoutY="147.0" prefHeight="386.0" prefWidth="248.0" visible="false" />
+         <Text fx:id="winnersText" layoutX="650.0" layoutY="135.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Winners" visible="false">
             <font>
                <Font name="Ebrima" size="15.0" />
             </font>
