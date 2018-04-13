@@ -1,4 +1,3 @@
-
 package tdt4140.gr1824.app.core;
 
 import java.sql.SQLException;
@@ -168,3 +167,13 @@ public class Statistics {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+

@@ -15,7 +15,7 @@ public class MainMenuController {
 	@FXML
 	public void handleUserButton(ActionEvent event) throws IOException {
 		/*Sets interface described in UserUI.fxml as the scene in the primary Stage*/
-		Parent userViewParent = FXMLLoader.load(getClass().getResource("UserLoginUI.fxml"));
+		Parent userViewParent = FXMLLoader.load(getClass().getResource("UserUI.fxml"));
 		Scene userViewScene = new Scene(userViewParent);
 		Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow()); //Get the current stage from the system
 		window.setScene(userViewScene); //Set the new scene
