@@ -25,11 +25,5 @@ public class LocationResource {
 		return null;
 	}
 	
-	@POST
-	@Path("test")
-	public Dude createDude(Dude dude) {
-		System.out.println(dude);
-		return dude;
-	}
 	
 }
