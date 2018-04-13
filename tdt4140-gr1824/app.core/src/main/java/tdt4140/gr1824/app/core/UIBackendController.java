@@ -218,7 +218,7 @@ public class UIBackendController {
 	
 	public String getStaydurationUserArea(String competitionName, int userID) throws SQLException { 
 		System.out.println(DatabaseCommunicator.getCompInfo(userID, competitionName));
-		return DatabaseCommunicator.getCompInfo(userID, competitionName).get(5);
+		return DatabaseCommunicator.getCompInfo(userID, competitionName).get(6) + " hours";
 	}
 	
 	public boolean competitionExists(String competitionName) throws SQLException {

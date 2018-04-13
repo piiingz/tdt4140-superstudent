@@ -172,7 +172,7 @@
                   <Font name="Ebrima" size="15.0" />
                </font>
             </Text>
-            <Text fx:id="currentHours" fill="#0171c3" layoutX="714.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="237 Hours" visible="false">
+            <Text fx:id="currentHours" fill="#0171c3" layoutX="650.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="237 Hours" visible="false">
                <font>
                   <Font name="Ebrima" size="15.0" />
                </font>

@@ -491,12 +491,13 @@ public class UserUIController {
 		this.compViewEndDate.setVisible(true);
 		this.compViewCompetitionArea.setVisible(true);
 		this.compViewRequiredHours.setVisible(true);
+		this.currentProgress.setVisible(true);
 	}
 	
 	private void handleRewardsViewButton() throws SQLException {
 		if (this.comboBoxCompetitions.getValue() != null) {
 			String[] compInfo = this.backendController.getCompetitionDetails(this.comboBoxCompetitions.getValue());
-			
+			String stayDetails = this.backendController.getStaydurationUserArea(this.comboBoxCompetitions.getValue(), currentUserID);
 			//Set values:
 			this.compViewCompetitionAreaVal.setText(compInfo[0]);
 			this.compViewRequiredHoursVal.setText(compInfo[1]);
@@ -504,6 +505,7 @@ public class UserUIController {
 			this.compViewEndDateVal.setText(compInfo[3]);
 			this.compViewDescriptionVal.setText(compInfo[4]);
 			this.compViewPrizeVal.setText(compInfo[5]);
+			this.currentHours.setText(stayDetails);
 			//Set visibility:
 			this.compViewCompetitionAreaVal.setVisible(true);
 			this.compViewRequiredHoursVal.setVisible(true);
@@ -511,6 +513,7 @@ public class UserUIController {
 			this.compViewEndDateVal.setVisible(true);
 			this.compViewDescriptionVal.setVisible(true);
 			this.compViewPrizeVal.setVisible(true);
+			this.currentHours.setVisible(true);
 			
 		}
 	}
@@ -529,7 +532,7 @@ public class UserUIController {
 		this.compViewEndDate.setVisible(false);
 		this.compViewCompetitionArea.setVisible(false);
 		this.compViewRequiredHours.setVisible(false);
-		
+		this.currentProgress.setVisible(false);
 		//Center of view, dynamic elements:
 		this.compViewCompetitionAreaVal.setVisible(false);
 		this.compViewRequiredHoursVal.setVisible(false);
@@ -537,6 +540,7 @@ public class UserUIController {
 		this.compViewEndDateVal.setVisible(false);
 		this.compViewDescriptionVal.setVisible(false);
 		this.compViewPrizeVal.setVisible(false);
+		this.currentHours.setVisible(false);
 	}
 	
 	//Handle View competitions events:
@@ -557,13 +561,11 @@ public class UserUIController {
 		this.compViewEndDate.setVisible(true);
 		this.compViewCompetitionArea.setVisible(true);
 		this.compViewRequiredHours.setVisible(true);
-		this.currentProgress.setVisible(true);
 	}
 	
 	private void handleViewCompButton() throws SQLException {
 		if (this.comboBoxCompetitions.getValue() != null) {
 			String[] compInfo = this.backendController.getCompetitionDetails(this.comboBoxCompetitions.getValue());
-			String stayDetails = this.backendController.getStaydurationUserArea(this.comboBoxCompetitions.getValue(), currentUserID);
 			
 			//Set values:
 			this.compViewCompetitionAreaVal.setText(compInfo[0]);
@@ -572,7 +574,6 @@ public class UserUIController {
 			this.compViewEndDateVal.setText(compInfo[3]);
 			this.compViewDescriptionVal.setText(compInfo[4]);
 			this.compViewPrizeVal.setText(compInfo[5]);
-			this.currentHours.setText(stayDetails);
 			//Visibility:
 			this.compViewCompetitionAreaVal.setVisible(true);
 			this.compViewRequiredHoursVal.setVisible(true);
@@ -580,7 +581,6 @@ public class UserUIController {
 			this.compViewEndDateVal.setVisible(true);
 			this.compViewDescriptionVal.setVisible(true);
 			this.compViewPrizeVal.setVisible(true);
-			this.currentHours.setVisible(true);
 		}
 	}
 	
@@ -598,7 +598,6 @@ public class UserUIController {
 		this.compViewEndDate.setVisible(false);
 		this.compViewCompetitionArea.setVisible(false);
 		this.compViewRequiredHours.setVisible(false);
-		this.currentProgress.setVisible(false);
 		
 		//Center of view, dynamic elements:
 		this.compViewCompetitionAreaVal.setVisible(false);
@@ -607,7 +606,6 @@ public class UserUIController {
 		this.compViewEndDateVal.setVisible(false);
 		this.compViewDescriptionVal.setVisible(false);
 		this.compViewPrizeVal.setVisible(false);
-		this.currentHours.setVisible(false);
 	}
 	
 	//Helper methods:
