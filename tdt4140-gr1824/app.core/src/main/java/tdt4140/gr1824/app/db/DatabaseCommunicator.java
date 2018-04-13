@@ -167,21 +167,6 @@ public class DatabaseCommunicator {
 		closeConnection();
 	}
 	
-	// Returns a list with users and the amount of time spent at the given area. The list is on the format [userID0, time(minutes), userID1, time, ...]
-	public static List<Integer> getDurationOfStays(String starttime, String stoptime, int areaID) throws SQLException {
-		List<Integer> list = new ArrayList<Integer>();
-		String query = "select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttime, stoptime) as duration, personID from ((select starttime, stoptime, personID From stay as stay1 where starttime >= '"+starttime+"' AND stoptime <= '"+stoptime+"' AND areaID = "+areaID+" UNION select starttime, stoptime, personID From stay as stay2 where starttime < '"+starttime+"' AND stoptime <= '"+stoptime+"' AND stoptime >= '"+starttime+"' AND areaID = "+areaID+" UNION select starttime, stoptime, personID from stay as stay3 where starttime >= '"+starttime+"' AND starttime <= '"+stoptime+"' AND stoptime > '"+stoptime+"' AND areaID = "+areaID+" UNION SELECT starttime,  '"+stoptime+"' AS stoptime, personID from currentstay where areaID = "+areaID+" AND starttime >= '"+starttime+"' AND starttime <= '"+stoptime+"' UNION SELECT '"+starttime+"' as starttime,  '"+stoptime+"' AS stoptime, personID from currentstay where areaID = "+areaID+" AND starttime <= '"+starttime+"' )AS table1)) as durationspp group by personID;";
-		ResultSet rs = getResultSet(query);
-		while (rs.next()) {
-			list.add(rs.getInt("personID"));
-			list.add(rs.getInt("timeSpent"));
-		} 
-		
-		rs.close();
-		closeConnection();
-		//System.out.println(list.toString());
-		return list;	
-	}
 	
 	// Returns the list of winners of a competition, given the competition name
 	public static List<Integer> getWinners(String name) throws SQLException {
