@@ -168,8 +168,8 @@ public class DatabaseCommunicator {
 	
 	
 	// Returns the list of winners of a competition, given the competition name
-	public static List<Integer> getWinners(String name) throws SQLException {
-		List<Integer> winners = new ArrayList<Integer>();
+	public static List<String> getWinners(String name) throws SQLException {
+		List<String> winners = new ArrayList<String>();
 		String query = "SELECT areaID, startdate, stopdate, hours from competition where competitionName = '"+name+"';";
 		ResultSet rs = getResultSet(query);
 		
@@ -181,14 +181,21 @@ public class DatabaseCommunicator {
 		int duration = rs.getInt("hours");
 		String starttime = rs.getString("startdate");
 		String stoptime = rs.getString("stopdate");
-		List<Integer> stays = getDurationOfStays(starttime, stoptime, areaID);
+		List<Integer> stays = getDurationOfStays(starttime, stoptime, areaID); // Returns [userID, time(minutes), userID2, time(minutes)]
+		System.out.println(duration);
+		System.out.println(stays);
 		
 		for (int i = 0; i <= stays.size()-1; i+=2) {
 			if (stays.get(i+1) >= duration*60) {
-				winners.add(stays.get(i));
+				ResultSet rs1 = getResultSet("SELECT fullname from person where personID = "+stays.get(i)+";");
+				if (rs1.next()) {
+					winners.add(rs1.getString("fullname"));
+				}
+				closeConnection();
 			}
 		}
 
+		System.out.println(winners);
 		closeConnection();
 		return winners;
 	}
