@@ -1,5 +1,6 @@
 package tdt4140.gr1824.app.ui;
 
+
 import java.io.IOException;
 
 import javafx.collections.FXCollections;
@@ -13,28 +14,22 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import tdt4140.gr1824.app.core.Statistics;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
+import tdt4140.gr1824.app.core.Statistics;
 
-public class UserUIController{
-
-	@FXML
-	public TextField userID; //Reads text input from User-field
+public class SitUIController{ 
 	
 	@FXML
-	public TextField groupID; //Reads text input from User-field
+	public TextField groupID; //Reads text from the group-field
 	
 	@FXML
 	public PieChart groupChart; //PieChart used to display group-stats
 	
 	@FXML
-	public PieChart userChart; //PieChart used to display user-stats
-	
-	@FXML
 	public PieChart averageChart; //PieChart used to display average stats for all users
 	
-	private Statistics statistics = new Statistics(new DatabaseCommunicator());
 	private boolean toggle = false; //State of the toggle button
+	private Statistics statistics = new Statistics(new DatabaseCommunicator());
 	
 	@FXML
 	public void handleReturnButton(ActionEvent event) throws IOException {
@@ -45,31 +40,25 @@ public class UserUIController{
 		window.setScene(userViewScene);
 		window.show();
 	}
+
+	@FXML
+	public void handleGetStatsButton() {
+		/*Retrieves and displays stats based on state of toggle button text-field*/
+		if (this.toggle && !this.groupID.getText().isEmpty()) { 
+			this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, groupID.getText());							
+		}
+		this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
+	}
 	
 	@FXML
 	public void handleToggleButton() {
-		/*Toggles the toggle variable. Enables/Disables group text field based on toggle-state*/
+		/*Toggles the toggle variable. Enables/Disables text field based on toggle-state*/
 		this.toggle = !this.toggle;
 		if (this.toggle == false) {
 			this.groupID.setDisable(true);
 		} else {
 			this.groupID.setDisable(false);
 		}
-	}
-	
-	@FXML
-	public void handleGetStatsButton() {
-		/*Retrieves and displays stats based on state of toggle button text-fields*/
-		if (this.toggle) {
-			if (!this.groupID.getText().isEmpty()) { //Don't get stats if textfield is empty
-				this.setPieChart(this.statistics.getGroupStats(this.groupID.getText()), this.groupChart, this.groupID.getText());
-			}
-			this.setPieChart(this.statistics.getAllStats(), this.averageChart, "Average stats all users");
-		} 
-		if (!this.userID.getText().isEmpty()) {
-			this.setPieChart(this.statistics.getUserStats(Integer.valueOf(this.userID.getText())), this.userChart, this.userID.getText());
-		}
-		
 	}
 	
 	private void setPieChart(int[] stats, PieChart chart, String groupName) {
@@ -83,4 +72,3 @@ public class UserUIController{
 		chart.setTitle(groupName);
 	}
 }
-

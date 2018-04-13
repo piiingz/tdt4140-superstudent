@@ -8,7 +8,7 @@ import tdt4140.gr1824.app.mock.DummyClassDatabaseCommunicatorForStatisticsTest;
 public class StatisticsTest {
 	
 	private DummyClassDatabaseCommunicatorForStatisticsTest dbcom = new DummyClassDatabaseCommunicatorForStatisticsTest();
-	private UIBackendController statistics = new UIBackendController(dbcom);
+	private Statistics statistics = new Statistics(dbcom);
 	private double[] expectedUserArray = {0.2538, 0.203, 0.1878, 0.3553};
 	private double[] expectedAllUserArray = {0.3046, 0.1523, 0.1878, 0.3553};
 	private double[] expectedGroupArray = {0.1132, 0.3019, 0.3962, 0.1887};
