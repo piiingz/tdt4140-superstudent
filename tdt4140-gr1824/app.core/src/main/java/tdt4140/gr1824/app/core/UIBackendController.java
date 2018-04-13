@@ -133,56 +133,65 @@ public class UIBackendController {
 	}
 
 	public void setNewGoal(Integer goal, int userID) {
-		DatabaseCommunicator.updateGoal(goal, userID);
+//		DatabaseCommunicator.updateGoal(goal, userID);
 	}
 
 	public String getGoal(int userID) {
-		return DatabaseCommunicator.getGoal(int userID);
+//		return DatabaseCommunicator.getGoal(int userID);
+		return null;
 	}
 	
 	public int getNumberAtGym() {
-		return DatabaseCommunicator.getNumberAtGym();
+//		return DatabaseCommunicator.getNumberAtGym();
+		return 1;
 	}
 	
 	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) {
-		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate), this.localDateToString(endDate), competitionDescription, prizeDescription);
+//		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate), this.localDateToString(endDate), competitionDescription, prizeDescription);
 	}
 	
 	public ObservableList<String> getAllCompetitionNames() {
-		ObservableList<String> competitionNames = FXCollections.observableArrayList(DatabaseCommunicator.getAllCompetitionNames());
-		return competitionNames;
+//		ObservableList<String> competitionNames = FXCollections.observableArrayList(DatabaseCommunicator.getAllCompetitionNames());
+//		return competitionNames;
+		return null;
 	}
 	
 	public ObservableList<String> getRewardNames(int userID) { 
-		ObservableList<String> rewardNames = FXCollections.observableArrayList(DatabaseCommunicator.getCompetitionNamesByUser(userID));
-		return rewardNames;
+//		ObservableList<String> rewardNames = FXCollections.observableArrayList(DatabaseCommunicator.getCompetitionNamesByUser(userID));
+//		return rewardNames;
+		return null;
 	}
 	
 	public String[] getCompetitionDetails(String competitionName) {
 		String[] compInfo = new String[6];
-		compInfo[0] = this.idToPrettyName(DatabaseCommunicator.getCompetitionAreaID(competitionName));
-		compInfo[1] = DatabaseCommunicator.getCompetitionDuration(competitionName) + " hours";
+//		compInfo[0] = this.idToPrettyName(DatabaseCommunicator.getCompetitionAreaID(competitionName));
+//		compInfo[1] = DatabaseCommunicator.getCompetitionDuration(competitionName) + " hours";
 		
-		String[] startEndDate = DatabaseCommunicator.getCompetitionDates(competitionName);
+//		String[] startEndDate = DatabaseCommunicator.getCompetitionDates(competitionName);
 		
-		compInfo[2] = startEndDate[0];
-		compInfo[3] = startEndDate[1];
-		compInfo[4] = DatabaseCommunicator.getCompetitionDescription(competitionName);
-		compInfo[5] = DatabaseCommunicator.getCompetitionPrize(competitionName);
-		return compInfo;
+//		compInfo[2] = startEndDate[0];
+//		compInfo[3] = startEndDate[1];
+////		compInfo[4] = DatabaseCommunicator.getCompetitionDescription(competitionName);
+//		compInfo[5] = DatabaseCommunicator.getCompetitionPrize(competitionName);
+//		return compInfo;
+		return null;
 	}
 	
 	public String getStaydurationUserArea(String competitionName, int userID) { 
-		return DatabaseCommunicator.getCompInfo(userID, competitionName).get(6);
+//		return DatabaseCommunicator.getCompInfo(userID, competitionName).get(6);
+		return null;
+		
 	}
 	
 	public boolean competitionExists(String competitionName) {
-		return DatabaseCommunicator.competitionInDatabase(competitionName);
+//		return DatabaseCommunicator.competitionInDatabase(competitionName);
+		return true;
 	}
 	
 	public ObservableList<String> getWinners(String competitionName) { 
-		ObservableList<String> winners = FXCollections.observableArrayList(DatabaseCommunicator.getWinners(competitionName)); //Denne returnerer personID-er
-		return winners;
+//		ObservableList<String> winners = FXCollections.observableArrayList(DatabaseCommunicator.getWinners(competitionName)); //Denne returnerer personID-er
+//		return winners;
+		return null;
 	}
 	
 	public static boolean userInDatabase(Integer userID) throws SQLException {
