@@ -20,9 +20,7 @@ public class DatabaseCommunicator {
 		try {
 			if (connection == null || connection.isClosed()) {
 				try {
-					//System.out.println("Connecting database...");
 					connection = dataSource.getConnection();
-					//System.out.println("Successfully connected to the database");
 				} catch (SQLException e) {
 					System.out.println("Could not connect to database");
 					throw e;
@@ -38,7 +36,6 @@ public class DatabaseCommunicator {
 		if (connection != null) {
 			try {
 				connection.close();
-				//System.out.println("Connection closed");
 			} catch (SQLException e) {
 				System.out.println("Could not close connection");
 				e.printStackTrace();
@@ -70,7 +67,6 @@ public class DatabaseCommunicator {
 			connection = getConnection();
 			stmt = connection.createStatement();
 			stmt.executeUpdate(query);
-			//System.out.println("Query successfully executed");
 			
 		}
 		catch( SQLException se )
@@ -111,7 +107,6 @@ public class DatabaseCommunicator {
 		
 		Integer nextID = getNextPersonID();
 		
-		System.out.println("Here is the information you provided:\r\n"+"Fullname: "+fullname+", Gender: "+gender+", Course: "+major+", Year: "+schoolYear);
 		
 		String sql1 = "INSERT INTO person VALUES("+nextID+", '"+fullname+"', '"+gender+"', "+schoolYear+", '"+major+"', "+weeklygoal+");";
 		String sql2 = "INSERT INTO currentstay VALUES ("+nextID+", 4, current_timestamp);";
@@ -182,8 +177,6 @@ public class DatabaseCommunicator {
 		String starttime = rs.getString("startdate");
 		String stoptime = rs.getString("stopdate");
 		List<Integer> stays = getDurationOfStays(starttime, stoptime, areaID); // Returns [userID, time(minutes), userID2, time(minutes)]
-		System.out.println(duration);
-		System.out.println(stays);
 		
 		for (int i = 0; i <= stays.size()-1; i+=2) {
 			if (stays.get(i+1) >= duration*60) {
@@ -195,7 +188,6 @@ public class DatabaseCommunicator {
 			}
 		}
 
-		System.out.println(winners);
 		closeConnection();
 		return winners;
 	}
@@ -401,7 +393,6 @@ public class DatabaseCommunicator {
 		
 		closeConnection();
 		
-		System.out.println("glos: "+glosDur+" sit: "+sitTreningDur+" samf: "+samfundetDur+" other: "+otherDur);
 		
 
 		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
@@ -442,7 +433,6 @@ public class DatabaseCommunicator {
 		
 		closeConnection();
 		
-		System.out.println("glos: "+glosDur+" sit: "+sitTreningDur+" samf: "+samfundetDur+" other: "+otherDur);
 		
 
 		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
@@ -487,7 +477,6 @@ public class DatabaseCommunicator {
 		
 		closeConnection();
 		
-		System.out.println("glos: "+glosDur+" sit: "+sitTreningDur+" samf: "+samfundetDur+" other: "+otherDur);
 		
 
 		int[] userStatset = {glosDur,sitTreningDur,samfundetDur,otherDur};
