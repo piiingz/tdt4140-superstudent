@@ -650,8 +650,8 @@ public class DatabaseCommunicator {
 			weeklyHours = rs.getInt("allAverage");
 		}
 		closeConnection();
-		
 		return weeklyHours;
+		
 		
 	}
 	
@@ -667,7 +667,6 @@ public class DatabaseCommunicator {
 		
 		return goal;
 	}
-
 
 }
 

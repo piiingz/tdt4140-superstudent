@@ -122,10 +122,12 @@ public class UIBackendController {
 		
 		while (startDate.isBefore(stopDate)) {
 			String startTime = localDateToStartString(startDate);
-			String endTime = localDateToEndString(startDate.plusWeeks(1));
+			String endTime = localDateToEndString(startDate.plusDays(6));
 			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, areaName));
 			startDate = startDate.plusWeeks(1);
 		}
+		
+		System.out.println(weeklyHoursAll);
 		int[] retVal = new int[weeklyHoursAll.size()];
 		for (int i = 0; i < weeklyHoursAll.size(); i++) {
 			retVal[i] = weeklyHoursAll.get(i);
@@ -139,7 +141,7 @@ public class UIBackendController {
 		
 		while (startDate.isBefore(stopDate)) {
 			String startTime = localDateToStartString(startDate);
-			String endTime = localDateToEndString(startDate.plusWeeks(1));
+			String endTime = localDateToEndString(startDate.plusDays(6));
 			weeklyHoursGroup.add(DatabaseCommunicator.getWeeklyHoursGroup(groupID, startTime, endTime, areaName));
 			startDate = startDate.plusWeeks(1);
 		}
@@ -156,7 +158,7 @@ public class UIBackendController {
 		
 		while (startDate.isBefore(stopDate)) {
 			String startTime = localDateToStartString(startDate);
-			String endTime = localDateToEndString(startDate.plusWeeks(1));
+			String endTime = localDateToEndString(startDate.plusDays(6));
 			weeklyHours.add(DatabaseCommunicator.getWeeklyHoursUser(userID, startTime, endTime, areaName));
 			startDate = startDate.plusWeeks(1);
 		}
@@ -274,6 +276,5 @@ public class UIBackendController {
 		}
 		return date.toString() + " 00:00:00";
 	}
-	
 	
 }
