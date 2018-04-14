@@ -119,11 +119,12 @@ public class UIBackendController {
 
 	public static int[] getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursAll = new ArrayList<Integer>();
+		String dbAreaName = prettyNameTodbName(areaName);
 		
 		while (startDate.isBefore(stopDate)) {
 			String startTime = localDateToStartString(startDate);
 			String endTime = localDateToEndString(startDate.plusDays(6));
-			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, areaName));
+			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, dbAreaName));
 			startDate = startDate.plusWeeks(1);
 		}
 		
@@ -137,11 +138,12 @@ public class UIBackendController {
 	
 	public static int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursGroup = new ArrayList<Integer>();
+		String dbAreaName = prettyNameTodbName(areaName);
 		
 		while (startDate.isBefore(stopDate)) {
 			String startTime = localDateToStartString(startDate);
 			String endTime = localDateToEndString(startDate.plusDays(6));
-			weeklyHoursGroup.add(DatabaseCommunicator.getWeeklyHoursGroup(groupID, startTime, endTime, areaName));
+			weeklyHoursGroup.add(DatabaseCommunicator.getWeeklyHoursGroup(groupID, startTime, endTime, dbAreaName));
 			startDate = startDate.plusWeeks(1);
 		}
 		int[] retVal = new int[weeklyHoursGroup.size()];
@@ -154,11 +156,12 @@ public class UIBackendController {
 	
 	public static int[] getLinePointsUser(int userID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHours = new ArrayList<Integer>();
+		String dbAreaName = prettyNameTodbName(areaName);
 		
 		while (startDate.isBefore(stopDate)) {
 			String startTime = localDateToStartString(startDate);
 			String endTime = localDateToEndString(startDate.plusDays(6));
-			weeklyHours.add(DatabaseCommunicator.getWeeklyHoursUser(userID, startTime, endTime, areaName));
+			weeklyHours.add(DatabaseCommunicator.getWeeklyHoursUser(userID, startTime, endTime, dbAreaName));
 			startDate = startDate.plusWeeks(1);
 		}
 		int[] retVal = new int[weeklyHours.size()];
@@ -274,6 +277,18 @@ public class UIBackendController {
 			return date.toString() + " 23:59:59";
 		}
 		return date.toString() + " 00:00:00";
+	}
+	
+	private static String prettyNameTodbName(String areaName) {
+		if (areaName.equals("Gloshaugen")) {
+			return "glos";
+		} else if (areaName.equals("SiT Trening")) {
+			return "sitTrening";
+		} else if (areaName.equals("Samfundet")) {
+			return "samfundet";
+		} else {
+			return "other";
+		}
 	}
 	
 }
