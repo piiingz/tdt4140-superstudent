@@ -127,7 +127,6 @@ public class UIBackendController {
 			startDate = startDate.plusWeeks(1);
 		}
 		
-		System.out.println(weeklyHoursAll);
 		int[] retVal = new int[weeklyHoursAll.size()];
 		for (int i = 0; i < weeklyHoursAll.size(); i++) {
 			retVal[i] = weeklyHoursAll.get(i);
