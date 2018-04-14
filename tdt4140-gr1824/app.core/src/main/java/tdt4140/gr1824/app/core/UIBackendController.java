@@ -127,10 +127,10 @@ public class UIBackendController {
 			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, dbAreaName));
 			startDate = startDate.plusWeeks(1);
 		}
-		
+		// converting to hours
 		int[] retVal = new int[weeklyHoursAll.size()];
 		for (int i = 0; i < weeklyHoursAll.size(); i++) {
-			retVal[i] = weeklyHoursAll.get(i);
+			retVal[i] = (int)weeklyHoursAll.get(i)/60;
 		}
 		
 		return retVal;
@@ -148,7 +148,7 @@ public class UIBackendController {
 		}
 		int[] retVal = new int[weeklyHoursGroup.size()];
 		for (int i = 0; i < weeklyHoursGroup.size(); i++) {
-			retVal[i] = weeklyHoursGroup.get(i);
+			retVal[i] = (int)weeklyHoursGroup.get(i)/60;
 		}
 		
 		return retVal;
@@ -166,7 +166,7 @@ public class UIBackendController {
 		}
 		int[] retVal = new int[weeklyHours.size()];
 		for (int i = 0; i < weeklyHours.size(); i++) {
-			retVal[i] = weeklyHours.get(i);
+			retVal[i] = (int)weeklyHours.get(i)/60;
 		}
 		
 		return retVal;
@@ -290,5 +290,7 @@ public class UIBackendController {
 			return "other";
 		}
 	}
+	
+
 	
 }
