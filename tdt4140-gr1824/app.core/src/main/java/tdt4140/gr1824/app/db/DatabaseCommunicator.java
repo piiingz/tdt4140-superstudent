@@ -499,7 +499,7 @@ public class DatabaseCommunicator {
 	//Minutes is how many minutes the user has been there.
 	public static List<Integer> getDurationOfStays(String starttime, String stoptime, int areaID) throws SQLException {
 		List<Integer> list = new ArrayList<Integer>();
-		String query = "select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttime, stoptime) as duration, personID from ((select starttime, stoptime, personID From stay as stay1 where starttime >= '"+starttime+"' AND stoptime <= '"+stoptime+"' AND areaID = "+areaID+" UNION select starttime, stoptime, personID From stay as stay2 where starttime < '"+starttime+"' AND stoptime <= '"+stoptime+"' AND stoptime >= '"+starttime+"' AND areaID = "+areaID+" UNION select starttime, stoptime, personID from stay as stay3 where starttime >= '"+starttime+"' AND starttime <= '"+stoptime+"' AND stoptime > '"+stoptime+"' AND areaID = "+areaID+" UNION SELECT starttime,  '"+stoptime+"' AS stoptime, personID from currentstay where areaID = "+areaID+" AND starttime >= '"+starttime+"' AND starttime <= '"+stoptime+"' UNION SELECT '"+starttime+"' as starttime,  '"+stoptime+"' AS stoptime, personID from currentstay where areaID = "+areaID+" AND starttime <= '"+starttime+"' )AS table1)) as durationspp group by personID;";
+		String query = "select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttid, stoptid) as duration, personID from ((select starttime as starttid, stoptime as stoptid, personID From stay as stay1 where starttime >= '"+starttime+"' AND stoptime <= '"+stoptime+"' AND areaID = "+areaID+" UNION select '"+starttime+"' as starttid, stoptime as stoptid, personID From stay as stay2 where starttime < '"+starttime+"' AND stoptime <= '"+stoptime+"' AND stoptime >= '"+starttime+"' AND areaID = "+areaID+" UNION select starttime as starttid, '"+stoptime+"' as stoptid, personID from stay as stay3 where starttime >= '"+starttime+"' AND starttime <= '"+stoptime+"' AND stoptime > '"+stoptime+"' AND areaID = "+areaID+" UNION SELECT starttime as starttid,  '"+stoptime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime >= '"+starttime+"' AND starttime <= '"+stoptime+"' AND '"+stoptime+"' <= NOW() UNION SELECT '"+starttime+"' as starttid,  '"+stoptime+"' AS stoptid, personID from stay where areaID = "+areaID+" and starttime < '"+starttime+"' and stoptime > '"+stoptime+"' UNION SELECT '"+starttime+"' as starttid,  '"+stoptime+"' AS stoptid, personID from currentstay where areaID = "+areaID+" AND starttime <= '"+starttime+"'  AND '"+stoptime+"' <= NOW() )AS table1)) as durationspp group by personID;";
 		ResultSet rs = getResultSet(query);
 		while (rs.next()) {
 			list.add(rs.getInt("personID"));
@@ -678,6 +678,7 @@ public class DatabaseCommunicator {
 		
 		return goal;
 	}
+
 
 }
 
