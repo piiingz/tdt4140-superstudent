@@ -22,14 +22,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.core.UIBackendController;
-import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class SiTUIController {
 

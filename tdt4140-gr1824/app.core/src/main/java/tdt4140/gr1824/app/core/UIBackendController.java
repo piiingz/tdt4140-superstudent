@@ -1,7 +1,6 @@
 package tdt4140.gr1824.app.core;
 
 import java.sql.SQLException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +10,9 @@ import javafx.collections.ObservableList;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UIBackendController {
-	
-	public double[] getAllUserStatPercentage() {
-		/*Return total stay-times as percentages*/
-		return this.calculateStayPercentage(this.getAllStats());
-	}
-	
-	public double[] getGroupStatPercentage(String groupID) {
-		/*Return group stays as percentages*/
-		return this.calculateStayPercentage(this.getGroupStats(groupID));
-	}
-	
-	public double[] getUserStatPercentage(int userID) {
-		/*Return user stays as percentages */
-		return this.calculateStayPercentage(this.getUserStats(userID));
+		
+	public String getUserName(int userID) throws SQLException{
+		return DatabaseCommunicator.getFullName(userID);
 	}
 	
 	/**
@@ -57,21 +45,6 @@ public class UIBackendController {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	private double[] calculateStayPercentage(int[] stayData) {
-		/* Calculate how many percent each element in the array is of the total value */
-		int totalStayTime = 0;
-		for (int stayTime : stayData) {
-			totalStayTime += stayTime;
-		}
-		
-		double[] stayPercentage = new double[stayData.length];
-		for (int i = 0; i < stayData.length; i++) {
-			stayPercentage[i] = (((double) stayData[i]) / totalStayTime);
-		}
-		
-		return stayPercentage;
 	}
 	
 	public static int[] getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
@@ -268,6 +241,4 @@ public class UIBackendController {
 			return "other";
 		}
 	}
-
-	
 }

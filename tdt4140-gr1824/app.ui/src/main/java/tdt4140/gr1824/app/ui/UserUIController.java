@@ -27,7 +27,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tdt4140.gr1824.app.core.UIBackendController;
-import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UserUIController {
 
@@ -36,6 +35,9 @@ public class UserUIController {
 	public Button bottomRightButton; //bottomRightButton.setText(String) depending on active view
 	
 	//Admin panel buttons and ID:
+	@FXML
+	public Text userName;
+	
 	@FXML
 	public HBox piechartStat; //ID: 1
 		
@@ -205,6 +207,12 @@ public class UserUIController {
 	
 	@FXML
 	public TextField groupID; 
+	
+	//Initialize user name in panel:
+	@FXML
+	public void initialize() throws SQLException {
+		this.userName.setText(this.backendController.getUserName(currentUserID));
+	}
 	
 	//Handle compare toggle:
 	@FXML

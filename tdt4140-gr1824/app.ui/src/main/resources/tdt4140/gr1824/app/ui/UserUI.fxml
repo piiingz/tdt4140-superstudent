@@ -64,15 +64,15 @@
                   <Font name="Ebrima" size="30.0" />
                </font>
             </Text>
-            <JFXButton fx:id="bottomRightButton" buttonType="RAISED" layoutX="812.0" layoutY="560.0" onAction="#handleBottomRightButton" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #00A2D3;" text="Button" textFill="WHITE" visible="false" />
+            <JFXButton fx:id="bottomRightButton" buttonType="RAISED" layoutX="812.0" layoutY="560.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleBottomRightButton" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #00A2D3;" text="Button" textFill="WHITE" visible="false" />
             <JFXToggleButton fx:id="enableCompareStats" layoutX="14.0" layoutY="11.0" onAction="#handleEnableCompareToggleButton" text="Enable Comparison" toggleColor="#00a2d3" visible="false" />
             <JFXTextField fx:id="groupID" disable="true" layoutX="216.0" layoutY="28.0" promptText="Group ID" unFocusColor="#00a2d3" visible="false" />
             <PieChart fx:id="userChart" layoutX="5.0" layoutY="105.0" prefHeight="450.0" prefWidth="294.0" visible="false" />
             <PieChart fx:id="averageChart" layoutX="306.0" layoutY="105.0" prefHeight="450.0" prefWidth="294.0" visible="false" />
             <PieChart fx:id="groupChart" layoutX="608.0" layoutY="105.0" prefHeight="450.0" prefWidth="294.0" visible="false" />
             <JFXComboBox fx:id="comboBoxProgression" layoutX="397.0" layoutY="28.0" promptText="Choose an area" unFocusColor="#00a2d3" visible="false" />
-            <JFXDatePicker fx:id="startDate" defaultColor="#00a2d3" layoutX="538.0" layoutY="28.0" prefHeight="25.0" prefWidth="98.0" promptText="Start Date" visible="false" />
-            <JFXDatePicker fx:id="endDate" defaultColor="#00a2d3" layoutX="650.0" layoutY="28.0" prefHeight="25.0" prefWidth="98.0" promptText="End Date" visible="false" />
+            <JFXDatePicker fx:id="startDate" defaultColor="#00a2d3" layoutX="538.0" layoutY="28.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="98.0" promptText="Start Date" visible="false" />
+            <JFXDatePicker fx:id="endDate" defaultColor="#00a2d3" layoutX="650.0" layoutY="28.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="98.0" promptText="End Date" visible="false" />
             <LineChart fx:id="lineChart" layoutX="11.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="885.0" visible="false">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
@@ -101,7 +101,7 @@
                   <Font name="Ebrima" size="30.0" />
                </font>
             </Text>
-            <JFXComboBox fx:id="comboBoxCompetitions" layoutX="596.0" layoutY="51.0" prefHeight="25.0" prefWidth="152.0" promptText="Competition Name" unFocusColor="#00a2d3" visible="false" />
+            <JFXComboBox fx:id="comboBoxCompetitions" layoutX="596.0" layoutY="51.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="152.0" promptText="Competition Name" unFocusColor="#00a2d3" visible="false" />
             <ImageView fx:id="competitionIconCenter" fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../icons/cup.png" />
@@ -182,8 +182,8 @@
                   <Image url="@../icons/medal.png" />
                </image>
             </ImageView>
-            <JFXTextField fx:id="newGoalField" layoutX="17.0" layoutY="65.0" prefHeight="25.0" prefWidth="61.0" promptText="New Goal" unFocusColor="#00a2d3" visible="false" />
-            <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="88.0" layoutY="65.0" onAction="#handleUpdateButton" prefHeight="25.0" prefWidth="55.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="Update" textFill="WHITE" visible="false" />
+            <JFXTextField fx:id="newGoalField" layoutX="17.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="61.0" promptText="New Goal" unFocusColor="#00a2d3" visible="false" />
+            <JFXButton fx:id="updateButton" buttonType="RAISED" layoutX="88.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleUpdateButton" prefHeight="25.0" prefWidth="55.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="Update" textFill="WHITE" visible="false" />
             <Text fx:id="currentGoal" layoutX="170.0" layoutY="85.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" text="Current goal:" visible="false" />
             <Text fx:id="currentGoalVal" layoutX="250.0" layoutY="85.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="00" visible="false" />
             <Text fx:id="endMessage" layoutX="280.0" layoutY="85.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="hours at Gloshaugen in a week" visible="false" />
@@ -340,5 +340,10 @@
             </Label>
          </children>
       </HBox>
+      <Text fx:id="userName" fill="WHITE" layoutX="23.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
