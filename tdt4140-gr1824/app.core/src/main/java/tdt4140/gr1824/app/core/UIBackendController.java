@@ -9,20 +9,16 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
-import tdt4140.gr1824.app.mock.DummyClassDatabaseCommunicatorForStatisticsTest;
 
 public class UIBackendController {
 
-	private DummyClassDatabaseCommunicatorForStatisticsTest dummydbCom;
 	private DatabaseCommunicator dbCom;
 	
 	public UIBackendController(DatabaseCommunicator dbcom) {
 		this.dbCom = dbcom;
 	}
 	
-	public UIBackendController(DummyClassDatabaseCommunicatorForStatisticsTest dbcom) {
-		this.dummydbCom = dbcom;
-	}
+	
 	
 	public double[] getAllUserStatPercentage() {
 		/*Return total stay-times as percentages*/
@@ -87,36 +83,6 @@ public class UIBackendController {
 		return stayPercentage;
 	}
 	
-	//Used by test:
-
-	public double[] getAllUserStatPercentagetest() {
-		/*Return total stay-times as percentages*/
-		return this.calculateStayPercentage(this.getAllStatsTest());
-	}
-	
-	public double[] getGroupStatPercentagetest(String groupID) {
-		/*Return group stays as percentages*/
-		return this.calculateStayPercentage(this.getGroupStatsTest(groupID));
-	}
-	
-	public double[] getUserStatPercentagetest(int userID) {
-		/*Return user stays as percentages */
-		return this.calculateStayPercentage(this.getUserStatsTest(userID));
-	}
-	
-	public int[] getUserStatsTest(int userID) {
-		return this.dummydbCom.getUserStats(userID);
-	}
-	
-	public int[] getGroupStatsTest(String groupID) {
-		return this.dummydbCom.getGroupStats(groupID);
-	}
-	
-	public int[] getAllStatsTest() {
-		return this.dummydbCom.getAllStats();
-		
-	}
-
 	public static int[] getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursAll = new ArrayList<Integer>();
 		String dbAreaName = prettyNameTodbName(areaName);
