@@ -41,7 +41,7 @@ public class Statistics {
 	/**
 	 * The methods: getUserStats, getGroupStats and getAllUserStats
 	 * uses the corresponding DatabaseCommunicator-methods to provide
-	 * 4-element int[]-arrays on the form: [Gløshaugen, SitTrening, Samfundet, Other] 
+	 * 4-element int[]-arrays on the form: [Gloshaugen, SitTrening, Samfundet, Other] 
 	 */
 	public int[] getUserStats(int userID) {
 		try {

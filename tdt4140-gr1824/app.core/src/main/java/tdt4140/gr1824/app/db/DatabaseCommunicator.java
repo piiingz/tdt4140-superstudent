@@ -2,6 +2,9 @@ package tdt4140.gr1824.app.db;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -535,7 +538,7 @@ public class DatabaseCommunicator {
 	}
 	
 	
-	// Gir List<String> i denne rekkefølgen: description, prize, starttime, stoptime, areaID, hours, actual hours.
+	// Gir List<String> i denne rekkefolgen: description, prize, starttime, stoptime, areaID, hours, actual hours.
 	public static List<String> getCompInfo(int userID, String competitionName) throws SQLException {
 		String query = "select * from competition where competitionName = '"+competitionName+"';";
 		List<String> compInfo = new ArrayList<String>();
@@ -592,6 +595,8 @@ public class DatabaseCommunicator {
 	public static Integer getWeeklyHoursUser(int personID, String startTime, String stopTime, String areaName) throws SQLException {
 		int areaID = getAreaID(areaName);
 		int weeklyHours = 0;
+		
+		
 		String query = "select timeSpent as personHours from (select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttid, stoptid) as duration, personID from"
 				+"((select starttime as starttid, stoptime as stoptid, personID From stay as stay1 where starttime >= '"+startTime+"' AND stoptime <= '"+stopTime+"' AND areaID = "+areaID+" UNION "
 				+"select '"+startTime+"' as starttid, stoptime as stoptid, personID From stay as stay2 where starttime < '"+startTime+"' AND stoptime <= '"+stopTime+"' AND stoptime >= '"+startTime+"' AND areaID = "+areaID+" UNION " 
@@ -613,8 +618,8 @@ public class DatabaseCommunicator {
 
 	public static Integer getWeeklyHoursGroup(String groupID, String startTime, String stopTime, String areaName) throws SQLException {
 		int areaID = getAreaID(areaName);
-		
 		int weeklyHours = 0;
+		
 		String query = "select avg(timeSpent) as genderAverage from (select timeSpent, gender from "
 				+"(select personID, sum(duration) as timeSpent from (select timestampdiff(minute, starttid, stoptid) as duration, personID from"
 				+"((select starttime as starttid, stoptime as stoptid, personID From stay as stay1 where starttime >= '"+startTime+"' AND stoptime <= '"+stopTime+"' AND areaID = "+areaID+" UNION "
@@ -667,7 +672,21 @@ public class DatabaseCommunicator {
 		
 		return goal;
 	}
+	/*
+	private static LocalDateTime getLocalDateTime (String stopTime) {
+		
+		
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		//System.out.println(dtf.format(now)); //2016/11/16 12:08:43
+		return ""+String.format("%1$tY-%1$tm-%1$td", now);
+		
+	}
 
+	public static void main(String[] args) {
+		System.out.println(getTodaysDate());
+	}*/
 }
 
 
