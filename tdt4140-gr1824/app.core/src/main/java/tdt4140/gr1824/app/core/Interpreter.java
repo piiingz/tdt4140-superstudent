@@ -18,7 +18,8 @@ public class Interpreter {
 	
 	//receives NMEAdata object. 
 	//receives current area and time for current user from database.
-	//if user changes location it calls stayLog to log last stay. It then calls DatabaseCommunicator to update new current area and starttime.
+	//if user changes location it calls stayLog to log last stay. 
+	//It then calls DatabaseCommunicator to update new current area and starttime.
 	public void receive(NMEAdata data) throws SQLException {
 		int currentUserID = data.getId();
 		String[] areaAndTime = DatabaseCommunicator.getCurrentStay(currentUserID); 
