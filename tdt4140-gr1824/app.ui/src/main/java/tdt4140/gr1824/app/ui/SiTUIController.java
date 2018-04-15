@@ -405,6 +405,8 @@ public class SiTUIController {
 	}
 	
 	private void handleGymStatButton() throws SQLException {
+		this.goodToGo.setVisible(false);
+		this.tooCrowded.setVisible(false);
 		if (this.backendController.getNumberAtGym() <= this.gymThreshold) {
 			this.goodToGo.setVisible(true);
 		} else {
