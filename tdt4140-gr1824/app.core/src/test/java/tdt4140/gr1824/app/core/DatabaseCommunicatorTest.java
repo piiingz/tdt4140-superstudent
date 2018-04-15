@@ -57,15 +57,6 @@ public class DatabaseCommunicatorTest {
 		int userID = DatabaseCommunicator.getNextPersonID()-1;
 		assertTrue(DatabaseCommunicator.getCompetitionNamesByUser(userID) instanceof List<?>);
 	}
-	/*
-	 * 
-	 * Venter til addCompetitionTest
-	@Test
-	public void testGetCompInfo() throws SQLException {
-		int userID = DatabaseCommunicator.getNextPersonID()-1;
-		assertTrue(DatabaseCommunicator.getCompInfo(userID, ) instanceof List<?>);
-	}
-	*/
 	@Test
 	public void testDeleteUser() {
 		try {
@@ -173,7 +164,7 @@ public class DatabaseCommunicatorTest {
 			e.printStackTrace();
 			}
 	}
-
+	
 	@Test
 	public void testCompetitionInDB(){
 		try {
