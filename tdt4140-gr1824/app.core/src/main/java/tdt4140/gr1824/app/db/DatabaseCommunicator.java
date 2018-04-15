@@ -2,9 +2,6 @@ package tdt4140.gr1824.app.db;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
