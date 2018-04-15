@@ -519,10 +519,6 @@ public class SiTUIController {
 				this.popupErrorMessage(event, "Start date must be before end date!");
 				return;
 			}
-			if(this.startDateCreateComp.getValue().getDayOfWeek() != DayOfWeek.MONDAY || this.endDateCreateComp.getValue().getDayOfWeek() != DayOfWeek.SUNDAY) {
-				this.popupErrorMessage(event, "Start date must be a monday!\n End date must be a Sunday");
-				return;
-			}
 			if (this.backendController.competitionExists(this.competitionNameCreate.getText())) {
 				return;
 			}
