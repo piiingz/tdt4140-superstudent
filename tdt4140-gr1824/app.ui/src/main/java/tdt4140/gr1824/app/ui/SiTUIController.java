@@ -195,7 +195,6 @@ public class SiTUIController {
 	private UIBackendController backendController = new UIBackendController();
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	private boolean groupStatsToggle = false;
-	private int gymThreshold = 5;
 	
 	@FXML
 	public ToggleButton enableGroupStats; //Used by pie and progression view
@@ -409,7 +408,7 @@ public class SiTUIController {
 	private void handleGymStatButton() throws SQLException {
 		this.goodToGo.setVisible(false);
 		this.tooCrowded.setVisible(false);
-		if (this.backendController.getNumberAtGym() <= this.gymThreshold) {
+		if (this.backendController.getNumberAtGym() <= this.backendController.getGymThreshold()) {
 			this.goodToGo.setVisible(true);
 			this.statusText.setText("Good to go!");
 		} else {

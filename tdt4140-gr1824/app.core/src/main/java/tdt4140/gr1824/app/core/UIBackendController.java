@@ -11,6 +11,12 @@ import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UIBackendController {
 		
+	public int gymThreshold = 5;
+	
+	public int getGymThreshold() {
+		return this.gymThreshold;
+	}
+	
 	public String getUserName(int userID) throws SQLException{
 		return DatabaseCommunicator.getFullName(userID);
 	}
@@ -47,7 +53,7 @@ public class UIBackendController {
 		}
 	}
 	
-	public static int[] getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+	public int[] getLinePointsAll(LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursAll = new ArrayList<Integer>();
 		String dbAreaName = prettyNameTodbName(areaName);
 		
@@ -73,7 +79,7 @@ public class UIBackendController {
 		return retVal;
 	}
 	
-	public static int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+	public int[] getLinePointsGroup(String groupID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHoursGroup = new ArrayList<Integer>();
 		String dbAreaName = prettyNameTodbName(areaName);
 		
@@ -98,7 +104,7 @@ public class UIBackendController {
 		return retVal;
 	}
 	
-	public static int[] getLinePointsUser(int userID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
+	public int[] getLinePointsUser(int userID, LocalDate startDate, LocalDate stopDate, String areaName) throws SQLException {
 		List<Integer> weeklyHours = new ArrayList<Integer>();
 		String dbAreaName = prettyNameTodbName(areaName);
 		
@@ -218,7 +224,6 @@ public class UIBackendController {
 		} else if (areaID == 4) {
 			return "Other";
 		}
-		
 		return null;
 	}
 	
