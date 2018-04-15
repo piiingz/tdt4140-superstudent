@@ -1,7 +1,6 @@
 package tdt4140.gr1824.app.core;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
@@ -18,13 +17,14 @@ import java.sql.ResultSet;
 
 public class DatabaseCommunicatorTest {
 
-
 	@Test
 	public void testGetConnection(){
 	  Connection connection  = DatabaseCommunicator.getConnection();
 	  assertTrue(connection != null);
 	}
 
+	// User tests 
+	
 	@Test
 	public void testCreateUser() {
 		try {
@@ -37,7 +37,6 @@ public class DatabaseCommunicatorTest {
 		}
 	}
 	
-	//Disse 4 testene er nye
 	@Test
 	public void testUpdateGoal() throws SQLException {
 		int userID = DatabaseCommunicator.getNextPersonID()-1;
@@ -57,6 +56,7 @@ public class DatabaseCommunicatorTest {
 		int userID = DatabaseCommunicator.getNextPersonID()-1;
 		assertTrue(DatabaseCommunicator.getCompetitionNamesByUser(userID) instanceof List<?>);
 	}
+	
 	@Test
 	public void testDeleteUser() {
 		try {
@@ -68,6 +68,8 @@ public class DatabaseCommunicatorTest {
 			se.printStackTrace();
 		}
 	}
+	
+	// Area tests
 	
 	@Test
 	public void testAddArea(){
@@ -113,6 +115,8 @@ public class DatabaseCommunicatorTest {
 		assertTrue(testInt == 1);
 	}
 	
+	// Stat tests
+	
 	@Test
 	public void testGetUserStats() throws SQLException {
 		assertTrue(DatabaseCommunicator.getUserStats(1).getClass().getComponentType() == int.class);
@@ -136,6 +140,28 @@ public class DatabaseCommunicatorTest {
 		DatabaseCommunicator.getGroupStats("None");
 	}
 
+	@Test
+	public void testGetWeeklyHoursAll() throws SQLException {
+		assertTrue(DatabaseCommunicator.getWeeklyHoursAll("2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
+	}
+	
+	@Test
+	public void testGetWeeklyHoursGroup() throws SQLException {
+		assertTrue(DatabaseCommunicator.getWeeklyHoursGroup("male", "2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
+	}
+	
+	@Test
+	public void testGetNumberAtGym() throws SQLException {
+		assertTrue(DatabaseCommunicator.getNumberAtGym() >= 0);
+	}
+	
+	@Test
+	public void testGetDurationOfStays() throws SQLException {
+		assertTrue(DatabaseCommunicator.getDurationOfStays("2018-04-04 00:00:00","2018-04-05 00:00:00",1) instanceof List<?>);
+	}
+	
+	// Competition test
+	
 	@Test
 	public void testAddCompetition(){
 		try {
@@ -233,25 +259,6 @@ public class DatabaseCommunicatorTest {
 		}
 	}
 	
-	@Test
-	public void testGetWeeklyHoursAll() throws SQLException {
-		assertTrue(DatabaseCommunicator.getWeeklyHoursAll("2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
-	}
-	
-	@Test
-	public void testGetWeeklyHoursGroup() throws SQLException {
-		assertTrue(DatabaseCommunicator.getWeeklyHoursGroup("male", "2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
-	}
-	
-	@Test
-	public void testGetNumberAtGym() throws SQLException {
-		assertTrue(DatabaseCommunicator.getNumberAtGym() >= 0);
-	}
-	
-	@Test
-	public void testGetDurationOfStays() throws SQLException {
-		assertTrue(DatabaseCommunicator.getDurationOfStays("2018-04-04 00:00:00","2018-04-05 00:00:00",1) instanceof List<?>);
-	}
 }
 		
 
