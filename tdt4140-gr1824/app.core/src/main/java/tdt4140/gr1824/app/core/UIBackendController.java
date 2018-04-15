@@ -259,7 +259,7 @@ public class UIBackendController {
 	public static boolean userInDatabase(Integer userID) throws SQLException {
 		return DatabaseCommunicator.userInDatabase(userID);
 	}
-	
+
 	public void deleteUser(int userID) {
 		DatabaseCommunicator.deleteUser(userID);
 	}
