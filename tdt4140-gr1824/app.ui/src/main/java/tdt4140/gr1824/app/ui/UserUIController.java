@@ -96,6 +96,9 @@ public class UserUIController {
 	public ImageView tooCrowded;
 	
 	@FXML
+	public Text statusText;
+	
+	@FXML
 	public Text gymStatText;
 	
 	//Rewards from competitions elements:
@@ -455,6 +458,7 @@ public class UserUIController {
 		this.gymStatText.setVisible(true);
 		this.bottomRightButton.setText("Refresh");
 		this.bottomRightButton.setVisible(true);
+		this.statusText.setVisible(true);
 	}
 	
 	private void handleGymStatButton() throws SQLException {
@@ -462,9 +466,12 @@ public class UserUIController {
 		this.tooCrowded.setVisible(false);
 		if (this.backendController.getNumberAtGym() <= this.gymThreshold) {
 			this.goodToGo.setVisible(true);
+			this.statusText.setText("Good to go!");
 		} else {
 			this.tooCrowded.setVisible(true);
+			this.statusText.setText("Too crowded!");
 		}
+		
 	}
 	
 	private void destructGymStatView() {
@@ -473,6 +480,8 @@ public class UserUIController {
 		this.tooCrowded.setVisible(false);
 		this.gymStatText.setVisible(false);
 		this.bottomRightButton.setVisible(false);
+		this.statusText.setVisible(false);
+		this.statusText.setText("Click the button to see");
 	}
 	
 	//Handle Rewards from competitions-view events:

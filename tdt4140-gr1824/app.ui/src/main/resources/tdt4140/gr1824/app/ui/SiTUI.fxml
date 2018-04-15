@@ -184,6 +184,11 @@
                <Font name="Ebrima" size="15.0" />
             </font>
          </Text>
+         <Text fx:id="statusText" layoutX="270.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button to see status" visible="false">
+            <font>
+               <Font size="30.0" />
+            </font>
+         </Text>
          </children></AnchorPane>
       <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="295.0" style="-fx-background-color: #00A2D3;" text="   SiT Admin Panel" textFill="WHITE">
          <font>

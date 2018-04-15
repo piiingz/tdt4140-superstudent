@@ -81,7 +81,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
-            <Text fx:id="gymStatText" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Gym Status" visible="false">
+            <Text fx:id="gymStatText" layoutX="100.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Gym Status:" visible="false">
                <font>
                   <Font size="30.0" />
                </font>
@@ -196,6 +196,11 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+            <Text fx:id="statusText" layoutX="270.0" layoutY="65.0" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button to see status" visible="false">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
       <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="295.0" style="-fx-background-color: #00A2D3;" text="   User Panel" textFill="WHITE">

@@ -173,7 +173,7 @@ public class UIBackendController {
 	}
 	
 	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) throws SQLException {
-		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate, true), this.localDateToString(endDate, true), competitionDescription, prizeDescription);
+		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate, true), this.localDateToString(endDate, false), competitionDescription, prizeDescription);
 	}
 	
 	public ObservableList<String> getAllCompetitionNames() throws SQLException {
