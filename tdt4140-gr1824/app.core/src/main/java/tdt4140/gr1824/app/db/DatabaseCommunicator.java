@@ -363,6 +363,17 @@ public class DatabaseCommunicator {
 		return areaName;
 	}
 	
+	public static String getFullName(int userID) throws SQLException {
+		
+		String fullName = "";
+		rs = getResultSet("SELECT fullname from person where personID = "+userID+";");
+		if (rs.next()) {
+			fullName = rs.getString("fullname");
+		}
+		closeConnection();
+		return fullName;
+	}
+	
 	public static int[] getUserStats(int userID) throws SQLException {
 		int glosDur = 0;
 		int sitTreningDur = 0;
