@@ -471,7 +471,6 @@ public class UserUIController {
 			this.tooCrowded.setVisible(true);
 			this.statusText.setText("Too crowded!");
 		}
-		
 	}
 	
 	private void destructGymStatView() {
