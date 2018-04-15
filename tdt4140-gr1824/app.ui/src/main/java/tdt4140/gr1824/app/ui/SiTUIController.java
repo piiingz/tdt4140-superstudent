@@ -191,7 +191,7 @@ public class SiTUIController {
 	public Text instructionMessage;
 	
 	//Other/common variables
-	private UIBackendController backendController = new UIBackendController(new DatabaseCommunicator());
+	private UIBackendController backendController = new UIBackendController();
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	private boolean groupStatsToggle = false;
 	private int gymThreshold = 5;

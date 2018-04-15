@@ -11,14 +11,6 @@ import javafx.collections.ObservableList;
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 public class UIBackendController {
-
-	private DatabaseCommunicator dbCom;
-	
-	public UIBackendController(DatabaseCommunicator dbcom) {
-		this.dbCom = dbcom;
-	}
-	
-	
 	
 	public double[] getAllUserStatPercentage() {
 		/*Return total stay-times as percentages*/
@@ -42,7 +34,7 @@ public class UIBackendController {
 	 */
 	public int[] getUserStats(int userID) {
 		try {
-			return this.dbCom.getUserStats(userID);
+			return DatabaseCommunicator.getUserStats(userID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -51,7 +43,7 @@ public class UIBackendController {
 	
 	public int[] getGroupStats(String groupID) {
 		try {
-			return this.dbCom.getGroupStats(groupID);
+			return DatabaseCommunicator.getGroupStats(groupID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -60,12 +52,11 @@ public class UIBackendController {
 	
 	public int[] getAllStats() {
 		try {
-			return dbCom.getAllStats();
+			return DatabaseCommunicator.getAllStats();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
 	
 	private double[] calculateStayPercentage(int[] stayData) {
@@ -182,7 +173,7 @@ public class UIBackendController {
 	}
 	
 	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) throws SQLException {
-		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate), this.localDateToString(endDate), competitionDescription, prizeDescription);
+		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate, true), this.localDateToString(endDate, true), competitionDescription, prizeDescription);
 	}
 	
 	public ObservableList<String> getAllCompetitionNames() throws SQLException {
@@ -258,13 +249,12 @@ public class UIBackendController {
 		return null;
 	}
 	
-	private String localDateToString(LocalDate date) {
-		if (date.getDayOfWeek() == DayOfWeek.MONDAY) {
+	private String localDateToString(LocalDate date, boolean startDate) {
+		if (startDate) {
 			return date.toString() + " 00:00:00";
-		} else if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+		} else {
 			return date.toString() + " 23:59:59";
 		}
-		return date.toString() + " 00:00:00";
 	}
 	
 	private static String prettyNameTodbName(String areaName) {

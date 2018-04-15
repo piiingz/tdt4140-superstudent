@@ -175,7 +175,7 @@ public class UserUIController {
 	public Button deleteButton;
 	
 	//Other/common variables
-	private UIBackendController backendController = new UIBackendController(new DatabaseCommunicator());
+	private UIBackendController backendController = new UIBackendController();
 	private ObservableList<String> comboBoxElements = FXCollections.observableArrayList("Gloshaugen","SiT Trening","Samfundet","Other");
 	private boolean compareToggle = false;
 	private int gymThreshold = 5;
