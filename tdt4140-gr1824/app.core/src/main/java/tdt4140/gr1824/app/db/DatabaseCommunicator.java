@@ -535,7 +535,7 @@ public class DatabaseCommunicator {
 	}
 	
 	
-	// Gir List<String> i denne rekkefølgen: description, prize, starttime, stoptime, areaID, hours, actual hours.
+	// Gir List<String> i denne rekkefolgen: description, prize, starttime, stoptime, areaID, hours, actual hours.
 	public static List<String> getCompInfo(int userID, String competitionName) throws SQLException {
 		String query = "select * from competition where competitionName = '"+competitionName+"';";
 		List<String> compInfo = new ArrayList<String>();
