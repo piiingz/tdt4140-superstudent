@@ -217,7 +217,31 @@ public class DatabaseCommunicatorTest {
 		
 	}
 	
-	//Nye tester
+	@Test
+	public void testGetWinners() {
+		try {
+			DatabaseCommunicator.addCompetition("Test name", 1, 5, "2018-04-01 00:00:00", "2018-04-15 23:59:59", "Test description", "Test prize");
+			DatabaseCommunicator.closeConnection();
+			
+			List<String> winners = DatabaseCommunicator.getWinners("Test name");
+
+			if (winners.isEmpty()) {
+				System.out.println(winners.getClass().getComponentType());
+				assertEquals(winners.getClass().getComponentType(), null);
+			} else {
+			
+				for (int i = 0; i < winners.size(); i++) {
+					assertTrue(winners.get(i).getClass().equals(String.class));
+				}
+			}
+			DatabaseCommunicator.updateTable("DELETE from competition where competitionName = 'Test name';");
+			DatabaseCommunicator.closeConnection();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	public void testGetWeeklyHoursAll() throws SQLException {
 		assertTrue(DatabaseCommunicator.getWeeklyHoursAll("2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);

@@ -578,5 +578,4 @@ public class SiTUIController {
 		errMessage.show();
 	}
 	
-	
 }
