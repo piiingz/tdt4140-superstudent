@@ -1,13 +1,13 @@
 # Superstudent							
 
 This is a project built as part of the course TDT4140, spring 2018. 
-Based on this [template project](https://gitlab.stud.iie.ntnu.no/tdt4140-staff/examples/blob/master/tdt4140-gr18nn/README.md), the purpose of the project is to "Plan and manage small software engineering projects and participate as designer/programmer/tester in larger software projects." See: [Course Information] (https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet)
+Based on this [template project](https://gitlab.stud.iie.ntnu.no/tdt4140-staff/examples/blob/master/tdt4140-gr18nn/README.md), the purpose of the project is to "Plan and manage small software engineering projects and participate as designer/programmer/tester in larger software projects." See: [Course Information] (https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet).
 
-*Superstudent* is a system intended for SiT - Student welfare organization in Trondheim
+*Superstudent* is a system intended for SiT (Student welfare organization in Trondheim).
 The system reads and classifies NMEA data. 
-It handles input from multiple users (Students) and will gather data about where each user is
+It handles input from multiple users and will gather data about where each user is
 and how long they stay at predefined areas. This information is then used to offer statistics
-describing a group's patterns, so that SiT can improve their services. *Superstudent* also allow SiT to create competitions where the students can win prizes. 
+describing a group's patterns, so that SiT can improve their services. *Superstudent* also allows SiT to create competitions where the students can win prizes. 
 
 ## Getting started
 
