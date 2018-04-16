@@ -28,15 +28,10 @@ public class DatabaseCommunicatorTest {
 	// User tests 
 	
 	@BeforeClass
-	public static void testCreateUser() {
-		try {
-			DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM", 40);
-			int personID = DatabaseCommunicator.getNextPersonID()-1;
-			assertTrue(DatabaseCommunicator.userInDatabase(personID) == true);
-		}
-		catch (SQLException se) {
-			se.printStackTrace();
-		}
+	public static void testCreateUser() throws SQLException {
+		DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM", 40);
+		int personID = DatabaseCommunicator.getNextPersonID()-1;
+		assertTrue(DatabaseCommunicator.userInDatabase(personID) == true);
 	}
 	
 	@Test
@@ -60,15 +55,10 @@ public class DatabaseCommunicatorTest {
 	}
 	
 	@AfterClass
-	public static void testDeleteUser() {
-		try {
-			int currpersonID = DatabaseCommunicator.getNextPersonID()-1;
-			DatabaseCommunicator.deleteUser(currpersonID);
-			assertTrue(DatabaseCommunicator.userInDatabase(currpersonID) == false);
-		}
-		catch (SQLException se) {
-			se.printStackTrace();
-		}
+	public static void testDeleteUser() throws SQLException {
+		int currpersonID = DatabaseCommunicator.getNextPersonID()-1;
+		DatabaseCommunicator.deleteUser(currpersonID);
+		assertTrue(DatabaseCommunicator.userInDatabase(currpersonID) == false);
 	}
 	
 	// Area tests

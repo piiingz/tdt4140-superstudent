@@ -13,12 +13,32 @@ public class UIBackendController {
 		
 	public int gymThreshold = 5;
 	
-	public int getGymThreshold() {
-		return this.gymThreshold;
-	}
+	// User methods
 	
 	public String getUserName(int userID) throws SQLException{
 		return DatabaseCommunicator.getFullName(userID);
+	}
+	
+	public void setNewGoal(Integer goal, int userID) {
+		DatabaseCommunicator.updateGoal(goal, userID);
+	}
+
+	public String getGoal(int userID) throws SQLException {
+		return String.valueOf(DatabaseCommunicator.getGoal(userID));
+	}
+	
+	public static boolean userInDatabase(Integer userID) throws SQLException {
+		return DatabaseCommunicator.userInDatabase(userID);
+	}
+
+	public void deleteUser(int userID) {
+		DatabaseCommunicator.deleteUser(userID);
+	}
+	
+	// Stat methods
+	
+	public int getGymThreshold() {
+		return this.gymThreshold;
 	}
 	
 	/**
@@ -130,17 +150,11 @@ public class UIBackendController {
 		return retVal;
 	}
 	
-	public void setNewGoal(Integer goal, int userID) {
-		DatabaseCommunicator.updateGoal(goal, userID);
-	}
-
-	public String getGoal(int userID) throws SQLException {
-		return String.valueOf(DatabaseCommunicator.getGoal(userID));
-	}
-	
 	public int getNumberAtGym() throws SQLException {
 		return DatabaseCommunicator.getNumberAtGym();
 	}
+	
+	// Competition methods
 	
 	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) throws SQLException {
 		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, localDateToString(startDate, true), localDateToString(endDate, false), competitionDescription, prizeDescription);
@@ -183,13 +197,7 @@ public class UIBackendController {
 		return winners;
 	}
 	
-	public static boolean userInDatabase(Integer userID) throws SQLException {
-		return DatabaseCommunicator.userInDatabase(userID);
-	}
-
-	public void deleteUser(int userID) {
-		DatabaseCommunicator.deleteUser(userID);
-	}
+	// Help methods
 	
 	public int prettyNameToId(String prettyName) {
 		if (prettyName.equals("Gloshaugen")) {
