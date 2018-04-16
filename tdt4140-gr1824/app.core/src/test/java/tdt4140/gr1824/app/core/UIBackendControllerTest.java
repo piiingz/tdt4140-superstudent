@@ -55,4 +55,20 @@ public class UIBackendControllerTest {
 	public void testGetGoal() throws NumberFormatException, SQLException {
 		assertTrue(Integer.valueOf(backendController.getGoal(1)) instanceof Integer);
 	}
+	
+	@Test
+	public void testPrettyNameToID() {
+		assertTrue(this.backendController.prettyNameToId("Gloshaugen") == 1);
+		assertTrue(this.backendController.prettyNameToId("SiT Trening") == 2);
+		assertTrue(this.backendController.prettyNameToId("Samfundet") == 3);
+		assertTrue(this.backendController.prettyNameToId("Other") == 4);
+	}
+	
+	@Test
+	public void testIDtoPrettyName() {
+		assertTrue(this.backendController.idToPrettyName(1).equals("Gloshaugen"));
+		assertTrue(this.backendController.idToPrettyName(2).equals("SiT Trening"));
+		assertTrue(this.backendController.idToPrettyName(3).equals("Samfundet"));
+		assertTrue(this.backendController.idToPrettyName(4).equals("Other"));
+	}
 }

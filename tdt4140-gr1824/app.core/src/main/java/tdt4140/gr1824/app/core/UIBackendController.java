@@ -200,7 +200,7 @@ public class UIBackendController {
 		DatabaseCommunicator.deleteUser(userID);
 	}
 	
-	private int prettyNameToId(String prettyName) {
+	public int prettyNameToId(String prettyName) {
 		if (prettyName.equals("Gloshaugen")) {
 			return 1;
 		} else if (prettyName.equals("SiT Trening")) {
@@ -214,7 +214,7 @@ public class UIBackendController {
 		return 0;
 	}
 	
-	private String idToPrettyName(int areaID) {
+	public String idToPrettyName(int areaID) {
 		if (areaID == 1) {
 			return "Gloshaugen";
 		} else if (areaID == 2) {
