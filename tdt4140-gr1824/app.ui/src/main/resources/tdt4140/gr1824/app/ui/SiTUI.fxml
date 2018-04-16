@@ -315,7 +315,7 @@
             </Label>
          </children>
       </HBox>
-   <JFXButton buttonType="RAISED" layoutX="62.0" layoutY="557.0" onAction="#handleReturnButton" prefHeight="42.0" prefWidth="171.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="      Return" textFill="WHITE">
+   <JFXButton fx:id="returnButton" buttonType="RAISED" layoutX="62.0" layoutY="557.0" onAction="#handleReturnButton" prefHeight="42.0" prefWidth="171.0" ripplerFill="#333645" style="-fx-background-color: #00A2D3;" text="      Return" textFill="WHITE">
       <graphic>
             <ImageView fitHeight="32.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
