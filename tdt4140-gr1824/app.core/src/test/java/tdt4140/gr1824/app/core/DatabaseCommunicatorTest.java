@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import tdt4140.gr1824.app.db.DatabaseCommunicator;
@@ -25,8 +27,8 @@ public class DatabaseCommunicatorTest {
 
 	// User tests 
 	
-	@Test
-	public void testCreateUser() {
+	@BeforeClass
+	public static void testCreateUser() {
 		try {
 			DatabaseCommunicator.createUser("testPerson", "female", 2013, "MTKOM", 40);
 			int personID = DatabaseCommunicator.getNextPersonID()-1;
@@ -57,8 +59,8 @@ public class DatabaseCommunicatorTest {
 		assertTrue(DatabaseCommunicator.getCompetitionNamesByUser(userID) instanceof List<?>);
 	}
 	
-	@Test
-	public void testDeleteUser() {
+	@AfterClass
+	public static void testDeleteUser() {
 		try {
 			int currpersonID = DatabaseCommunicator.getNextPersonID()-1;
 			DatabaseCommunicator.deleteUser(currpersonID);
@@ -70,29 +72,6 @@ public class DatabaseCommunicatorTest {
 	}
 	
 	// Area tests
-	
-	@Test
-	public void testAddArea(){
-		try {
-			int areaID = DatabaseCommunicator.getNextAreaID();
-			DatabaseCommunicator.addArea("testArea");
-			assertTrue(areaID == DatabaseCommunicator.getAreaID("testArea"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-	}
-	}
-	
-	@Test
-	public void testDeleteArea(){
-	  try {
-		  int currAreaID = DatabaseCommunicator.getNextAreaID()-1;
-		  DatabaseCommunicator.deleteArea(currAreaID);
-		  assertTrue(DatabaseCommunicator.getAreaName(currAreaID).isEmpty());
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	}
-	
 	@Test
 	public void testGetAreaName() {
 		String testName = "";

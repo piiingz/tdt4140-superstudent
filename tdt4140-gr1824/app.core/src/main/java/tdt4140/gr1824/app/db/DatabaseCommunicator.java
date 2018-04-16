@@ -160,19 +160,6 @@ public class DatabaseCommunicator {
 	}
 	
 	// Area methods
-	
-	public static void addArea(String areaName) throws SQLException {
-		int areaID = getNextAreaID();
-		updateTable("INSERT INTO definedarea VALUES("+areaID+", '"+areaName+"');");
-		closeConnection();
-	}
-	
-	public static void deleteArea(Integer areaID) {
-		
-		updateTable("DELETE FROM definedarea WHERE areaID="+areaID+";");
-		closeConnection();	
-	}	
-
 	public static int getAreaID(String areaName) throws SQLException {
 		int areaID = 0;
 		rs = getResultSet("SELECT areaID as ID FROM definedarea WHERE areaname = '"+areaName+"';");
