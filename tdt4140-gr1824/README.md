@@ -5,7 +5,7 @@ Based on this [template project](https://gitlab.stud.iie.ntnu.no/tdt4140-staff/e
 
 *Superstudent* is a system intended for SiT (Student welfare organization in Trondheim).
 The system reads and classifies NMEA data. 
-It handles input from multiple users and will gather data about where each user is
+It handles input from multiple users and gathers data about where each user is
 and how long they stay at predefined areas. This information is then used to offer statistics
 describing a group's patterns, so that SiT can improve their services. *Superstudent* also allows SiT to create competitions where the students can win prizes. 
 
