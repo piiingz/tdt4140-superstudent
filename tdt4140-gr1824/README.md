@@ -25,9 +25,12 @@ To run the project we suggest you use **JDK 8**.
 
 * In **Eclipse** use **import... > Existing Maven projects**
 
+### Running the program
+
 * Navigate to **app.ui/src/main/java/tdt.4140gr1824.app.ui** and run *AppStart.java*
 as java application. To view user statistics use userID 1-15 and password "password". 
 
+* To see group stats write either "male" or "female" in the Group ID field.
 
 ## Release Notes
 
