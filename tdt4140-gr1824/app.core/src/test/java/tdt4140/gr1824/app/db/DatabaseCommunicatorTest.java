@@ -54,12 +54,6 @@ public class DatabaseCommunicatorTest {
 	}
 	
 	@Test
-	public void testGetWeeklyHoursUser() throws SQLException {
-		int userID = DatabaseCommunicator.getNextPersonID()-1;
-		assertTrue(DatabaseCommunicator.getWeeklyHoursUser(userID, "2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
-	}
-	
-	@Test
 	public void testGetCompetitionNamesByUser() throws SQLException {
 		int userID = DatabaseCommunicator.getNextPersonID()-1;
 		assertTrue(DatabaseCommunicator.getCompetitionNamesByUser(userID) instanceof List<?>);
@@ -125,6 +119,12 @@ public class DatabaseCommunicatorTest {
 		DatabaseCommunicator.getGroupStats("None");
 	}
 
+	@Test
+	public void testGetWeeklyHoursUser() throws SQLException {
+		int userID = DatabaseCommunicator.getNextPersonID()-1;
+		assertTrue(DatabaseCommunicator.getWeeklyHoursUser(userID, "2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
+	}
+	
 	@Test
 	public void testGetWeeklyHoursAll() throws SQLException {
 		assertTrue(DatabaseCommunicator.getWeeklyHoursAll("2018-04-04 00:00:00","2018-04-05 00:00:00", "glos") >= 0);
