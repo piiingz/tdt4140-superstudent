@@ -7,9 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import tdt4140.gr1824.app.db.DatabaseCommunicator;
 
 
 public class UIBackendControllerTest {
