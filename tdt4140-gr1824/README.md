@@ -12,7 +12,7 @@ describing a group's patterns.
 
 ### Prerequisites
 
-We develop using **Eclipse** other IDEs should work, but are not explicitly supported.
+We develop using **Eclipse**. Other IDEs should work, but are not explicitly supported.
 To run the project we suggest you use **JDK 8**.
 
 ### Installing
