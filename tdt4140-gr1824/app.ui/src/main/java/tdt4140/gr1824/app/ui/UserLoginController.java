@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import tdt4140.gr1824.app.core.UIBackendController;
+import tdt4140.gr1824.app.uiBackend.UIBackendController;
 
 public class UserLoginController {
 

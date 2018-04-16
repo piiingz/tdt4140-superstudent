@@ -1,4 +1,4 @@
-package tdt4140.gr1824.app.core;
+package tdt4140.gr1824.app.uiBackend;
 
 import java.sql.SQLException;
 import java.time.LocalDate;

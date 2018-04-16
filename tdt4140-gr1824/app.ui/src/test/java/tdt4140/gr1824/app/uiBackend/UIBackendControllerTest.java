@@ -1,4 +1,4 @@
-package tdt4140.gr1824.app.core;
+package tdt4140.gr1824.app.uiBackend;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import org.junit.Test;
 
 import javafx.collections.ObservableList;
+import tdt4140.gr1824.app.uiBackend.UIBackendController;
 
 
 public class UIBackendControllerTest {

@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tdt4140.gr1824.app.core.UIBackendController;
+import tdt4140.gr1824.app.uiBackend.UIBackendController;
 
 public class SiTUIController {
 
