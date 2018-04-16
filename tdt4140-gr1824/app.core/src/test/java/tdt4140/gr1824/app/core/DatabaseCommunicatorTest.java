@@ -46,7 +46,10 @@ public class DatabaseCommunicatorTest {
 		DatabaseCommunicator.updateGoal(goal, userID);
 		assertEquals(DatabaseCommunicator.getGoal(userID), goal);
 	}
-	
+	/*
+	@Test
+	public void testGetFullName
+	*/
 	@Test
 	public void testGetWeeklyHoursUser() throws SQLException {
 		int userID = DatabaseCommunicator.getNextPersonID()-1;
