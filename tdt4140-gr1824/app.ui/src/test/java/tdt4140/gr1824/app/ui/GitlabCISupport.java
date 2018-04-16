@@ -2,6 +2,7 @@ package tdt4140.gr1824.app.ui;
 
 public class GitlabCISupport {
 
+	//Copied from TDT4140-staff example project
     public static void headless() {
         System.setProperty("prism.verbose", "true"); // optional
         System.setProperty("java.awt.headless", "true");
