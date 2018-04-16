@@ -160,6 +160,7 @@ public class DatabaseCommunicator {
 	}
 	
 	// Area methods
+	
 	public static int getAreaID(String areaName) throws SQLException {
 		int areaID = 0;
 		rs = getResultSet("SELECT areaID as ID FROM definedarea WHERE areaname = '"+areaName+"';");

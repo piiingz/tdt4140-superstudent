@@ -39,7 +39,6 @@ public class Interpreter {
 			}
 		}
 	
-	//Takes a location as an argument and returns which of the defined areas it is located inside.
 	public Location buildLocation(String latitudeNMEA, String longitudeNMEA) {
 		String latitudePart0 = latitudeNMEA.substring(0, 3);
 		String latitudePart1 = latitudeNMEA.substring(3);
@@ -51,6 +50,7 @@ public class Interpreter {
 		return location;
 	}
 	
+	//Takes a location as an argument and returns which of the defined areas it is located inside.
 	public Area inDefinedArea(Location location) {
 		for (Area area: DefinedAreas.areas) {
 			if(area.inArea(location)) {

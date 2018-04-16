@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 
 public class DatabaseConnection {
 	
+	// Sets up a connection to the database
 	static final String db_name = "jdbc:mysql://mysql.stud.ntnu.no:3306/ingviun_superstudent?useSSL=false";
 	
 	public static DataSource getMySQLDataSource() {

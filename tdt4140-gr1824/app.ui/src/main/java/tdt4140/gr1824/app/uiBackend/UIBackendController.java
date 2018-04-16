@@ -58,14 +58,14 @@ public class UIBackendController {
 		String dbAreaName = prettyNameTodbName(areaName);
 		
 		while (startDate.isBefore(stopDate) && startDate.isBefore(LocalDate.now())) {
-			String startTime = localDateToStartString(startDate);
+			String startTime = localDateToString(startDate, true);
 			String endTime;
 			
 			if (startDate.plusDays(6).isAfter(LocalDate.now())) {
-				endTime = localDateToEndString(LocalDate.now());
+				endTime = localDateToString(LocalDate.now(), false);
 			}
 			else {
-				endTime = localDateToEndString(startDate.plusDays(6));
+				endTime = localDateToString(startDate.plusDays(6), false);
 			}
 			weeklyHoursAll.add(DatabaseCommunicator.getWeeklyHoursAll(startTime, endTime, dbAreaName));
 			startDate = startDate.plusWeeks(1);
@@ -84,14 +84,14 @@ public class UIBackendController {
 		String dbAreaName = prettyNameTodbName(areaName);
 		
 		while (startDate.isBefore(stopDate) && startDate.isBefore(LocalDate.now())) {
-			String startTime = localDateToStartString(startDate);
+			String startTime = localDateToString(startDate, true);
 			String endTime;
 			
 			if (startDate.plusDays(6).isAfter(LocalDate.now())) {
-				endTime = localDateToEndString(LocalDate.now());
+				endTime = localDateToString(LocalDate.now(), false);
 			}
 			else {
-				endTime = localDateToEndString(startDate.plusDays(6));
+				endTime = localDateToString(startDate.plusDays(6), false);
 			}
 			weeklyHoursGroup.add(DatabaseCommunicator.getWeeklyHoursGroup(groupID, startTime, endTime, dbAreaName));
 			startDate = startDate.plusWeeks(1);
@@ -109,14 +109,14 @@ public class UIBackendController {
 		String dbAreaName = prettyNameTodbName(areaName);
 		
 		while (startDate.isBefore(stopDate) && startDate.isBefore(LocalDate.now())) {
-			String startTime = localDateToStartString(startDate);
+			String startTime = localDateToString(startDate, true);
 			String endTime;
 			
 			if (startDate.plusDays(6).isAfter(LocalDate.now())) {
-				endTime = localDateToEndString(LocalDate.now());
+				endTime = localDateToString(LocalDate.now(), false);
 			}
 			else {
-				endTime = localDateToEndString(startDate.plusDays(6));
+				endTime = localDateToString(startDate.plusDays(6), false);
 			}
 			
 			weeklyHours.add(DatabaseCommunicator.getWeeklyHoursUser(userID, startTime, endTime, dbAreaName));
@@ -130,15 +130,6 @@ public class UIBackendController {
 		return retVal;
 	}
 	
-	
-	private static String localDateToStartString (LocalDate localdate) {
-		return ""+String.format("%1$tY-%1$tm-%1$td", localdate)+" 00:00:00";
-	}
-	
-	private static String localDateToEndString (LocalDate localdate) {
-		return ""+String.format("%1$tY-%1$tm-%1$td", localdate)+" 23:59:59";
-	}
-
 	public void setNewGoal(Integer goal, int userID) {
 		DatabaseCommunicator.updateGoal(goal, userID);
 	}
@@ -152,7 +143,7 @@ public class UIBackendController {
 	}
 	
 	public void createCompetition(String competitionName, String areaName, int requiredHours, LocalDate startDate, LocalDate endDate, String competitionDescription, String prizeDescription) throws SQLException {
-		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, this.localDateToString(startDate, true), this.localDateToString(endDate, false), competitionDescription, prizeDescription);
+		DatabaseCommunicator.addCompetition(competitionName, this.prettyNameToId(areaName), requiredHours, localDateToString(startDate, true), localDateToString(endDate, false), competitionDescription, prizeDescription);
 	}
 	
 	public ObservableList<String> getAllCompetitionNames() throws SQLException {
@@ -227,7 +218,7 @@ public class UIBackendController {
 		return null;
 	}
 	
-	private String localDateToString(LocalDate date, boolean startDate) {
+	private static String localDateToString(LocalDate date, boolean startDate) {
 		if (startDate) {
 			return date.toString() + " 00:00:00";
 		} else {
