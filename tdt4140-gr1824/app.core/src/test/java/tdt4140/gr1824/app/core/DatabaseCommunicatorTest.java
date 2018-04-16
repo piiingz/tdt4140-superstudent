@@ -46,10 +46,13 @@ public class DatabaseCommunicatorTest {
 		DatabaseCommunicator.updateGoal(goal, userID);
 		assertEquals(DatabaseCommunicator.getGoal(userID), goal);
 	}
-	/*
+	
 	@Test
-	public void testGetFullName
-	*/
+	public void testGetFullName() throws SQLException {
+		String fullName = DatabaseCommunicator.getFullName(DatabaseCommunicator.getNextPersonID()-1);
+		assertEquals(fullName, "testPerson");
+	}
+	
 	@Test
 	public void testGetWeeklyHoursUser() throws SQLException {
 		int userID = DatabaseCommunicator.getNextPersonID()-1;
@@ -216,6 +219,7 @@ public class DatabaseCommunicatorTest {
 		
 	}
 	
+	
 	@Test
 	public void testGetWinners() {
 		try {
@@ -225,7 +229,6 @@ public class DatabaseCommunicatorTest {
 			List<String> winners = DatabaseCommunicator.getWinners("Test name");
 
 			if (winners.isEmpty()) {
-				System.out.println(winners.getClass().getComponentType());
 				assertEquals(winners.getClass().getComponentType(), null);
 			} else {
 			
