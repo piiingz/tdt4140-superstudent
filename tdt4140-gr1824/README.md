@@ -35,11 +35,12 @@ The full list of changes can be found at https://gitlab.stud.iie.ntnu.no/tdt4140
 
 ## Built with
 
-* [Jetty](https://www.eclipse.org/jetty/) - embedded HTTP server
+* [Jetty](https://www.eclipse.org/jetty/) - Embedded HTTP server
 * [Jersey] (https://jersey.github.io/) - Restful web services
 * [JFoenix] (http://www.jfoenix.com/) - JavaFX material design library
-* [TestFX](https://github.com/TestFX/TestFX) - test framework for JavaFX apps
+* [TestFX](https://github.com/TestFX/TestFX) - Test framework for JavaFX apps
 * [Jackson](https://github.com/FasterXML/jackson) - [JSON](https://www.json.org) library
+* [MySQL](https://innsida.ntnu.no/wiki/-/wiki/English/Using+MySQL+at+NTNU) - Database
 
 
 ## Authors
