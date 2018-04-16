@@ -14,11 +14,11 @@ import tdt4140.gr1824.app.db.DatabaseCommunicator;
 public class StayLog {
 	
 	// Used by interpreter to log stays to database. Writing to database, format: ID, Area.name, stayTime.
-	public void logStay(String currentStartTime, Date stopTime, String currentAreaName, int currentUserID) {
-		Long duration = this.calculateDuration(this.stringToDate(currentStartTime), stopTime);
+	public void logStay(String currentStartTime, String stopTime, String currentAreaName, int currentUserID) {
+		Long duration = this.calculateDuration(this.stringToDate(currentStartTime), this.stringToDate(stopTime));
 		
 		try {
-			DatabaseCommunicator.addStay(currentStartTime, duration, currentAreaName, currentUserID);
+			DatabaseCommunicator.addStay(currentStartTime, stopTime, duration, currentAreaName, currentUserID);
 		} catch (Exception e) {
 			System.out.println("Trouble while trying to add stay to database.");
 		}
