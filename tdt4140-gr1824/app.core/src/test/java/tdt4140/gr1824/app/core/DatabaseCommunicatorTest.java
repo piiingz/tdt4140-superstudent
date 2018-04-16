@@ -177,6 +177,25 @@ public class DatabaseCommunicatorTest {
 	}
 	
 	@Test
+	public void testGetCompInfo() throws SQLException {
+		// Creating a competition in the database
+		DatabaseCommunicator.addCompetition("Test name", 1, 30, "2018-04-02 00:00:00", "2018-04-06 23:59:59", "Test description", "Test prize");
+		int personID = DatabaseCommunicator.getNextPersonID()-1;
+		List<String> liste = new ArrayList<String>();
+		liste.add("Test description");
+		liste.add("Test prize");
+		liste.add("2018-04-02 00:00:00.0");
+		liste.add("2018-04-06 23:59:59.0");
+		liste.add("1");
+		liste.add("30");
+		assertEquals(liste, DatabaseCommunicator.getCompInfo(personID, "Test name"));
+		
+		DatabaseCommunicator.updateTable("DELETE from competition where competitionName = 'Test name';");
+		DatabaseCommunicator.closeConnection();
+		
+	}
+	
+	@Test
 	public void testCompetitionInDB(){
 		try {
 			// Creating a competition in the database
