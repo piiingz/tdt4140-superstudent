@@ -1,4 +1,4 @@
-package tdt4140.gr1824.app.core;
+package tdt4140.gr1824.app.db;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
