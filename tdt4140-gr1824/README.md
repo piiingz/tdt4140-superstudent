@@ -1,6 +1,6 @@
 # Superstudent							
 
-This is a project built as part of the subject TDT4140, spring 2018. 
+This is a project built as part of the course TDT4140, spring 2018. 
 Based on this [template project](https://gitlab.stud.iie.ntnu.no/tdt4140-staff/examples/blob/master/tdt4140-gr18nn/README.md), the purpose of the project is to "Plan and manage small software engineering projects and participate as designer/programmer/tester in larger software projects." See: [Course Information] (https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet)
 
 *Superstudent* is a system that reads and classifies NMEA data. It 
@@ -12,7 +12,7 @@ describing a group's patterns.
 
 ### Prerequisites
 
-We develop using **Maven** and **Eclipse** other IDE should work, but are not explicitly supported.
+We develop using **Eclipse** other IDEs should work, but are not explicitly supported.
 To run the project we suggest you use **JDK 8**.
 
 ### Installing
@@ -38,6 +38,7 @@ The full list of changes can be found at https://gitlab.stud.iie.ntnu.no/tdt4140
 * [Jersey] (https://jersey.github.io/) - Restful web services
 * [JFoenix] (http://www.jfoenix.com/) - JavaFX material design library
 * [TestFX](https://github.com/TestFX/TestFX) - test framework for JavaFX apps
+* [Jackson](https://github.com/FasterXML/jackson) - [JSON](https://www.json.org) library
 
 
 ## Authors
