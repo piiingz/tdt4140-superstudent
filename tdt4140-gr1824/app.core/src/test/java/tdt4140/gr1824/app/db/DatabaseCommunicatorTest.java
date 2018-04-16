@@ -238,7 +238,6 @@ public class DatabaseCommunicatorTest {
 		
 	}
 	
-	
 	@Test
 	public void testGetWinners() {
 		try {
