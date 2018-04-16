@@ -183,19 +183,6 @@ public class DatabaseCommunicator {
 		closeConnection();
 		return areaName;
 	}
-
-	public static int getNextAreaID() throws SQLException {
-			
-			int nextID = 0;
-			rs = getResultSet("SELECT MAX(areaID) AS maximum FROM definedarea;");
-			
-			if (rs.next()) {
-				int currID = rs.getInt("maximum");
-				nextID = currID+1;
-			}
-			closeConnection();
-			return nextID;
-		}
 	
 	// Stay methods
 	
