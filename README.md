@@ -9,6 +9,8 @@ It handles input from multiple users and gathers data about where each user is
 and how long they stay at predefined areas. This information is then used to offer statistics
 describing a group's patterns, so that SiT can improve their services. *Superstudent* also allows SiT to create competitions where the students can win prizes. 
 
+![Screenshot UI](/tdt4140-gr1824/app.ui/src/main/resources/tdt4140/gr1824/app/ui/Screenshot-UI.png)
+
 ## Getting started
 
 ### Prerequisites
